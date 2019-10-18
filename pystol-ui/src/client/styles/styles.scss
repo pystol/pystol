@@ -1,0 +1,315 @@
+// reset
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto;
+}
+
+// -----------------------------------------
+// modal
+.modalContainer {
+    background-color: rgba(55, 145, 170, 0.8);
+}
+.closeButton:hover {
+    background-color: rgba(105, 181, 202, 0.8);
+    color:white;
+    // color:rgb(235, 235, 235);
+}
+#podModalButton:hover {
+    background-color: #1b7ac7;
+}
+#serviceModalButton:hover {
+    background-color: #1b7ac7;
+}
+#ingressModalButton:hover {
+    background-color: #1b7ac7;
+}
+// .closeButton {
+//     width: 100%;
+//     display: block;
+//     height: 50px;
+//     color:rgba(105, 181, 202, 0.8);
+//     font-size: 14pt;
+//     font-family:sans-serif;
+//     font-weight: bold;
+//     margin-top: 15px;
+// }
+.containerinfo {
+    text-decoration: underline;
+}
+.PVC {
+    text-decoration: underline;
+}
+.serviceLeft {
+    float:left;
+}
+.serviceRight {
+    float:right;
+}
+
+// --------------------------------------------------
+// Header / App Bar
+// .header {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 15px;
+//     border-bottom: 1px solid black;
+// }
+
+#kubernetestitle {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+}
+#appbar {
+    background-image: -webkit-linear-gradient(bottom left, #102139 30%,rgb(233, 227, 202) );
+}
+#viewButton {
+    color: white;
+    background-color: #102139;
+}
+#viewArrow {
+    color: white;
+}
+#menuListButton {
+    background-color: #102139;
+}
+#graphLabel {
+    color: white;
+}
+
+#tableLabel {
+    color: white;
+}
+
+// ---------------------------------------------------
+// DRAWER ITEMS
+
+// header
+.leftheader {
+    background-color: #08182E
+}
+#leftheadertitle {
+    color: #F8F8F8;
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#rightheadertitle {
+    color: #F8F8F8;
+    text-align: right;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#handledrawerbutton {
+    color: #F8F8F8;
+}
+
+// legend 
+#legendpanel {
+    background-color: #08182E;
+}
+#legendtitle {
+    color: #F8F8F8;
+}
+
+
+// monitoring 
+.monitoring {
+    background-color: #08182E;
+}
+#monitoringlabel {
+    color: #F8F8F8;
+}
+#refreshbutton {
+    background-color: #d3e0eb;
+}
+#refreshbutton:hover {
+    background-color: #7794b1;
+}
+#monitorbutton {
+    background-color: #d3e0eb;
+}
+#monitorbutton:hover {
+    background-color: #7794b1;
+}
+
+// directions
+.directions {
+    background-color: #08182E;
+}
+#pageslabel {
+    color: #F8F8F8;
+}
+
+.viewMenu {
+    margin-right: 10%;
+}
+
+.rightSide {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+
+.tableRight {
+    margin-bottom: 10%;
+}
+.monitoring {
+    height: 25%;
+    padding: 0 15px;
+}
+.directions {
+    padding: 0 25px;
+    text-align: center;
+}
+ 
+// -----------------------------------------------------
+// MAIN VISUALIZATION ITEMS
+.rightSide {
+    height: 100%;
+    overflow-y: auto;
+}
+
+#k8sContainer {
+    position: relative;
+    height: 100%;
+}
+#k8sContainer #k8simage {
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+
+
+//
+
+// #mynetwork {
+//     width: 600px;
+//     height: 200px;
+//   }
+  
+  div.vis-network div.vis-navigation div.vis-button.vis-up, 
+  div.vis-network div.vis-navigation div.vis-button.vis-down, 
+  div.vis-network div.vis-navigation div.vis-button.vis-left, 
+  div.vis-network div.vis-navigation div.vis-button.vis-right, 
+  div.vis-network div.vis-navigation div.vis-button.vis-zoomIn, 
+  div.vis-network div.vis-navigation div.vis-button.vis-zoomOut, 
+  div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
+    background-image: none !important;
+  }
+  
+  div.vis-network div.vis-navigation div.vis-button:hover {
+    box-shadow: none !important;
+  }
+  
+  .vis-button:after {
+    font-size: 2em;
+    color: gray;
+  }
+  
+  .vis-button:hover:after {
+    font-size: 2em;
+    color: lightgray;
+  }
+
+  .vis-button.vis-up {
+    content: "▲";
+    bottom: 17% !important;
+  }
+  .vis-button.vis-up:after {
+    content: "▲";
+  }
+  
+  .vis-button.vis-down {
+    content: "▼";
+    bottom: 11% !important;
+  }
+  .vis-button.vis-down:after {
+    content: "▼";
+  }
+
+  .vis-button.vis-left {
+    content: "▶";
+    transform: scale(-1, 1);
+    margin-right: 5px !important;
+    bottom: 11% !important; 
+  }
+  .vis-button.vis-left:after {
+    content: "▶";
+  }
+  
+  .vis-button.vis-right {
+    content: "▶";
+    bottom: 11% !important;
+  }
+  .vis-button.vis-right:after {
+    content: "▶";
+  }
+
+  .vis-button.vis-zoomIn {
+    content: "+";
+    top: 3%;
+    font-weight: bold;
+  }
+  .vis-button.vis-zoomIn:after {
+    content: "+";
+    top: 3%;
+    font-weight: bold;
+  }
+  
+  .vis-button.vis-zoomOut {
+    content: "−";
+    top: 3%;
+    font-weight: bold;
+  }
+  .vis-button.vis-zoomOut:after {
+    content: "−";
+    top: 3%;
+    font-weight: bold;
+  }
+  
+  .vis-button.vis-zoomExtends {
+    top: 9%;
+    content: "⤧";
+  }
+  .vis-button.vis-zoomExtends:after {
+    top: 9%;
+    content: "⤧";
+  }
+
+
+
+//   .vis-button.vis-up {
+//     bottom: 17% !important;  
+//   }
+//   .vis-button.vis-down {
+//     bottom: 11% !important;
+//   }
+//   .vis-button.vis-left {
+//     bottom: 11% !important;
+//   }
+//   .vis-button.vis-right {
+//     bottom: 11% !important;
+//   }
+//   .vis-button.vis-zoomIn {
+//     top: 3%;
+//   }
+//   .vis-button.vis-zoomOut {
+//     top: 3%;
+//   }
+//   div.vis-button.vis-zoomExtends {
+//     top: 9%;
+//   }
