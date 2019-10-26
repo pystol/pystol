@@ -1,3 +1,6 @@
 nohup.out
 *.pyc
 *pystol.egg-info*
+.tox
+.tox/*
+node_modules/
