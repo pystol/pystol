@@ -9,6 +9,7 @@
   [![TOX Flake8 build](https://github.com/pystol/pystol/workflows/tox-flake-build/badge.svg)](https://github.com/pystol/pystol/actions?workflow=tox-flake-build)
   [![TOX NodeJS units build](https://github.com/pystol/pystol/workflows/tox-nodeunits-build/badge.svg)](https://github.com/pystol/pystol/actions?workflow=tox-nodeunits-build)
   [![TOX Pytest build](https://github.com/pystol/pystol/workflows/tox-pytest-build/badge.svg)](https://github.com/pystol/pystol/actions?workflow=tox-pytest-build)
+  [![TOX SyncMDs build](https://github.com/pystol/pystol/workflows/tox-syncmds-build/badge.svg)](https://github.com/pystol/pystol/actions?workflow=tox-syncmds-build)
   [![Docs build](https://github.com/pystol/pystol-docs/workflows/jekyll-docs-build/badge.svg)](https://github.com/pystol/pystol-docs/actions?workflow=jekyll-docs-build)
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
