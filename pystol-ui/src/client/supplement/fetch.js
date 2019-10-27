@@ -205,7 +205,7 @@ const fetchData = (nodes, edges, graph, that) => {
 				newGraph.edges.push(
 					{ from: 1, to: 4 },
 					{ from: 2, to: 4 },
-					{ from: 3, to: 4 },
+					{ from: 3, to: 4 }
 				)
 
 				that.setState({
