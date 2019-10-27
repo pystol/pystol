@@ -6,3 +6,5 @@ flake8-docstrings
 flake8-import-order
 pep8-naming
 nodeenv
+pygithub
+requests
