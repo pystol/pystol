@@ -89,11 +89,13 @@ describe('GET /ingress endpoint', () => {
       .get('/ingress')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200)
+      .expect(200, done)
+/*
       .end((err, res) => {
         if (err) throw done(err);
         done();
       })
+*/
   });
 });
 
