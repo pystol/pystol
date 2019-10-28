@@ -1,0 +1,149 @@
+name: e2e-deploy-build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    # Originally from: https://github.com/kubernetes-sigs/kind/issues/865
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.12
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.12
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Run docker login
+      id: pystol-login
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> Docker login quay.io"
+        docker login -u="pystol+bot" -p="T2K5TLLL3ERE82F22SCVUF9M0ANY1ARR7NDR4CQ6P49H654WIMEQCNS0BL3O9Y2I" quay.io
+
+    - name: Create Kubernetes Cluster
+      id: kind
+      uses: engineerd/setup-kind@v0.1.0
+      with:
+        version: "v0.5.1"
+        config: .github/e2e-templates/cluster.yaml
+
+    - name: Install local-path provisioner
+      id: local-path
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        kubectl wait --for=condition=Ready nodes --all --timeout=5m
+        kubectl get nodes
+        kubectl delete storageclass --all
+        kubectl apply -f https://github.com/rancher/local-path-provisioner/raw/master/deploy/local-path-storage.yaml
+        kubectl wait --for=condition=Ready pods -n local-path-storage --all --timeout=5m
+
+    - name: Create the image tag
+      id: pystol-create-image-tag
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> Create the image tag"
+        IMG_TAG=$(date +%s%N)
+        echo $IMG_TAG
+        echo "::set-env name=TAG::$IMG_TAG"
+
+    - name: Create the container image
+      id: pystol-create-image
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> Print the image tag"
+        echo $TAG
+        echo ">>> Build the container image"
+        docker build -t quay.io/pystol/pystol-operator-staging:$TAG .
+
+    - name: Push the container image
+      id: pystol-push-image
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> Push the container image"
+        docker push quay.io/pystol/pystol-operator-staging:$TAG
+
+    - name: Deploy pystol
+      id: pystol-deploy
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> Install Pystol deployment crd and rbac"
+        kubectl apply -f templates/rbac.yaml
+        # Now we need to deploy the operator using the GPR image we created in the previous steps
+        cat templates/operator.yaml | \
+          sed "s/image\: pystol\/operator\:latest/image\: quay\.io\/pystol\/pystol-operator-staging\:$TAG/g" | \
+          kubectl apply -f -
+        kubectl apply -f templates/crd.yaml
+        echo
+        echo ">>> Get pods 12 times"
+        for i in {1..12}; do kubectl get pod;echo;sleep 3; done
+
+    - name: Debug pystol creation
+      id: debug-pystol-deploy
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> Debug pystol-controller pod"
+        kubectl describe pod `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1`
+        echo
+        echo ">>> Debug pystol-ui pod"
+        kubectl describe pod `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1`
+        echo
+        echo ">>> Get pods 12 times"
+        for i in {1..12}; do kubectl get pod;echo;sleep 10; done
+
+    - name: Build
+      run: id;pwd;lsblk;df;cat /proc/mounts
+
+    - name: Wait for all to be deployed
+      run: |
+        echo
+        echo ">>> Wait for all running before continue"
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        kubectl get all --all-namespaces
+        # We wait for all pods to be created and running
+        kubectl wait --for=condition=Ready pods -n default --all --timeout=5m
+        kubectl wait --for=condition=Ready pods -n kube-system --all --timeout=5m
+        kubectl wait --for=condition=Ready pods -n local-path-storage --all --timeout=5m
+
+    - name: Test Pystol CLI
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> run pystol CLI pystol -h"
+        kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -h
+        echo ">>> run pystol CLI pystol -v"
+        kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -v
+
+    - name: Test
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo
+        echo ">>> run pod"
+        kubectl apply -f ${GITHUB_WORKSPACE}/.github/e2e-templates/rancher-provisioner-nonroot.yaml
+        echo ">>> get pod"
+        for i in {1..12}; do kubectl get pod;echo;sleep 5; done
+        echo
+        echo ">>> get pod"
+        kubectl get pod volume-test -o go-template="{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}"
+        echo
+        echo ">>> describe pod"
+        kubectl get pod -n default volume-test -o yaml
+        echo
+        echo ">>> show pod logs"
+        kubectl logs -n default volume-test
+        echo
+        kubectl get pvc -o yaml
+        echo
+        kubectl get pv -o yaml
+        echo
+        kubectl get nodes
