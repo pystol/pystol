@@ -21,16 +21,11 @@ from os import getenv
 
 import kubernetes
 
+from pystol import __version__
 from pystol.load_crd import load_crd
 from pystol.operator import handle
 
-
-try:
-    kubernetes = kubernetes.config.load_incluster_config()
-except kubernetes.config.config_exception.ConfigException:
-    raise RuntimeError(
-        'Can not read Kubernetes cluster configuration.'
-    )
+pystol_version = __version__
 
 
 def main():
@@ -45,6 +40,10 @@ def main():
         description='Pystol - copy operator.',
         prog='pystol'
     )
+    parser.add_argument('-v',
+                        '--version',
+                        action='version',
+                        version='%(prog)s ' + pystol_version)
     parser.add_argument(
         '--namespace',
         type=str,
@@ -59,6 +58,14 @@ def main():
     )
 
     args = parser.parse_args()
+
+    try:
+        kubernetes.config.load_incluster_config()
+    except kubernetes.config.config_exception.ConfigException:
+        raise RuntimeError(
+            'Can not read Kubernetes cluster configuration.'
+        )
+
     try:
         specs = load_crd(args.namespace, args.rule_name)
         handle(specs)

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-path-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-test
+  namespace: default
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
+  containers:
+  - image: tigerworks/debian:nonroot
+    command:
+      - /bin/sh
+      - -c
+      - "id;ls -laR /data; echo testdata > /data/file.txt; cat /data/file.txt;ls -laR /data;lsblk;df;cat /proc/mounts"
+    imagePullPolicy: IfNotPresent
+    name: debian
+    volumeMounts:
+    - name: volv
+      mountPath: /data
+  volumes:
+  - name: volv
+    persistentVolumeClaim:
+      claimName: local-path-pvc
