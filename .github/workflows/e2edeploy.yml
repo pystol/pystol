@@ -80,7 +80,7 @@ jobs:
         kubectl apply -f templates/rbac.yaml
         # Now we need to deploy the operator using the GPR image we created in the previous steps
         cat templates/operator.yaml | \
-          sed "s/image\: pystol\/operator\:latest/image\: quay\.io\/pystol\/pystol-operator-staging\:$TAG/g" | \
+          sed "s/image\: quay\.io\/pystol\/pystol-operator-stable\:latest/image\: quay\.io\/pystol\/pystol-operator-staging\:$TAG/g" | \
           kubectl apply -f -
         kubectl apply -f templates/crd.yaml
         echo

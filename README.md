@@ -13,7 +13,6 @@
   [![Docker Repository on Quay](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker Repository on Quay")](https://quay.io/repository/pystol/pystol-operator-staging)
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
   [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3331/badge)](https://bestpractices.coreinfrastructure.org/projects/3331)
-  [![Docker Pulls](https://img.shields.io/docker/pulls/pystol/operator.svg)](https://hub.docker.com/r/pystol/operator)
   [![GitHub stars](https://img.shields.io/github/stars/pystol/pystol?style=social)](https://github.com/pystol/pystol/stargazers)
   [![GitHub issues](https://img.shields.io/github/issues/pystol/pystol)](https://github.com/pystol/pystol/issues)
 

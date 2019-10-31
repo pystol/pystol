@@ -14,11 +14,9 @@ spec:
         name: pystol-ui
         component: pystol-ui
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: pystol-ui
-          image: pystol/operator:latest
+          image: quay.io/pystol/pystol-operator-stable:latest
           ports:
             - containerPort: 3000
           command: ["npm"]
@@ -48,11 +46,9 @@ spec:
         name: pystol-controller
         component: pystol-controller
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: pystol-controller
-          image: pystol/operator:latest
+          image: quay.io/pystol/pystol-operator-stable:latest
           imagePullPolicy: Always
           command: ["pystol"]
           env:
