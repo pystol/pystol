@@ -10,10 +10,10 @@
   [![TOX Pytest build](https://github.com/pystol/pystol/workflows/tox-pytest-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-pytest-build)
   [![TOX SyncMDs build](https://github.com/pystol/pystol/workflows/tox-syncmds-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-syncmds-build)
   [![Docs build](https://github.com/pystol/pystol-docs/workflows/jekyll-docs-build/badge.svg?event=push)](https://github.com/pystol/pystol-docs/actions?workflow=jekyll-docs-build)
-  [![Docker Repository on Quay](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker Repository on Quay")](https://quay.io/repository/pystol/pystol-operator-staging)
+  [![Docker registry STAGING status](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker registry STAGING status")](https://quay.io/repository/pystol/pystol-operator-staging)
+  [![Docker registry STABLE status](https://quay.io/repository/pystol/pystol-operator-stable/status "Docker registry STABLE status")](https://quay.io/repository/pystol/pystol-operator-stable)
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
   [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3331/badge)](https://bestpractices.coreinfrastructure.org/projects/3331)
-  [![GitHub stars](https://img.shields.io/github/stars/pystol/pystol?style=social)](https://github.com/pystol/pystol/stargazers)
   [![GitHub issues](https://img.shields.io/github/issues/pystol/pystol)](https://github.com/pystol/pystol/issues)
 
 ## Documentation
