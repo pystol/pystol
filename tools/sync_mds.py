@@ -67,6 +67,7 @@ def main():
 
     organization = opts.organization
     master_repo = organization + "/" + opts.master_repo
+    this_repo = "pystol/pystol"
     files_to_compare = opts.files_to_check
 
     gh = Github()
@@ -92,7 +93,13 @@ def main():
                 print(url)
                 print(out)
                 raise e
-        with open(master_repo.split("/")[1] + "_" + file) as f:
+
+        if (this_repo == master_repo):
+            base_file = file
+        else:
+            base_file = master_repo.split("/")[1] + "_" + file
+
+        with open(base_file) as f:
             flines = f.readlines()
             for repo in repositories:
                 with open(repo.full_name.split("/")[1] + "_" + file) as g:
