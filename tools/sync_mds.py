@@ -41,21 +41,20 @@ def parse_opts(argv):
                              'to compare the files. i.e. pystol',
                         )
 
-    parser.add_argument('--master-repo',
-                        required=True,
-                        metavar='<master repository>',
-                        help='The master repository which '
-                             'should have the latest '
-                             'versions of the files to '
-                             'compare. i.e. pystol'
-                        )
-
     parser.add_argument('--files-to-check',
                         nargs="+", required=True,
                         metavar='<files to check>',
                         help='A list of files to check across '
                              'the repositories of the organization '
                              'i.e. README.md LICENSE')
+
+    parser.add_argument('--exclude-repos',
+                        nargs="+", required=False,
+                        metavar='<exclude repos>',
+                        default=[],
+                        help='A list of repos to be '
+                             'excluded from the ckeck '
+                             'i.e. pystol/badgeboard test')
 
     opts = parser.parse_args(argv[1:])
     return opts
@@ -66,12 +65,18 @@ def main():
     opts = parse_opts(sys.argv)
 
     organization = opts.organization
-    master_repo = organization + "/" + opts.master_repo
-    this_repo = "pystol/pystol"
     files_to_compare = opts.files_to_check
+    repos_to_exclude = opts.exclude_repos
 
     gh = Github()
-    repositories = gh.search_repositories(query='user:' + organization)
+    temp_repositories = gh.search_repositories(query='user:' + organization)
+
+    repos_to_exclude.append('pystol/pystol')
+    repositories = []
+    for repo in temp_repositories:
+        if repo.full_name not in repos_to_exclude:
+            repositories.append(repo)
+
     errors = False
     for file in files_to_compare:
         for repo in repositories:
@@ -94,12 +99,7 @@ def main():
                 print(out)
                 raise e
 
-        if (this_repo == master_repo):
-            base_file = file
-        else:
-            base_file = master_repo.split("/")[1] + "_" + file
-
-        with open(base_file) as f:
+        with open(file) as f:
             flines = f.readlines()
             for repo in repositories:
                 with open(repo.full_name.split("/")[1] + "_" + file) as g:
@@ -109,18 +109,14 @@ def main():
                              d.compare(flines, glines)
                              if x[0] in ('+', '-')]
                     if diffs:
-                        print(master_repo.split("/")[1] +
-                              "_" +
-                              file +
+                        print(file +
                               " is different than " +
                               repo.full_name.split("/")[1] +
                               "_" +
                               file)
                         errors = True
                     else:
-                        print(master_repo.split("/")[1] +
-                              "_" +
-                              file +
+                        print(file +
                               " is the same than " +
                               repo.full_name.split("/")[1] +
                               "_" +

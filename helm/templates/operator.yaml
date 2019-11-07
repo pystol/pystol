@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: pystol-ui
-          image: quay.io/pystol/pystol-operator-stable:latest
+          image: {{ .Values.appSettings.pystol.ui.image }}
           ports:
-            - containerPort: 3000
+            - containerPort: {{ .Values.appSettings.pystol.ui.port }}
           command: ["npm"]
           args: ["run", "server"]
           imagePullPolicy: Always
@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
         - name: pystol-controller
-          image: quay.io/pystol/pystol-operator-stable:latest
+          image: {{ .Values.appSettings.pystol.controller.image }}
           imagePullPolicy: Always
           command: ["pystol"]
           env:

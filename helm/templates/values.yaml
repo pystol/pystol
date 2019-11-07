@@ -1,0 +1,7 @@
+appSettings:
+  pystol:
+    controller:
+      image: quay.io/pystol/pystol-operator-stable:latest
+    ui:
+      image: quay.io/pystol/pystol-operator-stable:latest
+      port: 3000
