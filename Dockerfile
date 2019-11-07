@@ -1,6 +1,7 @@
 # version 8 of node
 FROM node:8
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
+LABEL quay.expires-after=3w
 
 ## Initial copy of the repository to the container image
 # Bundle app source
