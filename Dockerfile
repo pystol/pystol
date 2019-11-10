@@ -3,6 +3,8 @@ FROM node:8
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=3w
 
+ARG revision
+
 ## Initial copy of the repository to the container image
 # Bundle app source
 COPY . .
@@ -13,8 +15,10 @@ RUN apt-get update -y
 RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
 # We install the operator and dependencies
-RUN pip3 install --upgrade /pystol-operator
+RUN echo "The pystol revision is ${revision}"
+
 RUN pip3 install -r /pystol-operator/requirements.txt
+RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 
 ## Installing the web UI
 # Create a directory for client
