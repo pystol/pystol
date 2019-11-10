@@ -49,23 +49,32 @@ jobs:
         kubectl apply -f https://github.com/rancher/local-path-provisioner/raw/master/deploy/local-path-storage.yaml
         kubectl wait --for=condition=Ready pods -n local-path-storage --all --timeout=5m
 
-    - name: Create the container image
-      id: pystol-create-image
+    - name: Define and print relevant variables
+      id: pystol-define-variables
       run: |
-        export KUBECONFIG="$(kind get kubeconfig-path)"
-        echo
         echo ">>> Print the GitHub commit tag"
         echo $GITHUB_SHA
+        echo
+        echo ">>> Define the GitHub short commit tag"
+        echo "::set-env name=GITHUB_SHORT_SHA::$(git rev-parse --short $GITHUB_SHA)"
         echo
         echo ">>> Create the image name"
         IMAGE_NAME=quay.io/pystol/pystol-operator-staging
         echo "::set-env name=IMAGE_NAME::$IMAGE_NAME"
         echo
+
+    - name: Create the container image
+      id: pystol-create-image
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        echo ">>> Print the short GitHub commit tag"
+        echo $GITHUB_SHORT_SHA
+        echo
         echo ">>> Build the container image"
-        docker build -t $IMAGE_NAME:$GITHUB_SHA .
+        docker build --build-arg revision=$GITHUB_SHORT_SHA -t $IMAGE_NAME:$GITHUB_SHORT_SHA .
         echo
         echo ">>> Print the image name"
-        echo "docker build -t $IMAGE_NAME:$GITHUB_SHA ."
+        echo "docker build --build-arg revision=$GITHUB_SHORT_SHA -t $IMAGE_NAME:$GITHUB_SHORT_SHA ."
         echo
 
     - name: Push the container image
@@ -74,10 +83,10 @@ jobs:
         export KUBECONFIG="$(kind get kubeconfig-path)"
         echo
         echo ">>> Push the container image"
-        docker push $IMAGE_NAME:$GITHUB_SHA
+        docker push $IMAGE_NAME:$GITHUB_SHORT_SHA
         echo
         echo ">>> Get the image digest"
-        IMAGE_DIGEST=$(docker images --digests --format "{{.Tag}}-{{.Digest}}" $IMAGE_NAME | grep $GITHUB_SHA | cut -d'-' -f2)
+        IMAGE_DIGEST=$(docker images --digests --format "{{.Tag}}-{{.Digest}}" $IMAGE_NAME | grep $GITHUB_SHORT_SHA | cut -d'-' -f2)
         echo
         echo ">>> Print the image digest"
         echo $IMAGE_DIGEST
@@ -85,7 +94,7 @@ jobs:
         echo "::set-env name=IMAGE_DIGEST::$IMAGE_DIGEST"
         echo
         echo ">>> Debug image digests"
-        docker images --digests $IMAGE_NAME:$GITHUB_SHA
+        docker images --digests $IMAGE_NAME:$GITHUB_SHORT_SHA
         echo
 
     - name: Deploy pystol
@@ -150,8 +159,17 @@ jobs:
         echo
         echo ">>> run pystol CLI pystol -h"
         kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -h
+        echo
         echo ">>> run pystol CLI pystol -v"
-        kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -v
+        VERSION_OUTPUT=$(kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -v)
+        echo $VERSION_OUTPUT
+        echo
+        if [[ $VERSION_OUTPUT == *$GITHUB_SHORT_SHA* ]]; then
+            echo "GitHub commit ID matches with the deployed version"
+        else
+            echo "GitHub commit ID DO NOT MATCH with the deployed version"
+            exit 1
+        fi
 
     - name: Test
       run: |

@@ -16,6 +16,7 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import os
 from sys import version_info
 
 from setuptools import find_packages, setup
@@ -25,11 +26,16 @@ if version_info[:2] < (3, 5):
         'Unsupported python version %s.' % '.'.join(version_info)
     )
 
-
 _NAME = 'pystol'
+_REVISION = '0.0.1'
+
+pystol_revision = os.environ.get('PYSTOL_REVISION', default="")
+if (pystol_revision != ""):
+    _REVISION = _REVISION + "." + pystol_revision
+
 setup(
     name=_NAME,
-    version='0.0.1',
+    version=_REVISION,
     packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',
