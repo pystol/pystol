@@ -22,7 +22,7 @@ module.exports = {
     // use the recommended rule set for both plain javascript
     "eslint:recommended",
     "plugin:jest/recommended",
-//    "plugin:react/recommended"
+    "plugin:react/recommended"
   ],
   rules: {
     // we should always disable console logs and debugging in production
