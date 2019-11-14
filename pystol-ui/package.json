@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
     "test": "jest --verbose --coverage --coverageReporters=text-summary",
-    "server": "nodemon src/server/server.js"
+    "server": "nodemon src/server/server.js",
+    "k8s-server": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./dist/ && nodemon src/server/server.js"
   },
   "author": "",
   "license": "ISC",

@@ -3,6 +3,7 @@ FROM node:8
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=3w
 
+# Arguments
 ARG revision
 
 ## Initial copy of the repository to the container image
@@ -35,4 +36,3 @@ EXPOSE 3000
 ## In the operator.yaml definition we will
 ## run one container for the web server and
 ## another container to run the controller CLI
-
