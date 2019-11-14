@@ -1,10 +1,20 @@
+/*
+Currently, the constants are referenced in this file in runtime.
+The values for these constants are injected using Node’s
+in the index.html with env-config.js using the window._env_ property,
+which returns an object with information about your user environment
+at runtime. Setting values dynamically
+allows us to decouple the code from the underlying infrastructure,
+which is necessary in a dynamic, stateless environment.
+*/
+
 const fetchData = (nodes, edges, graph, that) => {
 	
 	return new Promise((resolve, reject) => {
-		const p1 = fetch('http://labserver:3000/pod');
-		const p2 = fetch('http://labserver:3000/service');
-		const p3 = fetch('http://labserver:3000/ingress');
-		//const p4 = fetch('http://labserver:3000/daemonset')
+		const p1 = fetch('http://' + window._env_.PYSTOL_UI_API_HOST + ':' + window._env_.PYSTOL_UI_API_PORT + '/pod');
+		const p2 = fetch('http://' + window._env_.PYSTOL_UI_API_HOST + ':' + window._env_.PYSTOL_UI_API_PORT + '/service');
+		const p3 = fetch('http://' + window._env_.PYSTOL_UI_API_HOST + ':' + window._env_.PYSTOL_UI_API_PORT + '/ingress');
+		//const p4 = fetch('http://' + window._env_.PYSTOL_UI_API_HOST + ':' + window._env_.PYSTOL_UI_API_PORT + '/daemonset');
 
 		// Waits for all the fetch to resolve
 		//Promise.all([p1, p2, p3, p4])

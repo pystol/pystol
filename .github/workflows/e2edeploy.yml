@@ -114,6 +114,8 @@ jobs:
         helm template \
           --set appSettings.pystol.ui.image=$IMAGE_NAME@$IMAGE_DIGEST \
           --set appSettings.pystol.controller.image=$IMAGE_NAME@$IMAGE_DIGEST \
+          --set appSettings.pystol.ui.api_host='labserver' \
+          --set appSettings.pystol.ui.api_port=3000 \
           ./helm/ \
           -f helm/templates/values.yaml \
           -x templates/operator.yaml \

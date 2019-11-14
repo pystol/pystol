@@ -4,4 +4,8 @@ appSettings:
       image: quay.io/pystol/pystol-operator-stable:latest
     ui:
       image: quay.io/pystol/pystol-operator-stable:latest
-      port: 3000
+      # The pystol UI API is exposed in 3000 port by default
+      api_port: 3000
+      # This is the host where the Pystol API
+      # is supossed to be listening the UI 
+      api_host: l0c4lh0st

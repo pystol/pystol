@@ -1,3 +1,13 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pystol-config
+data:
+  PYSTOL_UI_API_PORT: "{{ .Values.appSettings.pystol.ui.api_port }}"
+  PYSTOL_UI_API_HOST: "{{ .Values.appSettings.pystol.ui.api_host }}"
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,11 +28,21 @@ spec:
         - name: pystol-ui
           image: {{ .Values.appSettings.pystol.ui.image }}
           ports:
-            - containerPort: {{ .Values.appSettings.pystol.ui.port }}
+            - containerPort: {{ .Values.appSettings.pystol.ui.api_port }}
           command: ["npm"]
-          args: ["run", "server"]
+          args: ["run", "k8s-server"]
           imagePullPolicy: Always
           env:
+            - name: PYSTOL_UI_API_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: PYSTOL_UI_API_HOST
+                  name: pystol-config
+            - name: PYSTOL_UI_API_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PYSTOL_UI_API_PORT
+                  name: pystol-config
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
