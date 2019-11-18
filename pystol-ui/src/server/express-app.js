@@ -19,7 +19,6 @@ const k8sApi = kc.makeApiClient(k8s.Core_v1Api);
 // optional: daemonset, and network policy as well as replica set if needed
 const k8sApi2 = kc.makeApiClient(k8s.Extensions_v1beta1Api);
 
-
 // use statements
 app.use(bodyParser.json());
 

@@ -1,0 +1,203 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:14:01Z",
+                "labels": {
+                    "run": "cheddar-cheese"
+                },
+                "name": "cheddar-cheese",
+                "namespace": "default",
+                "resourceVersion": "13060",
+                "selfLink": "/api/v1/namespaces/default/services/cheddar-cheese",
+                "uid": "d75fa8f8-1f58-46f6-b879-dc75dfb306db"
+            },
+            "spec": {
+                "clusterIP": "10.111.86.60",
+                "externalTrafficPolicy": "Cluster",
+                "ports": [
+                    {
+                        "nodePort": 32437,
+                        "port": 80,
+                        "protocol": "TCP",
+                        "targetPort": 80
+                    }
+                ],
+                "selector": {
+                    "run": "cheddar-cheese"
+                },
+                "sessionAffinity": "None",
+                "type": "NodePort"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:12:51Z",
+                "labels": {
+                    "run": "echoserver"
+                },
+                "name": "echoserver",
+                "namespace": "default",
+                "resourceVersion": "12911",
+                "selfLink": "/api/v1/namespaces/default/services/echoserver",
+                "uid": "070da5d2-2feb-42cf-a0fc-c4526bdbdb33"
+            },
+            "spec": {
+                "clusterIP": "10.108.63.211",
+                "externalTrafficPolicy": "Cluster",
+                "ports": [
+                    {
+                        "nodePort": 30047,
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "run": "echoserver"
+                },
+                "sessionAffinity": "None",
+                "type": "NodePort"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T08:26:23Z",
+                "labels": {
+                    "component": "apiserver",
+                    "provider": "kubernetes"
+                },
+                "name": "kubernetes",
+                "namespace": "default",
+                "resourceVersion": "151",
+                "selfLink": "/api/v1/namespaces/default/services/kubernetes",
+                "uid": "3aa9280b-f60f-47cc-b73c-20a2629904b6"
+            },
+            "spec": {
+                "clusterIP": "10.96.0.1",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"rocketchat-mongo-service\",\"namespace\":\"default\"},\"spec\":{\"ports\":[{\"port\":27017,\"protocol\":\"TCP\",\"targetPort\":27017}],\"selector\":{\"app\":\"rocketchat-mongo\"}}}\n"
+                },
+                "creationTimestamp": "2019-11-18T11:04:25Z",
+                "name": "rocketchat-mongo-service",
+                "namespace": "default",
+                "resourceVersion": "12239",
+                "selfLink": "/api/v1/namespaces/default/services/rocketchat-mongo-service",
+                "uid": "39b91596-d41c-4f8a-81f2-a7ed1837464c"
+            },
+            "spec": {
+                "clusterIP": "10.106.249.110",
+                "ports": [
+                    {
+                        "port": 27017,
+                        "protocol": "TCP",
+                        "targetPort": 27017
+                    }
+                ],
+                "selector": {
+                    "app": "rocketchat-mongo"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"rocketchat-server-service\",\"namespace\":\"default\"},\"spec\":{\"ports\":[{\"port\":33000,\"protocol\":\"TCP\",\"targetPort\":3030}],\"selector\":{\"app\":\"rocketchat-server\"},\"type\":\"LoadBalancer\"}}\n"
+                },
+                "creationTimestamp": "2019-11-18T11:06:14Z",
+                "name": "rocketchat-server-service",
+                "namespace": "default",
+                "resourceVersion": "12269",
+                "selfLink": "/api/v1/namespaces/default/services/rocketchat-server-service",
+                "uid": "52fe0d53-ec61-4f5e-a518-204f5f513791"
+            },
+            "spec": {
+                "clusterIP": "10.100.205.135",
+                "externalTrafficPolicy": "Cluster",
+                "ports": [
+                    {
+                        "nodePort": 30055,
+                        "port": 33000,
+                        "protocol": "TCP",
+                        "targetPort": 3030
+                    }
+                ],
+                "selector": {
+                    "app": "rocketchat-server"
+                },
+                "sessionAffinity": "None",
+                "type": "LoadBalancer"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:13:37Z",
+                "labels": {
+                    "run": "stilton-cheese"
+                },
+                "name": "stilton-cheese",
+                "namespace": "default",
+                "resourceVersion": "13002",
+                "selfLink": "/api/v1/namespaces/default/services/stilton-cheese",
+                "uid": "397f8d6b-8714-4171-9984-bc7b9722a216"
+            },
+            "spec": {
+                "clusterIP": "10.102.38.160",
+                "externalTrafficPolicy": "Cluster",
+                "ports": [
+                    {
+                        "nodePort": 32617,
+                        "port": 80,
+                        "protocol": "TCP",
+                        "targetPort": 80
+                    }
+                ],
+                "selector": {
+                    "run": "stilton-cheese"
+                },
+                "sessionAffinity": "None",
+                "type": "NodePort"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ],
+    "kind": "ServiceList",
+    "metadata": {
+        "resourceVersion": "19982",
+        "selfLink": "/api/v1/namespaces/default/services"
+    }
+}

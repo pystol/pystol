@@ -1,0 +1,76 @@
+{
+    "apiVersion": "extensions/v1beta1",
+    "items": [
+        {
+            "metadata": {
+                "annotations": {
+                    "nginx.ingress.kubernetes.io/rewrite-target": "/"
+                },
+                "creationTimestamp": "2019-11-18T11:14:47Z",
+                "generation": 1,
+                "name": "ingress-tutorial",
+                "namespace": "default",
+                "resourceVersion": "13183",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses/ingress-tutorial",
+                "uid": "fb7966f6-15e1-4923-a8df-e3a6b2392aaa"
+            },
+            "spec": {
+                "backend": {
+                    "serviceName": "default-http-backend",
+                    "servicePort": 80
+                },
+                "rules": [
+                    {
+                        "host": "myminikube.info",
+                        "http": {
+                            "paths": [
+                                {
+                                    "backend": {
+                                        "serviceName": "echoserver",
+                                        "servicePort": 8080
+                                    },
+                                    "path": "/"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "host": "cheeses.all",
+                        "http": {
+                            "paths": [
+                                {
+                                    "backend": {
+                                        "serviceName": "stilton-cheese",
+                                        "servicePort": 80
+                                    },
+                                    "path": "/stilton"
+                                },
+                                {
+                                    "backend": {
+                                        "serviceName": "cheddar-cheese",
+                                        "servicePort": 80
+                                    },
+                                    "path": "/cheddar"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "loadBalancer": {
+                    "ingress": [
+                        {
+                            "ip": "10.0.2.15"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "kind": "IngressList",
+    "metadata": {
+        "resourceVersion": "20050",
+        "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses"
+    }
+}
