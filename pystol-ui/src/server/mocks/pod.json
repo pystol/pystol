@@ -1,0 +1,1199 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:14:01Z",
+                "generateName": "cheddar-cheese-6897f794f7-",
+                "labels": {
+                    "pod-template-hash": "6897f794f7",
+                    "run": "cheddar-cheese"
+                },
+                "name": "cheddar-cheese-6897f794f7-mvffb",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "cheddar-cheese-6897f794f7",
+                        "uid": "f4dd3b2c-58c7-45b5-b1a0-96843caada32"
+                    }
+                ],
+                "resourceVersion": "13072",
+                "selfLink": "/api/v1/namespaces/default/pods/cheddar-cheese-6897f794f7-mvffb",
+                "uid": "a2fcdffa-68a6-49b8-96e5-322c836a8ded"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "errm/cheese:cheddar",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "cheddar-cheese",
+                        "ports": [
+                            {
+                                "containerPort": 80,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-zbg8b",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube2",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "default-token-zbg8b",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-zbg8b"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:14:01Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:14:05Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:14:05Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:14:01Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://8268818c0dd9e6da9fb93040371759213717979416a29a80775c2ce7e4784096",
+                        "image": "errm/cheese:cheddar",
+                        "imageID": "docker-pullable://errm/cheese@sha256:d0b44559d3671ff436e08012aed235e2d84eba0f61410eeadd2def55cb48f2da",
+                        "lastState": {},
+                        "name": "cheddar-cheese",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T11:14:04Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.14",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.14"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T11:14:01Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T12:13:29Z",
+                "generateName": "echoserver-5d9b4777bc-",
+                "labels": {
+                    "pod-template-hash": "5d9b4777bc",
+                    "run": "echoserver"
+                },
+                "name": "echoserver-5d9b4777bc-g8mmk",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "echoserver-5d9b4777bc",
+                        "uid": "33bd3674-6d89-44ec-88d7-6fc8c989b203"
+                    }
+                ],
+                "resourceVersion": "18107",
+                "selfLink": "/api/v1/namespaces/default/pods/echoserver-5d9b4777bc-g8mmk",
+                "uid": "28bcfd8c-c30b-4f4f-96fb-5ce0be8723f1"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "gcr.io/google_containers/echoserver:1.4",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "echoserver",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-zbg8b",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube2",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "default-token-zbg8b",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-zbg8b"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:29Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:31Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:31Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:29Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://5858002d4c465afa3ef5410f57f03c14907facadd1cafd9d06398f2bac22cf84",
+                        "image": "gcr.io/google_containers/echoserver:1.4",
+                        "imageID": "docker-pullable://gcr.io/google_containers/echoserver@sha256:5d99aa1120524c801bc8c1a7077e8f5ec122ba16b6dda1a5d3826057f67b9bcb",
+                        "lastState": {},
+                        "name": "echoserver",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T12:13:30Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.15",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.15"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T12:13:29Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:12:51Z",
+                "generateName": "echoserver-5d9b4777bc-",
+                "labels": {
+                    "pod-template-hash": "5d9b4777bc",
+                    "run": "echoserver"
+                },
+                "name": "echoserver-5d9b4777bc-kzdbg",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "echoserver-5d9b4777bc",
+                        "uid": "33bd3674-6d89-44ec-88d7-6fc8c989b203"
+                    }
+                ],
+                "resourceVersion": "12970",
+                "selfLink": "/api/v1/namespaces/default/pods/echoserver-5d9b4777bc-kzdbg",
+                "uid": "997241cd-55a7-4d75-bf1c-c605616228a9"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "gcr.io/google_containers/echoserver:1.4",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "echoserver",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-zbg8b",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube2",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "default-token-zbg8b",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-zbg8b"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:12:51Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:13:27Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:13:27Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:12:51Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://4eec6b7026ac5ca043e04111f7ecb694e5ee074f6e0652a6fa1a87f12d429efd",
+                        "image": "gcr.io/google_containers/echoserver:1.4",
+                        "imageID": "docker-pullable://gcr.io/google_containers/echoserver@sha256:5d99aa1120524c801bc8c1a7077e8f5ec122ba16b6dda1a5d3826057f67b9bcb",
+                        "lastState": {},
+                        "name": "echoserver",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T11:13:26Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.12",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.12"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T11:12:51Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T12:13:29Z",
+                "generateName": "echoserver-5d9b4777bc-",
+                "labels": {
+                    "pod-template-hash": "5d9b4777bc",
+                    "run": "echoserver"
+                },
+                "name": "echoserver-5d9b4777bc-pvb6h",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "echoserver-5d9b4777bc",
+                        "uid": "33bd3674-6d89-44ec-88d7-6fc8c989b203"
+                    }
+                ],
+                "resourceVersion": "18111",
+                "selfLink": "/api/v1/namespaces/default/pods/echoserver-5d9b4777bc-pvb6h",
+                "uid": "ee5fa0ac-7fad-4d10-8a88-818ac5b3a22b"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "gcr.io/google_containers/echoserver:1.4",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "echoserver",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-zbg8b",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube3",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "default-token-zbg8b",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-zbg8b"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:29Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:31Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:31Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:13:29Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://03440daaf695209088db6ac241e0798b7e9ce69bed9ef4e335f176312c8bc78f",
+                        "image": "gcr.io/google_containers/echoserver:1.4",
+                        "imageID": "docker-pullable://gcr.io/google_containers/echoserver@sha256:5d99aa1120524c801bc8c1a7077e8f5ec122ba16b6dda1a5d3826057f67b9bcb",
+                        "lastState": {},
+                        "name": "echoserver",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T12:13:30Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.16",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.16"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T12:13:29Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T08:58:05Z",
+                "generateName": "pystol-controller-58bf45bf54-",
+                "labels": {
+                    "component": "pystol-controller",
+                    "name": "pystol-controller",
+                    "pod-template-hash": "58bf45bf54"
+                },
+                "name": "pystol-controller-58bf45bf54-7mmw7",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "pystol-controller-58bf45bf54",
+                        "uid": "d39fa882-fa8c-4a3d-a43d-b4652a4a91f5"
+                    }
+                ],
+                "resourceVersion": "4232",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-controller-58bf45bf54-7mmw7",
+                "uid": "ee66b37d-6e13-4db1-9a68-d43bd4a1e260"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "command": [
+                            "pystol"
+                        ],
+                        "env": [
+                            {
+                                "name": "NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.namespace"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imagePullPolicy": "Always",
+                        "name": "pystol-controller",
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "pystol-acc-token-7cq9v",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube3",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "pystol-acc",
+                "serviceAccountName": "pystol-acc",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-7cq9v",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "pystol-acc-token-7cq9v"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T08:58:05Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T09:16:16Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T09:16:16Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T08:58:05Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://1d9dae1e2db19be371a2177200accce14841d8044f81fa9152078bf079b8740f",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "docker-pullable://quay.io/pystol/pystol-operator-stable@sha256:e251e09b36998e0f46d39ecd9f881bad14b62553c27e6530feaaee69978eda5d",
+                        "lastState": {
+                            "terminated": {
+                                "containerID": "docker://aeae879a3a68545e63a0878f5d5ca02d6d3feea6fec5bf63c46cf66c4effe58b",
+                                "exitCode": 1,
+                                "finishedAt": "2019-11-18T09:11:03Z",
+                                "reason": "Error",
+                                "startedAt": "2019-11-18T09:11:03Z"
+                            }
+                        },
+                        "name": "pystol-controller",
+                        "ready": true,
+                        "restartCount": 8,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T09:16:15Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.8",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.8"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T08:58:05Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T08:58:05Z",
+                "generateName": "pystol-ui-b8495c9b4-",
+                "labels": {
+                    "component": "pystol-ui",
+                    "name": "pystol-ui",
+                    "pod-template-hash": "b8495c9b4"
+                },
+                "name": "pystol-ui-b8495c9b4-pd4jr",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "pystol-ui-b8495c9b4",
+                        "uid": "2ad94fd1-8849-450c-b4cf-aacc6a04a17f"
+                    }
+                ],
+                "resourceVersion": "2941",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-ui-b8495c9b4-pd4jr",
+                "uid": "a21127bd-4fe0-492d-8d2c-f03718dfcd67"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "run",
+                            "k8s-server"
+                        ],
+                        "command": [
+                            "npm"
+                        ],
+                        "env": [
+                            {
+                                "name": "PYSTOL_UI_API_HOST",
+                                "valueFrom": {
+                                    "configMapKeyRef": {
+                                        "key": "PYSTOL_UI_API_HOST",
+                                        "name": "pystol-config"
+                                    }
+                                }
+                            },
+                            {
+                                "name": "PYSTOL_UI_API_PORT",
+                                "valueFrom": {
+                                    "configMapKeyRef": {
+                                        "key": "PYSTOL_UI_API_PORT",
+                                        "name": "pystol-config"
+                                    }
+                                }
+                            },
+                            {
+                                "name": "NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.namespace"
+                                    }
+                                }
+                            }
+                        ],
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imagePullPolicy": "Always",
+                        "name": "pystol-ui",
+                        "ports": [
+                            {
+                                "containerPort": 3000,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "pystol-acc-token-7cq9v",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "pystol-acc",
+                "serviceAccountName": "pystol-acc",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-7cq9v",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "pystol-acc-token-7cq9v"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T08:58:05Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T08:59:42Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T08:59:42Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T08:58:05Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://74cb80d1e1d34c8a433d01ac04053291f940116d07f6602fb73cec34a1981c76",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "docker-pullable://quay.io/pystol/pystol-operator-stable@sha256:e251e09b36998e0f46d39ecd9f881bad14b62553c27e6530feaaee69978eda5d",
+                        "lastState": {},
+                        "name": "pystol-ui",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T08:59:42Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.9",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.9"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T08:58:05Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:06:14Z",
+                "generateName": "rocketchat-server-deployment-6b9584859d-",
+                "labels": {
+                    "app": "rocketchat-server",
+                    "pod-template-hash": "6b9584859d"
+                },
+                "name": "rocketchat-server-deployment-6b9584859d-fj6x2",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "rocketchat-server-deployment-6b9584859d",
+                        "uid": "9020f095-47c5-401c-aa01-877a5418503c"
+                    }
+                ],
+                "resourceVersion": "19404",
+                "selfLink": "/api/v1/namespaces/default/pods/rocketchat-server-deployment-6b9584859d-fj6x2",
+                "uid": "6bbfe081-df42-4e00-92c9-ff6ba2b608b3"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "PORT",
+                                "value": "3030"
+                            },
+                            {
+                                "name": "ROOT_URL",
+                                "value": "http://localhost:3030"
+                            },
+                            {
+                                "name": "MONGO_URL",
+                                "value": "mongodb://rocketchat-mongo-service-0.default,rocketchat-mongo-service-1.default,rocketchat-mongo-service-2.mongo:27017/rocketchat"
+                            },
+                            {
+                                "name": "MONGO_OPLOG_URL",
+                                "value": "mongodb://rocketchat-mongo-service-0.default,rocketchat-mongo-service-1.default,rocketchat-mongo-service-2.mongo:27017/local"
+                            }
+                        ],
+                        "image": "rocketchat/rocket.chat:latest",
+                        "imagePullPolicy": "Always",
+                        "name": "rocketchat-server",
+                        "ports": [
+                            {
+                                "containerPort": 3030,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-zbg8b",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "default-token-zbg8b",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-zbg8b"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:06:14Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:28:45Z",
+                        "message": "containers with unready status: [rocketchat-server]",
+                        "reason": "ContainersNotReady",
+                        "status": "False",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T12:28:45Z",
+                        "message": "containers with unready status: [rocketchat-server]",
+                        "reason": "ContainersNotReady",
+                        "status": "False",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:06:14Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://6cf5ec84f8c676719e59f0c7e63697cca4aec222effdcdb700e436abf64b3c2f",
+                        "image": "rocketchat/rocket.chat:latest",
+                        "imageID": "docker-pullable://rocketchat/rocket.chat@sha256:bbb9262083257316d1a64192b3f468374d989a1d28f8f2648937947ccac8bddd",
+                        "lastState": {
+                            "terminated": {
+                                "containerID": "docker://6cf5ec84f8c676719e59f0c7e63697cca4aec222effdcdb700e436abf64b3c2f",
+                                "exitCode": 1,
+                                "finishedAt": "2019-11-18T12:28:45Z",
+                                "reason": "Error",
+                                "startedAt": "2019-11-18T12:28:34Z"
+                            }
+                        },
+                        "name": "rocketchat-server",
+                        "ready": false,
+                        "restartCount": 20,
+                        "started": false,
+                        "state": {
+                            "waiting": {
+                                "message": "back-off 5m0s restarting failed container=rocketchat-server pod=rocketchat-server-deployment-6b9584859d-fj6x2_default(6bbfe081-df42-4e00-92c9-ff6ba2b608b3)",
+                                "reason": "CrashLoopBackOff"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.10",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.10"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T11:06:14Z"
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-11-18T11:13:37Z",
+                "generateName": "stilton-cheese-54cb8f8d7-",
+                "labels": {
+                    "pod-template-hash": "54cb8f8d7",
+                    "run": "stilton-cheese"
+                },
+                "name": "stilton-cheese-54cb8f8d7-cctpz",
+                "namespace": "default",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "stilton-cheese-54cb8f8d7",
+                        "uid": "39405f7d-9e70-4358-a5c8-94476771a3ad"
+                    }
+                ],
+                "resourceVersion": "13019",
+                "selfLink": "/api/v1/namespaces/default/pods/stilton-cheese-54cb8f8d7-cctpz",
+                "uid": "f237a96c-9b49-4fbe-9d6c-a99056ba5989"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "errm/cheese:stilton",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "stilton-cheese",
+                        "ports": [
+                            {
+                                "containerPort": 80,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-zbg8b",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "minikube",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "default-token-zbg8b",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-zbg8b"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:13:37Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:13:44Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:13:44Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-11-18T11:13:37Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://346a45dcfde4ee2c5a2600f8e4be09f8c8a0c5e6211376e29808e42961310c22",
+                        "image": "errm/cheese:stilton",
+                        "imageID": "docker-pullable://errm/cheese@sha256:d75324f741cc6c389c95f4cecd171b33e40519c24e5ba68f63448d09047168ec",
+                        "lastState": {},
+                        "name": "stilton-cheese",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-11-18T11:13:43Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "10.0.2.15",
+                "phase": "Running",
+                "podIP": "172.17.0.13",
+                "podIPs": [
+                    {
+                        "ip": "172.17.0.13"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2019-11-18T11:13:37Z"
+            }
+        }
+    ],
+    "kind": "PodList",
+    "metadata": {
+        "resourceVersion": "19510",
+        "selfLink": "/api/v1/namespaces/default/pods"
+    }
+}

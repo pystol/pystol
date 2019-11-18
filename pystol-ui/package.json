@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
     "test": "jest --verbose --coverage --coverageReporters=text-summary",
     "server": "nodemon src/server/server.js",

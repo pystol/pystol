@@ -3,4 +3,7 @@ nohup.out
 *pystol.egg-info*
 .tox
 .tox/*
-node_modules/
+*/node_modules/*
+*env-config.js*
+*pystol-ui/.env
+*pystol-ui/dist
