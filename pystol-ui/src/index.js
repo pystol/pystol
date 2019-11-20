@@ -11,19 +11,20 @@ import store from './client/reducers/store';
 
 const theme = createMuiTheme({
   typography: {
-		useNextVariants: true,
-	},
-	palette: {
-		primary: blue,
-		secondary: {
-			main: '#ffd54f',
-		}
-	},
+        useNextVariants: true,
+    },
+    palette: {
+        primary: blue,
+        secondary: {
+            main: '#ffd54f',
+        }
+    },
 });
 
 ReactDOM.render(
-	<MuiThemeProvider theme={theme}>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</MuiThemeProvider>, document.getElementById('index'));
+    <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </MuiThemeProvider>, document.getElementById('index'));
+
