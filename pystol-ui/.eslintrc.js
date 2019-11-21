@@ -4,19 +4,20 @@ module.exports = {
     "eslint-plugin-jest",
       "react",
       "react-native",
-//    "eslint-plugin-react",
+      "eslint-plugin-react",
   ],
   env: {
     // this section will be used to determine which APIs are available to us
     // (i.e are we running in a browser environment or a node.js env)
     node: true,
-    browser: true
+    browser: true,
+    es6: true,
   },
+  parser: "babel-eslint",
   parserOptions: {
-    parser: "babel-eslint",
     // specifying a module sourcetype prevent eslint from marking import statements as errors
     sourceType: "module",
-    ecmaVersion: 6,
+    ecmaVersion: 2018,
   },
   extends: [
     // use the recommended rule set for both plain javascript
@@ -32,6 +33,11 @@ module.exports = {
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
     "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error"
+    "jest/valid-expect": "error",
+    "jest/no-commented-out-tests": 0,
+    "jest/no-test-callback": 0,
+    "no-class-assign": 0,
+    "react/prop-types": 0,
+    "no-unused-vars": 0,
   }
 };
