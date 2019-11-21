@@ -160,11 +160,18 @@ jobs:
         export KUBECONFIG="$(kind get kubeconfig-path)"
         echo
         echo ">>> run pystol CLI pystol -h"
-        kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -h
+        kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -h
         echo
         echo ">>> run pystol CLI pystol -v"
-        VERSION_OUTPUT=$(kubectl exec `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1` -- pystol -v)
+        VERSION_OUTPUT=$(kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -v)
         echo $VERSION_OUTPUT
+        echo
+        echo ">>> run pystol CLI pystol -b"
+        kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -b
+        echo
+        echo "Printing versions"
+        echo "Version output from CLI: $VERSION_OUTPUT"
+        echo "Version output from GitHub short SHA: $GITHUB_SHORT_SHA"
         echo
         if [[ $VERSION_OUTPUT == *$GITHUB_SHORT_SHA* ]]; then
             echo "GitHub commit ID matches with the deployed version"
