@@ -31,11 +31,11 @@ tasks is represented using badges.
 In particular we embrace the use of
 CI dashboard as information radiators.
 
-We created the [badgeboad project](https://www.pystol.org/badgeboard)
+We created the [badgeboad project](https://badgeboard.pystol.org)
 to show the value of any set of badges as a dashboard.
 
 For more information you can open the
-[CI dashboard](https://www.pystol.org/badgeboard)
+[CI dashboard](https://badgeboard.pystol.org)
 directly or go to the
 [project page in GitHub](https://github.com/pystol/badgeboard).
 
