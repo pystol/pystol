@@ -173,7 +173,11 @@ jobs:
         echo "Version output from CLI: $VERSION_OUTPUT"
         echo "Version output from GitHub short SHA: $GITHUB_SHORT_SHA"
         echo
-        if [[ $VERSION_OUTPUT == *$GITHUB_SHORT_SHA* ]]; then
+        PARSED_CLI=$(echo $VERSION_OUTPUT | cut -d'.' -f4 | cut -c1-5)
+        echo
+        echo "Version output short CLI: $PARSED_CLI"
+        echo
+        if [[ $GITHUB_SHORT_SHA == *$PARSED_CLI* ]]; then
             echo "GitHub commit ID matches with the deployed version"
         else
             echo "GitHub commit ID DO NOT MATCH with the deployed version"
