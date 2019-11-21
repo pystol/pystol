@@ -22,6 +22,7 @@ from os import getenv
 import kubernetes
 
 from pystol import __version__
+from pystol.get_banner import get_banner
 from pystol.load_crd import load_crd
 from pystol.operator import handle
 
@@ -40,10 +41,18 @@ def main():
         description='Pystol - copy operator.',
         prog='pystol'
     )
-    parser.add_argument('-v',
-                        '--version',
-                        action='version',
-                        version='%(prog)s ' + pystol_version)
+    parser.add_argument(
+        '-v',
+        '--version',
+        action='version',
+        version='%(prog)s ' + pystol_version
+    )
+    parser.add_argument(
+        '-b',
+        '--banner',
+        action='store_true',
+        help='Print Pystol.org banner'
+    )
     parser.add_argument(
         '--namespace',
         type=str,
@@ -58,6 +67,10 @@ def main():
     )
 
     args = parser.parse_args()
+
+    if args.banner:
+        print(get_banner())
+        exit()
 
     try:
         kubernetes.config.load_incluster_config()
@@ -74,4 +87,4 @@ def main():
         pass
 
     except Exception as err:
-        raise RuntimeError('Oh no! I am dying...') from err
+        raise RuntimeError('Oh no! I am dying...' + err)
