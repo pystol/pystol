@@ -9,6 +9,7 @@
   [![TOX NodeJS units build](https://github.com/pystol/pystol/workflows/tox-nodeunits-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-nodeunits-build)
   [![TOX Pytest build](https://github.com/pystol/pystol/workflows/tox-pytest-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-pytest-build)
   [![TOX CheckTools build](https://github.com/pystol/pystol/workflows/tox-checktools-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-checktools-build)
+  [![E2E base install](https://github.com/pystol/pystol/workflows/e2e-deploy-base-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=e2e-deploy-base-build)
   [![Docs build](https://github.com/pystol/pystol-docs/workflows/jekyll-docs-build/badge.svg?event=push)](https://github.com/pystol/pystol-docs/actions?workflow=jekyll-docs-build)
   [![Docker registry STAGING status](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker registry STAGING status")](https://quay.io/repository/pystol/pystol-operator-staging)
   [![Docker registry STABLE status](https://quay.io/repository/pystol/pystol-operator-stable/status "Docker registry STABLE status")](https://quay.io/repository/pystol/pystol-operator-stable)
