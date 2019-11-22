@@ -1,4 +1,4 @@
-name: e2e-deploy-build
+name: e2e-deploy-base-build
 
 on: [push, pull_request]
 
