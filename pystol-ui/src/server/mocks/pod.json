@@ -1,586 +1,53 @@
 {
+    "kind": "PodList",
     "apiVersion": "v1",
+    "metadata": {
+        "selfLink": "/api/v1/namespaces/default/pods",
+        "resourceVersion": "42286"
+    },
     "items": [
         {
             "metadata": {
-                "creationTimestamp": "2019-11-18T11:14:01Z",
-                "generateName": "cheddar-cheese-6897f794f7-",
-                "labels": {
-                    "pod-template-hash": "6897f794f7",
-                    "run": "cheddar-cheese"
-                },
-                "name": "cheddar-cheese-6897f794f7-mvffb",
+                "name": "pystol-controller-6f58f8fc75-czwsp",
+                "generateName": "pystol-controller-6f58f8fc75-",
                 "namespace": "default",
-                "ownerReferences": [
-                    {
-                        "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
-                        "kind": "ReplicaSet",
-                        "name": "cheddar-cheese-6897f794f7",
-                        "uid": "f4dd3b2c-58c7-45b5-b1a0-96843caada32"
-                    }
-                ],
-                "resourceVersion": "13072",
-                "selfLink": "/api/v1/namespaces/default/pods/cheddar-cheese-6897f794f7-mvffb",
-                "uid": "a2fcdffa-68a6-49b8-96e5-322c836a8ded"
-            },
-            "spec": {
-                "containers": [
-                    {
-                        "image": "errm/cheese:cheddar",
-                        "imagePullPolicy": "IfNotPresent",
-                        "name": "cheddar-cheese",
-                        "ports": [
-                            {
-                                "containerPort": 80,
-                                "protocol": "TCP"
-                            }
-                        ],
-                        "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
-                        "volumeMounts": [
-                            {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "default-token-zbg8b",
-                                "readOnly": true
-                            }
-                        ]
-                    }
-                ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube2",
-                "priority": 0,
-                "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "default",
-                "serviceAccountName": "default",
-                "terminationGracePeriodSeconds": 30,
-                "tolerations": [
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/not-ready",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    },
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/unreachable",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    }
-                ],
-                "volumes": [
-                    {
-                        "name": "default-token-zbg8b",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "default-token-zbg8b"
-                        }
-                    }
-                ]
-            },
-            "status": {
-                "conditions": [
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:14:01Z",
-                        "status": "True",
-                        "type": "Initialized"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:14:05Z",
-                        "status": "True",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:14:05Z",
-                        "status": "True",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:14:01Z",
-                        "status": "True",
-                        "type": "PodScheduled"
-                    }
-                ],
-                "containerStatuses": [
-                    {
-                        "containerID": "docker://8268818c0dd9e6da9fb93040371759213717979416a29a80775c2ce7e4784096",
-                        "image": "errm/cheese:cheddar",
-                        "imageID": "docker-pullable://errm/cheese@sha256:d0b44559d3671ff436e08012aed235e2d84eba0f61410eeadd2def55cb48f2da",
-                        "lastState": {},
-                        "name": "cheddar-cheese",
-                        "ready": true,
-                        "restartCount": 0,
-                        "started": true,
-                        "state": {
-                            "running": {
-                                "startedAt": "2019-11-18T11:14:04Z"
-                            }
-                        }
-                    }
-                ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.14",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.14"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T11:14:01Z"
-            }
-        },
-        {
-            "metadata": {
-                "creationTimestamp": "2019-11-18T12:13:29Z",
-                "generateName": "echoserver-5d9b4777bc-",
-                "labels": {
-                    "pod-template-hash": "5d9b4777bc",
-                    "run": "echoserver"
-                },
-                "name": "echoserver-5d9b4777bc-g8mmk",
-                "namespace": "default",
-                "ownerReferences": [
-                    {
-                        "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
-                        "kind": "ReplicaSet",
-                        "name": "echoserver-5d9b4777bc",
-                        "uid": "33bd3674-6d89-44ec-88d7-6fc8c989b203"
-                    }
-                ],
-                "resourceVersion": "18107",
-                "selfLink": "/api/v1/namespaces/default/pods/echoserver-5d9b4777bc-g8mmk",
-                "uid": "28bcfd8c-c30b-4f4f-96fb-5ce0be8723f1"
-            },
-            "spec": {
-                "containers": [
-                    {
-                        "image": "gcr.io/google_containers/echoserver:1.4",
-                        "imagePullPolicy": "IfNotPresent",
-                        "name": "echoserver",
-                        "ports": [
-                            {
-                                "containerPort": 8080,
-                                "protocol": "TCP"
-                            }
-                        ],
-                        "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
-                        "volumeMounts": [
-                            {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "default-token-zbg8b",
-                                "readOnly": true
-                            }
-                        ]
-                    }
-                ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube2",
-                "priority": 0,
-                "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "default",
-                "serviceAccountName": "default",
-                "terminationGracePeriodSeconds": 30,
-                "tolerations": [
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/not-ready",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    },
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/unreachable",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    }
-                ],
-                "volumes": [
-                    {
-                        "name": "default-token-zbg8b",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "default-token-zbg8b"
-                        }
-                    }
-                ]
-            },
-            "status": {
-                "conditions": [
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:29Z",
-                        "status": "True",
-                        "type": "Initialized"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:31Z",
-                        "status": "True",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:31Z",
-                        "status": "True",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:29Z",
-                        "status": "True",
-                        "type": "PodScheduled"
-                    }
-                ],
-                "containerStatuses": [
-                    {
-                        "containerID": "docker://5858002d4c465afa3ef5410f57f03c14907facadd1cafd9d06398f2bac22cf84",
-                        "image": "gcr.io/google_containers/echoserver:1.4",
-                        "imageID": "docker-pullable://gcr.io/google_containers/echoserver@sha256:5d99aa1120524c801bc8c1a7077e8f5ec122ba16b6dda1a5d3826057f67b9bcb",
-                        "lastState": {},
-                        "name": "echoserver",
-                        "ready": true,
-                        "restartCount": 0,
-                        "started": true,
-                        "state": {
-                            "running": {
-                                "startedAt": "2019-11-18T12:13:30Z"
-                            }
-                        }
-                    }
-                ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.15",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.15"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T12:13:29Z"
-            }
-        },
-        {
-            "metadata": {
-                "creationTimestamp": "2019-11-18T11:12:51Z",
-                "generateName": "echoserver-5d9b4777bc-",
-                "labels": {
-                    "pod-template-hash": "5d9b4777bc",
-                    "run": "echoserver"
-                },
-                "name": "echoserver-5d9b4777bc-kzdbg",
-                "namespace": "default",
-                "ownerReferences": [
-                    {
-                        "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
-                        "kind": "ReplicaSet",
-                        "name": "echoserver-5d9b4777bc",
-                        "uid": "33bd3674-6d89-44ec-88d7-6fc8c989b203"
-                    }
-                ],
-                "resourceVersion": "12970",
-                "selfLink": "/api/v1/namespaces/default/pods/echoserver-5d9b4777bc-kzdbg",
-                "uid": "997241cd-55a7-4d75-bf1c-c605616228a9"
-            },
-            "spec": {
-                "containers": [
-                    {
-                        "image": "gcr.io/google_containers/echoserver:1.4",
-                        "imagePullPolicy": "IfNotPresent",
-                        "name": "echoserver",
-                        "ports": [
-                            {
-                                "containerPort": 8080,
-                                "protocol": "TCP"
-                            }
-                        ],
-                        "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
-                        "volumeMounts": [
-                            {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "default-token-zbg8b",
-                                "readOnly": true
-                            }
-                        ]
-                    }
-                ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube2",
-                "priority": 0,
-                "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "default",
-                "serviceAccountName": "default",
-                "terminationGracePeriodSeconds": 30,
-                "tolerations": [
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/not-ready",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    },
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/unreachable",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    }
-                ],
-                "volumes": [
-                    {
-                        "name": "default-token-zbg8b",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "default-token-zbg8b"
-                        }
-                    }
-                ]
-            },
-            "status": {
-                "conditions": [
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:12:51Z",
-                        "status": "True",
-                        "type": "Initialized"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:13:27Z",
-                        "status": "True",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:13:27Z",
-                        "status": "True",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:12:51Z",
-                        "status": "True",
-                        "type": "PodScheduled"
-                    }
-                ],
-                "containerStatuses": [
-                    {
-                        "containerID": "docker://4eec6b7026ac5ca043e04111f7ecb694e5ee074f6e0652a6fa1a87f12d429efd",
-                        "image": "gcr.io/google_containers/echoserver:1.4",
-                        "imageID": "docker-pullable://gcr.io/google_containers/echoserver@sha256:5d99aa1120524c801bc8c1a7077e8f5ec122ba16b6dda1a5d3826057f67b9bcb",
-                        "lastState": {},
-                        "name": "echoserver",
-                        "ready": true,
-                        "restartCount": 0,
-                        "started": true,
-                        "state": {
-                            "running": {
-                                "startedAt": "2019-11-18T11:13:26Z"
-                            }
-                        }
-                    }
-                ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.12",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.12"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T11:12:51Z"
-            }
-        },
-        {
-            "metadata": {
-                "creationTimestamp": "2019-11-18T12:13:29Z",
-                "generateName": "echoserver-5d9b4777bc-",
-                "labels": {
-                    "pod-template-hash": "5d9b4777bc",
-                    "run": "echoserver"
-                },
-                "name": "echoserver-5d9b4777bc-pvb6h",
-                "namespace": "default",
-                "ownerReferences": [
-                    {
-                        "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
-                        "kind": "ReplicaSet",
-                        "name": "echoserver-5d9b4777bc",
-                        "uid": "33bd3674-6d89-44ec-88d7-6fc8c989b203"
-                    }
-                ],
-                "resourceVersion": "18111",
-                "selfLink": "/api/v1/namespaces/default/pods/echoserver-5d9b4777bc-pvb6h",
-                "uid": "ee5fa0ac-7fad-4d10-8a88-818ac5b3a22b"
-            },
-            "spec": {
-                "containers": [
-                    {
-                        "image": "gcr.io/google_containers/echoserver:1.4",
-                        "imagePullPolicy": "IfNotPresent",
-                        "name": "echoserver",
-                        "ports": [
-                            {
-                                "containerPort": 8080,
-                                "protocol": "TCP"
-                            }
-                        ],
-                        "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
-                        "volumeMounts": [
-                            {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "default-token-zbg8b",
-                                "readOnly": true
-                            }
-                        ]
-                    }
-                ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube3",
-                "priority": 0,
-                "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "default",
-                "serviceAccountName": "default",
-                "terminationGracePeriodSeconds": 30,
-                "tolerations": [
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/not-ready",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    },
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/unreachable",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    }
-                ],
-                "volumes": [
-                    {
-                        "name": "default-token-zbg8b",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "default-token-zbg8b"
-                        }
-                    }
-                ]
-            },
-            "status": {
-                "conditions": [
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:29Z",
-                        "status": "True",
-                        "type": "Initialized"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:31Z",
-                        "status": "True",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:31Z",
-                        "status": "True",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:13:29Z",
-                        "status": "True",
-                        "type": "PodScheduled"
-                    }
-                ],
-                "containerStatuses": [
-                    {
-                        "containerID": "docker://03440daaf695209088db6ac241e0798b7e9ce69bed9ef4e335f176312c8bc78f",
-                        "image": "gcr.io/google_containers/echoserver:1.4",
-                        "imageID": "docker-pullable://gcr.io/google_containers/echoserver@sha256:5d99aa1120524c801bc8c1a7077e8f5ec122ba16b6dda1a5d3826057f67b9bcb",
-                        "lastState": {},
-                        "name": "echoserver",
-                        "ready": true,
-                        "restartCount": 0,
-                        "started": true,
-                        "state": {
-                            "running": {
-                                "startedAt": "2019-11-18T12:13:30Z"
-                            }
-                        }
-                    }
-                ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.16",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.16"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T12:13:29Z"
-            }
-        },
-        {
-            "metadata": {
-                "creationTimestamp": "2019-11-18T08:58:05Z",
-                "generateName": "pystol-controller-58bf45bf54-",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-controller-6f58f8fc75-czwsp",
+                "uid": "8a8389c0-1684-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "29341",
+                "creationTimestamp": "2019-12-04T10:55:10Z",
                 "labels": {
                     "component": "pystol-controller",
                     "name": "pystol-controller",
-                    "pod-template-hash": "58bf45bf54"
+                    "pod-template-hash": "6f58f8fc75"
                 },
-                "name": "pystol-controller-58bf45bf54-7mmw7",
-                "namespace": "default",
+                "annotations": {
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.129.0.26\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]"
+                },
                 "ownerReferences": [
                     {
                         "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
                         "kind": "ReplicaSet",
-                        "name": "pystol-controller-58bf45bf54",
-                        "uid": "d39fa882-fa8c-4a3d-a43d-b4652a4a91f5"
+                        "name": "pystol-controller-6f58f8fc75",
+                        "uid": "3366e570-1681-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
                     }
-                ],
-                "resourceVersion": "4232",
-                "selfLink": "/api/v1/namespaces/default/pods/pystol-controller-58bf45bf54-7mmw7",
-                "uid": "ee66b37d-6e13-4db1-9a68-d43bd4a1e260"
+                ]
             },
             "spec": {
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-qwjmh",
+                        "secret": {
+                            "secretName": "pystol-acc-token-qwjmh",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
                 "containers": [
                     {
+                        "name": "pystol-controller",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
                         "command": [
                             "pystol"
                         ],
@@ -595,161 +62,608 @@
                                 }
                             }
                         ],
-                        "image": "quay.io/pystol/pystol-operator-stable:latest",
-                        "imagePullPolicy": "Always",
-                        "name": "pystol-controller",
                         "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
                         "volumeMounts": [
                             {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "pystol-acc-token-7cq9v",
-                                "readOnly": true
+                                "name": "pystol-acc-token-qwjmh",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
                             }
-                        ]
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
                     }
                 ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube3",
-                "priority": 0,
                 "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "pystol-acc",
-                "serviceAccountName": "pystol-acc",
                 "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "pystol-acc",
+                "serviceAccount": "pystol-acc",
+                "nodeName": "ip-10-0-141-140.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "pystol-acc-dockercfg-k6qhb"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
                 "tolerations": [
                     {
-                        "effect": "NoExecute",
                         "key": "node.kubernetes.io/not-ready",
                         "operator": "Exists",
+                        "effect": "NoExecute",
                         "tolerationSeconds": 300
                     },
                     {
-                        "effect": "NoExecute",
                         "key": "node.kubernetes.io/unreachable",
                         "operator": "Exists",
+                        "effect": "NoExecute",
                         "tolerationSeconds": 300
                     }
                 ],
-                "volumes": [
-                    {
-                        "name": "pystol-acc-token-7cq9v",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "pystol-acc-token-7cq9v"
-                        }
-                    }
-                ]
+                "priority": 0,
+                "enableServiceLinks": true
             },
             "status": {
+                "phase": "Running",
                 "conditions": [
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T08:58:05Z",
+                        "type": "Initialized",
                         "status": "True",
-                        "type": "Initialized"
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:10Z"
                     },
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T09:16:16Z",
+                        "type": "Ready",
                         "status": "True",
-                        "type": "Ready"
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:21Z"
                     },
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T09:16:16Z",
+                        "type": "ContainersReady",
                         "status": "True",
-                        "type": "ContainersReady"
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:21Z"
                     },
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T08:58:05Z",
+                        "type": "PodScheduled",
                         "status": "True",
-                        "type": "PodScheduled"
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:10Z"
                     }
                 ],
+                "hostIP": "10.0.141.140",
+                "podIP": "10.129.0.26",
+                "startTime": "2019-12-04T10:55:10Z",
                 "containerStatuses": [
                     {
-                        "containerID": "docker://1d9dae1e2db19be371a2177200accce14841d8044f81fa9152078bf079b8740f",
-                        "image": "quay.io/pystol/pystol-operator-stable:latest",
-                        "imageID": "docker-pullable://quay.io/pystol/pystol-operator-stable@sha256:e251e09b36998e0f46d39ecd9f881bad14b62553c27e6530feaaee69978eda5d",
-                        "lastState": {
-                            "terminated": {
-                                "containerID": "docker://aeae879a3a68545e63a0878f5d5ca02d6d3feea6fec5bf63c46cf66c4effe58b",
-                                "exitCode": 1,
-                                "finishedAt": "2019-11-18T09:11:03Z",
-                                "reason": "Error",
-                                "startedAt": "2019-11-18T09:11:03Z"
-                            }
-                        },
                         "name": "pystol-controller",
-                        "ready": true,
-                        "restartCount": 8,
-                        "started": true,
                         "state": {
                             "running": {
-                                "startedAt": "2019-11-18T09:16:15Z"
+                                "startedAt": "2019-12-04T10:55:21Z"
                             }
-                        }
+                        },
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "quay.io/pystol/pystol-operator-stable@sha256:fd60519485d8375cad4483adf77d26f7c552ff1eebecf8aaf791f96ca64c3145",
+                        "containerID": "cri-o://df6ceb39c2fa8f30edc46e2de585ce5b9ea4b8f6268b5c2e66c83c06b917610d"
                     }
                 ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.8",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.8"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T08:58:05Z"
+                "qosClass": "BestEffort"
             }
         },
         {
             "metadata": {
-                "creationTimestamp": "2019-11-18T08:58:05Z",
-                "generateName": "pystol-ui-b8495c9b4-",
-                "labels": {
-                    "component": "pystol-ui",
-                    "name": "pystol-ui",
-                    "pod-template-hash": "b8495c9b4"
-                },
-                "name": "pystol-ui-b8495c9b4-pd4jr",
+                "name": "pystol-controller-6f58f8fc75-fbqsr",
+                "generateName": "pystol-controller-6f58f8fc75-",
                 "namespace": "default",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-controller-6f58f8fc75-fbqsr",
+                "uid": "33676366-1681-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "23725",
+                "creationTimestamp": "2019-12-04T10:31:15Z",
+                "labels": {
+                    "component": "pystol-controller",
+                    "name": "pystol-controller",
+                    "pod-template-hash": "6f58f8fc75"
+                },
+                "annotations": {
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.130.0.17\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]"
+                },
                 "ownerReferences": [
                     {
                         "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
                         "kind": "ReplicaSet",
-                        "name": "pystol-ui-b8495c9b4",
-                        "uid": "2ad94fd1-8849-450c-b4cf-aacc6a04a17f"
+                        "name": "pystol-controller-6f58f8fc75",
+                        "uid": "3366e570-1681-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
                     }
-                ],
-                "resourceVersion": "2941",
-                "selfLink": "/api/v1/namespaces/default/pods/pystol-ui-b8495c9b4-pd4jr",
-                "uid": "a21127bd-4fe0-492d-8d2c-f03718dfcd67"
+                ]
             },
             "spec": {
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-qwjmh",
+                        "secret": {
+                            "secretName": "pystol-acc-token-qwjmh",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
                 "containers": [
                     {
+                        "name": "pystol-controller",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "command": [
+                            "pystol"
+                        ],
+                        "env": [
+                            {
+                                "name": "NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.namespace"
+                                    }
+                                }
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "pystol-acc-token-qwjmh",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "pystol-acc",
+                "serviceAccount": "pystol-acc",
+                "nodeName": "ip-10-0-153-187.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "pystol-acc-dockercfg-k6qhb"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
+                "tolerations": [
+                    {
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "priority": 0,
+                "enableServiceLinks": true
+            },
+            "status": {
+                "phase": "Running",
+                "conditions": [
+                    {
+                        "type": "Initialized",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:31:15Z"
+                    },
+                    {
+                        "type": "Ready",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:31:58Z"
+                    },
+                    {
+                        "type": "ContainersReady",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:31:58Z"
+                    },
+                    {
+                        "type": "PodScheduled",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:31:15Z"
+                    }
+                ],
+                "hostIP": "10.0.153.187",
+                "podIP": "10.130.0.17",
+                "startTime": "2019-12-04T10:31:15Z",
+                "containerStatuses": [
+                    {
+                        "name": "pystol-controller",
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-12-04T10:31:58Z"
+                            }
+                        },
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "quay.io/pystol/pystol-operator-stable@sha256:fd60519485d8375cad4483adf77d26f7c552ff1eebecf8aaf791f96ca64c3145",
+                        "containerID": "cri-o://415cd13ee4d321ec7a2408ad9036f1333e8f22d1c15b29a55652b96992782603"
+                    }
+                ],
+                "qosClass": "BestEffort"
+            }
+        },
+        {
+            "metadata": {
+                "name": "pystol-controller-6f58f8fc75-l4956",
+                "generateName": "pystol-controller-6f58f8fc75-",
+                "namespace": "default",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-controller-6f58f8fc75-l4956",
+                "uid": "8a8443bd-1684-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "29352",
+                "creationTimestamp": "2019-12-04T10:55:10Z",
+                "labels": {
+                    "component": "pystol-controller",
+                    "name": "pystol-controller",
+                    "pod-template-hash": "6f58f8fc75"
+                },
+                "annotations": {
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.130.0.21\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]"
+                },
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "ReplicaSet",
+                        "name": "pystol-controller-6f58f8fc75",
+                        "uid": "3366e570-1681-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
+                    }
+                ]
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-qwjmh",
+                        "secret": {
+                            "secretName": "pystol-acc-token-qwjmh",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "pystol-controller",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "command": [
+                            "pystol"
+                        ],
+                        "env": [
+                            {
+                                "name": "NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.namespace"
+                                    }
+                                }
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "pystol-acc-token-qwjmh",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "pystol-acc",
+                "serviceAccount": "pystol-acc",
+                "nodeName": "ip-10-0-153-187.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "pystol-acc-dockercfg-k6qhb"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
+                "tolerations": [
+                    {
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "priority": 0,
+                "enableServiceLinks": true
+            },
+            "status": {
+                "phase": "Running",
+                "conditions": [
+                    {
+                        "type": "Initialized",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:10Z"
+                    },
+                    {
+                        "type": "Ready",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:22Z"
+                    },
+                    {
+                        "type": "ContainersReady",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:22Z"
+                    },
+                    {
+                        "type": "PodScheduled",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:10Z"
+                    }
+                ],
+                "hostIP": "10.0.153.187",
+                "podIP": "10.130.0.21",
+                "startTime": "2019-12-04T10:55:10Z",
+                "containerStatuses": [
+                    {
+                        "name": "pystol-controller",
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-12-04T10:55:22Z"
+                            }
+                        },
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "quay.io/pystol/pystol-operator-stable@sha256:fd60519485d8375cad4483adf77d26f7c552ff1eebecf8aaf791f96ca64c3145",
+                        "containerID": "cri-o://8058dbeaf29b9c36d7ae3bd75ca02eab0d29eb96d20fbf53ac87663d040162b4"
+                    }
+                ],
+                "qosClass": "BestEffort"
+            }
+        },
+        {
+            "metadata": {
+                "name": "pystol-controller-6f58f8fc75-n2lfg",
+                "generateName": "pystol-controller-6f58f8fc75-",
+                "namespace": "default",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-controller-6f58f8fc75-n2lfg",
+                "uid": "8a84578c-1684-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "29343",
+                "creationTimestamp": "2019-12-04T10:55:10Z",
+                "labels": {
+                    "component": "pystol-controller",
+                    "name": "pystol-controller",
+                    "pod-template-hash": "6f58f8fc75"
+                },
+                "annotations": {
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.129.0.27\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]"
+                },
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "ReplicaSet",
+                        "name": "pystol-controller-6f58f8fc75",
+                        "uid": "3366e570-1681-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
+                    }
+                ]
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-qwjmh",
+                        "secret": {
+                            "secretName": "pystol-acc-token-qwjmh",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "pystol-controller",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "command": [
+                            "pystol"
+                        ],
+                        "env": [
+                            {
+                                "name": "NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.namespace"
+                                    }
+                                }
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "pystol-acc-token-qwjmh",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "pystol-acc",
+                "serviceAccount": "pystol-acc",
+                "nodeName": "ip-10-0-141-140.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "pystol-acc-dockercfg-k6qhb"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
+                "tolerations": [
+                    {
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "priority": 0,
+                "enableServiceLinks": true
+            },
+            "status": {
+                "phase": "Running",
+                "conditions": [
+                    {
+                        "type": "Initialized",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:10Z"
+                    },
+                    {
+                        "type": "Ready",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:21Z"
+                    },
+                    {
+                        "type": "ContainersReady",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:21Z"
+                    },
+                    {
+                        "type": "PodScheduled",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T10:55:10Z"
+                    }
+                ],
+                "hostIP": "10.0.141.140",
+                "podIP": "10.129.0.27",
+                "startTime": "2019-12-04T10:55:10Z",
+                "containerStatuses": [
+                    {
+                        "name": "pystol-controller",
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-12-04T10:55:20Z"
+                            }
+                        },
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "quay.io/pystol/pystol-operator-stable@sha256:fd60519485d8375cad4483adf77d26f7c552ff1eebecf8aaf791f96ca64c3145",
+                        "containerID": "cri-o://4b7022ed81ff0c461202e706a39cb1cea356d5bd6288550dcb73b6fcadcaf2a6"
+                    }
+                ],
+                "qosClass": "BestEffort"
+            }
+        },
+        {
+            "metadata": {
+                "name": "pystol-ui-85b5f6f8d5-64tb7",
+                "generateName": "pystol-ui-85b5f6f8d5-",
+                "namespace": "default",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-ui-85b5f6f8d5-64tb7",
+                "uid": "36187e0c-168b-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "40679",
+                "creationTimestamp": "2019-12-04T11:42:55Z",
+                "labels": {
+                    "component": "pystol-ui",
+                    "name": "pystol-ui",
+                    "pod-template-hash": "85b5f6f8d5"
+                },
+                "annotations": {
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.130.0.23\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]"
+                },
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "ReplicaSet",
+                        "name": "pystol-ui-85b5f6f8d5",
+                        "uid": "3617a4b2-168b-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
+                    }
+                ]
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-qwjmh",
+                        "secret": {
+                            "secretName": "pystol-acc-token-qwjmh",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "pystol-ui",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "command": [
+                            "npm"
+                        ],
                         "args": [
                             "run",
                             "k8s-server"
                         ],
-                        "command": [
-                            "npm"
+                        "ports": [
+                            {
+                                "containerPort": 3000,
+                                "protocol": "TCP"
+                            }
                         ],
                         "env": [
                             {
                                 "name": "PYSTOL_UI_API_HOST",
                                 "valueFrom": {
                                     "configMapKeyRef": {
-                                        "key": "PYSTOL_UI_API_HOST",
-                                        "name": "pystol-config"
+                                        "name": "pystol-config",
+                                        "key": "PYSTOL_UI_API_HOST"
                                     }
                                 }
                             },
@@ -757,8 +671,8 @@
                                 "name": "PYSTOL_UI_API_PORT",
                                 "valueFrom": {
                                     "configMapKeyRef": {
-                                        "key": "PYSTOL_UI_API_PORT",
-                                        "name": "pystol-config"
+                                        "name": "pystol-config",
+                                        "key": "PYSTOL_UI_API_PORT"
                                     }
                                 }
                             },
@@ -772,428 +686,436 @@
                                 }
                             }
                         ],
-                        "image": "quay.io/pystol/pystol-operator-stable:latest",
-                        "imagePullPolicy": "Always",
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "pystol-acc-token-qwjmh",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "pystol-acc",
+                "serviceAccount": "pystol-acc",
+                "nodeName": "ip-10-0-153-187.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "pystol-acc-dockercfg-k6qhb"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
+                "tolerations": [
+                    {
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "priority": 0,
+                "enableServiceLinks": true
+            },
+            "status": {
+                "phase": "Running",
+                "conditions": [
+                    {
+                        "type": "Initialized",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:42:55Z"
+                    },
+                    {
+                        "type": "Ready",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:43:06Z"
+                    },
+                    {
+                        "type": "ContainersReady",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:43:06Z"
+                    },
+                    {
+                        "type": "PodScheduled",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:42:55Z"
+                    }
+                ],
+                "hostIP": "10.0.153.187",
+                "podIP": "10.130.0.23",
+                "startTime": "2019-12-04T11:42:55Z",
+                "containerStatuses": [
+                    {
                         "name": "pystol-ui",
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-12-04T11:43:06Z"
+                            }
+                        },
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "quay.io/pystol/pystol-operator-stable@sha256:fd60519485d8375cad4483adf77d26f7c552ff1eebecf8aaf791f96ca64c3145",
+                        "containerID": "cri-o://9cb473cf65ac2c444ba90fc19b6077e1bc056cd8801f468b22aec25a52a96969"
+                    }
+                ],
+                "qosClass": "BestEffort"
+            }
+        },
+        {
+            "metadata": {
+                "name": "pystol-ui-85b5f6f8d5-75vk9",
+                "generateName": "pystol-ui-85b5f6f8d5-",
+                "namespace": "default",
+                "selfLink": "/api/v1/namespaces/default/pods/pystol-ui-85b5f6f8d5-75vk9",
+                "uid": "092d9e88-168c-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "42064",
+                "creationTimestamp": "2019-12-04T11:48:49Z",
+                "labels": {
+                    "component": "pystol-ui",
+                    "name": "pystol-ui",
+                    "pod-template-hash": "85b5f6f8d5"
+                },
+                "annotations": {
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.129.0.29\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]"
+                },
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "ReplicaSet",
+                        "name": "pystol-ui-85b5f6f8d5",
+                        "uid": "3617a4b2-168b-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
+                    }
+                ]
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "pystol-acc-token-qwjmh",
+                        "secret": {
+                            "secretName": "pystol-acc-token-qwjmh",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "pystol-ui",
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "command": [
+                            "npm"
+                        ],
+                        "args": [
+                            "run",
+                            "k8s-server"
+                        ],
                         "ports": [
                             {
                                 "containerPort": 3000,
                                 "protocol": "TCP"
                             }
                         ],
-                        "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
-                        "volumeMounts": [
-                            {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "pystol-acc-token-7cq9v",
-                                "readOnly": true
-                            }
-                        ]
-                    }
-                ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube",
-                "priority": 0,
-                "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "pystol-acc",
-                "serviceAccountName": "pystol-acc",
-                "terminationGracePeriodSeconds": 30,
-                "tolerations": [
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/not-ready",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    },
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/unreachable",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    }
-                ],
-                "volumes": [
-                    {
-                        "name": "pystol-acc-token-7cq9v",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "pystol-acc-token-7cq9v"
-                        }
-                    }
-                ]
-            },
-            "status": {
-                "conditions": [
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T08:58:05Z",
-                        "status": "True",
-                        "type": "Initialized"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T08:59:42Z",
-                        "status": "True",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T08:59:42Z",
-                        "status": "True",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T08:58:05Z",
-                        "status": "True",
-                        "type": "PodScheduled"
-                    }
-                ],
-                "containerStatuses": [
-                    {
-                        "containerID": "docker://74cb80d1e1d34c8a433d01ac04053291f940116d07f6602fb73cec34a1981c76",
-                        "image": "quay.io/pystol/pystol-operator-stable:latest",
-                        "imageID": "docker-pullable://quay.io/pystol/pystol-operator-stable@sha256:e251e09b36998e0f46d39ecd9f881bad14b62553c27e6530feaaee69978eda5d",
-                        "lastState": {},
-                        "name": "pystol-ui",
-                        "ready": true,
-                        "restartCount": 0,
-                        "started": true,
-                        "state": {
-                            "running": {
-                                "startedAt": "2019-11-18T08:59:42Z"
-                            }
-                        }
-                    }
-                ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.9",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.9"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T08:58:05Z"
-            }
-        },
-        {
-            "metadata": {
-                "creationTimestamp": "2019-11-18T11:06:14Z",
-                "generateName": "rocketchat-server-deployment-6b9584859d-",
-                "labels": {
-                    "app": "rocketchat-server",
-                    "pod-template-hash": "6b9584859d"
-                },
-                "name": "rocketchat-server-deployment-6b9584859d-fj6x2",
-                "namespace": "default",
-                "ownerReferences": [
-                    {
-                        "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
-                        "kind": "ReplicaSet",
-                        "name": "rocketchat-server-deployment-6b9584859d",
-                        "uid": "9020f095-47c5-401c-aa01-877a5418503c"
-                    }
-                ],
-                "resourceVersion": "19404",
-                "selfLink": "/api/v1/namespaces/default/pods/rocketchat-server-deployment-6b9584859d-fj6x2",
-                "uid": "6bbfe081-df42-4e00-92c9-ff6ba2b608b3"
-            },
-            "spec": {
-                "containers": [
-                    {
                         "env": [
                             {
-                                "name": "PORT",
-                                "value": "3030"
+                                "name": "PYSTOL_UI_API_HOST",
+                                "valueFrom": {
+                                    "configMapKeyRef": {
+                                        "name": "pystol-config",
+                                        "key": "PYSTOL_UI_API_HOST"
+                                    }
+                                }
                             },
                             {
-                                "name": "ROOT_URL",
-                                "value": "http://localhost:3030"
+                                "name": "PYSTOL_UI_API_PORT",
+                                "valueFrom": {
+                                    "configMapKeyRef": {
+                                        "name": "pystol-config",
+                                        "key": "PYSTOL_UI_API_PORT"
+                                    }
+                                }
                             },
                             {
-                                "name": "MONGO_URL",
-                                "value": "mongodb://rocketchat-mongo-service-0.default,rocketchat-mongo-service-1.default,rocketchat-mongo-service-2.mongo:27017/rocketchat"
-                            },
-                            {
-                                "name": "MONGO_OPLOG_URL",
-                                "value": "mongodb://rocketchat-mongo-service-0.default,rocketchat-mongo-service-1.default,rocketchat-mongo-service-2.mongo:27017/local"
-                            }
-                        ],
-                        "image": "rocketchat/rocket.chat:latest",
-                        "imagePullPolicy": "Always",
-                        "name": "rocketchat-server",
-                        "ports": [
-                            {
-                                "containerPort": 3030,
-                                "protocol": "TCP"
+                                "name": "NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.namespace"
+                                    }
+                                }
                             }
                         ],
                         "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
                         "volumeMounts": [
                             {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "default-token-zbg8b",
-                                "readOnly": true
+                                "name": "pystol-acc-token-qwjmh",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
                             }
-                        ]
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
                     }
                 ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube",
-                "priority": 0,
                 "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "default",
-                "serviceAccountName": "default",
                 "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "pystol-acc",
+                "serviceAccount": "pystol-acc",
+                "nodeName": "ip-10-0-141-140.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "pystol-acc-dockercfg-k6qhb"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
                 "tolerations": [
                     {
-                        "effect": "NoExecute",
                         "key": "node.kubernetes.io/not-ready",
                         "operator": "Exists",
+                        "effect": "NoExecute",
                         "tolerationSeconds": 300
                     },
                     {
-                        "effect": "NoExecute",
                         "key": "node.kubernetes.io/unreachable",
                         "operator": "Exists",
+                        "effect": "NoExecute",
                         "tolerationSeconds": 300
                     }
                 ],
-                "volumes": [
-                    {
-                        "name": "default-token-zbg8b",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "default-token-zbg8b"
-                        }
-                    }
-                ]
+                "priority": 0,
+                "enableServiceLinks": true
             },
             "status": {
+                "phase": "Running",
                 "conditions": [
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:06:14Z",
+                        "type": "Initialized",
                         "status": "True",
-                        "type": "Initialized"
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:48:49Z"
                     },
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:28:45Z",
-                        "message": "containers with unready status: [rocketchat-server]",
-                        "reason": "ContainersNotReady",
-                        "status": "False",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T12:28:45Z",
-                        "message": "containers with unready status: [rocketchat-server]",
-                        "reason": "ContainersNotReady",
-                        "status": "False",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:06:14Z",
+                        "type": "Ready",
                         "status": "True",
-                        "type": "PodScheduled"
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:49:01Z"
+                    },
+                    {
+                        "type": "ContainersReady",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:49:01Z"
+                    },
+                    {
+                        "type": "PodScheduled",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:48:49Z"
                     }
                 ],
+                "hostIP": "10.0.141.140",
+                "podIP": "10.129.0.29",
+                "startTime": "2019-12-04T11:48:49Z",
                 "containerStatuses": [
                     {
-                        "containerID": "docker://6cf5ec84f8c676719e59f0c7e63697cca4aec222effdcdb700e436abf64b3c2f",
-                        "image": "rocketchat/rocket.chat:latest",
-                        "imageID": "docker-pullable://rocketchat/rocket.chat@sha256:bbb9262083257316d1a64192b3f468374d989a1d28f8f2648937947ccac8bddd",
-                        "lastState": {
-                            "terminated": {
-                                "containerID": "docker://6cf5ec84f8c676719e59f0c7e63697cca4aec222effdcdb700e436abf64b3c2f",
-                                "exitCode": 1,
-                                "finishedAt": "2019-11-18T12:28:45Z",
-                                "reason": "Error",
-                                "startedAt": "2019-11-18T12:28:34Z"
+                        "name": "pystol-ui",
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-12-04T11:49:00Z"
                             }
                         },
-                        "name": "rocketchat-server",
-                        "ready": false,
-                        "restartCount": 20,
-                        "started": false,
-                        "state": {
-                            "waiting": {
-                                "message": "back-off 5m0s restarting failed container=rocketchat-server pod=rocketchat-server-deployment-6b9584859d-fj6x2_default(6bbfe081-df42-4e00-92c9-ff6ba2b608b3)",
-                                "reason": "CrashLoopBackOff"
-                            }
-                        }
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "quay.io/pystol/pystol-operator-stable:latest",
+                        "imageID": "quay.io/pystol/pystol-operator-stable@sha256:fd60519485d8375cad4483adf77d26f7c552ff1eebecf8aaf791f96ca64c3145",
+                        "containerID": "cri-o://09d6482d5e0a27e9efe06874268631530a81ac7d349fcf57c119dcb5cebd68a4"
                     }
                 ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.10",
-                "podIPs": [
-                    {
-                        "ip": "172.17.0.10"
-                    }
-                ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T11:06:14Z"
+                "qosClass": "BestEffort"
             }
         },
         {
             "metadata": {
-                "creationTimestamp": "2019-11-18T11:13:37Z",
-                "generateName": "stilton-cheese-54cb8f8d7-",
-                "labels": {
-                    "pod-template-hash": "54cb8f8d7",
-                    "run": "stilton-cheese"
-                },
-                "name": "stilton-cheese-54cb8f8d7-cctpz",
+                "name": "spark-operator-6978dd8dbd-4qnpd",
+                "generateName": "spark-operator-6978dd8dbd-",
                 "namespace": "default",
+                "selfLink": "/api/v1/namespaces/default/pods/spark-operator-6978dd8dbd-4qnpd",
+                "uid": "f37bbb88-1686-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "33489",
+                "creationTimestamp": "2019-12-04T11:12:25Z",
+                "labels": {
+                    "app.kubernetes.io/name": "spark-operator",
+                    "app.kubernetes.io/version": "v2.4.0-v1beta1",
+                    "pod-template-hash": "6978dd8dbd"
+                },
+                "annotations": {
+                    "alm-examples": "[\n  {\n    \"apiVersion\": \"sparkoperator.k8s.io/v1beta1\",\n    \"kind\": \"SparkApplication\",\n    \"metadata\": {\n      \"name\": \"pyspark-pi\"\n    },\n    \"spec\": {\n      \"type\": \"Python\",\n      \"pythonVersion\": \"2\",\n      \"mode\": \"cluster\",\n      \"image\": \"gcr.io/spark-operator/spark-py:v2.4.0\",\n      \"imagePullPolicy\": \"Always\",\n      \"mainApplicationFile\": \"local:///opt/spark/examples/src/main/python/pi.py\",\n      \"sparkVersion\": \"2.4.0\",\n      \"restartPolicy\": {\n        \"type\": \"OnFailure\",\n        \"onFailureRetries\": 3,\n        \"onFailureRetryInterval\": 10,\n        \"onSubmissionFailureRetries\": 5,\n        \"onSubmissionFailureRetryInterval\": 20\n      },\n      \"driver\": {\n        \"cores\": 0.1,\n        \"coreLimit\": \"200m\",\n        \"memory\": \"512m\",\n        \"labels\": {\n          \"version\": \"2.4.0\"\n        },\n        \"serviceAccount\": \"spark\"\n      },\n      \"executor\": {\n        \"cores\": 1,\n        \"instances\": 1,\n        \"memory\": \"512m\",\n        \"labels\": {\n          \"version\": \"2.4.0\"\n        }\n      }\n    }\n  },\n  {\n    \"apiVersion\": \"sparkoperator.k8s.io/v1beta1\",\n    \"kind\": \"ScheduledSparkApplication\",\n    \"metadata\": {\n      \"name\": \"spark-pi-scheduled\"\n    },\n    \"spec\": {\n      \"schedule\": \"@every 5m\",\n      \"concurrencyPolicy\": \"Allow\",\n      \"template\": {\n        \"type\": \"Scala\",\n        \"mode\": \"cluster\",\n        \"image\": \"gcr.io/spark-operator/spark:v2.4.0\",\n        \"imagePullPolicy\": \"Always\",\n        \"mainClass\": \"org.apache.spark.examples.SparkPi\",\n        \"mainApplicationFile\": \"local:///opt/spark/examples/jars/spark-examples_2.11-2.4.0.jar\",\n        \"restartPolicy\": {\n          \"type\": \"Never\"\n        },\n        \"driver\": {\n          \"cores\": 0.1,\n          \"coreLimit\": \"200m\",\n          \"memory\": \"512m\",\n          \"labels\": {\n            \"version\": \"2.4.0\"\n          },\n          \"serviceAccount\": \"spark\"\n        },\n        \"executor\": {\n          \"cores\": 1,\n          \"instances\": 1,\n          \"memory\": \"512m\",\n          \"labels\": {\n            \"version\": \"2.4.0\"\n          }\n        }\n      }\n    }\n  }\n]",
+                    "capabilities": "Deep Insights",
+                    "categories": "Big Data",
+                    "certified": "False",
+                    "containerImage": "gcr.io/spark-operator/spark-operator:v2.4.0-v1beta1-latest",
+                    "description": "Apache Spark is a unified analytics engine for large-scale data processing.",
+                    "k8s.v1.cni.cncf.io/networks-status": "[{\n    \"name\": \"openshift-sdn\",\n    \"interface\": \"eth0\",\n    \"ips\": [\n        \"10.130.0.22\"\n    ],\n    \"default\": true,\n    \"dns\": {}\n}]",
+                    "olm.operatorGroup": "default-g9q8w",
+                    "olm.operatorNamespace": "default",
+                    "olm.targetNamespaces": "default",
+                    "repository": "https://github.com/GoogleCloudPlatform/spark-on-k8s-operator"
+                },
                 "ownerReferences": [
                     {
                         "apiVersion": "apps/v1",
-                        "blockOwnerDeletion": true,
-                        "controller": true,
                         "kind": "ReplicaSet",
-                        "name": "stilton-cheese-54cb8f8d7",
-                        "uid": "39405f7d-9e70-4358-a5c8-94476771a3ad"
-                    }
-                ],
-                "resourceVersion": "13019",
-                "selfLink": "/api/v1/namespaces/default/pods/stilton-cheese-54cb8f8d7-cctpz",
-                "uid": "f237a96c-9b49-4fbe-9d6c-a99056ba5989"
-            },
-            "spec": {
-                "containers": [
-                    {
-                        "image": "errm/cheese:stilton",
-                        "imagePullPolicy": "IfNotPresent",
-                        "name": "stilton-cheese",
-                        "ports": [
-                            {
-                                "containerPort": 80,
-                                "protocol": "TCP"
-                            }
-                        ],
-                        "resources": {},
-                        "terminationMessagePath": "/dev/termination-log",
-                        "terminationMessagePolicy": "File",
-                        "volumeMounts": [
-                            {
-                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                "name": "default-token-zbg8b",
-                                "readOnly": true
-                            }
-                        ]
-                    }
-                ],
-                "dnsPolicy": "ClusterFirst",
-                "enableServiceLinks": true,
-                "nodeName": "minikube",
-                "priority": 0,
-                "restartPolicy": "Always",
-                "schedulerName": "default-scheduler",
-                "securityContext": {},
-                "serviceAccount": "default",
-                "serviceAccountName": "default",
-                "terminationGracePeriodSeconds": 30,
-                "tolerations": [
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/not-ready",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    },
-                    {
-                        "effect": "NoExecute",
-                        "key": "node.kubernetes.io/unreachable",
-                        "operator": "Exists",
-                        "tolerationSeconds": 300
-                    }
-                ],
-                "volumes": [
-                    {
-                        "name": "default-token-zbg8b",
-                        "secret": {
-                            "defaultMode": 420,
-                            "secretName": "default-token-zbg8b"
-                        }
+                        "name": "spark-operator-6978dd8dbd",
+                        "uid": "f3799246-1686-11ea-a90c-02bc9d6eed04",
+                        "controller": true,
+                        "blockOwnerDeletion": true
                     }
                 ]
             },
-            "status": {
-                "conditions": [
+            "spec": {
+                "volumes": [
                     {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:13:37Z",
-                        "status": "True",
-                        "type": "Initialized"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:13:44Z",
-                        "status": "True",
-                        "type": "Ready"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:13:44Z",
-                        "status": "True",
-                        "type": "ContainersReady"
-                    },
-                    {
-                        "lastProbeTime": null,
-                        "lastTransitionTime": "2019-11-18T11:13:37Z",
-                        "status": "True",
-                        "type": "PodScheduled"
-                    }
-                ],
-                "containerStatuses": [
-                    {
-                        "containerID": "docker://346a45dcfde4ee2c5a2600f8e4be09f8c8a0c5e6211376e29808e42961310c22",
-                        "image": "errm/cheese:stilton",
-                        "imageID": "docker-pullable://errm/cheese@sha256:d75324f741cc6c389c95f4cecd171b33e40519c24e5ba68f63448d09047168ec",
-                        "lastState": {},
-                        "name": "stilton-cheese",
-                        "ready": true,
-                        "restartCount": 0,
-                        "started": true,
-                        "state": {
-                            "running": {
-                                "startedAt": "2019-11-18T11:13:43Z"
-                            }
+                        "name": "spark-operator-token-6dgpf",
+                        "secret": {
+                            "secretName": "spark-operator-token-6dgpf",
+                            "defaultMode": 420
                         }
                     }
                 ],
-                "hostIP": "10.0.2.15",
-                "phase": "Running",
-                "podIP": "172.17.0.13",
-                "podIPs": [
+                "containers": [
                     {
-                        "ip": "172.17.0.13"
+                        "name": "spark-operator",
+                        "image": "gcr.io/spark-operator/spark-operator:v2.4.0-v1beta1-latest",
+                        "args": [
+                            "-logtostderr",
+                            "-install-crds=false",
+                            "-namespace=$(WATCH_NAMESPACE)"
+                        ],
+                        "env": [
+                            {
+                                "name": "WATCH_NAMESPACE",
+                                "valueFrom": {
+                                    "fieldRef": {
+                                        "apiVersion": "v1",
+                                        "fieldPath": "metadata.annotations['olm.targetNamespaces']"
+                                    }
+                                }
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "spark-operator-token-6dgpf",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "Always"
                     }
                 ],
-                "qosClass": "BestEffort",
-                "startTime": "2019-11-18T11:13:37Z"
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "spark-operator",
+                "serviceAccount": "spark-operator",
+                "nodeName": "ip-10-0-153-187.eu-west-1.compute.internal",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "spark-operator-dockercfg-cnszm"
+                    }
+                ],
+                "schedulerName": "default-scheduler",
+                "tolerations": [
+                    {
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "priority": 0,
+                "enableServiceLinks": true
+            },
+            "status": {
+                "phase": "Running",
+                "conditions": [
+                    {
+                        "type": "Initialized",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:12:25Z"
+                    },
+                    {
+                        "type": "Ready",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:12:51Z"
+                    },
+                    {
+                        "type": "ContainersReady",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:12:51Z"
+                    },
+                    {
+                        "type": "PodScheduled",
+                        "status": "True",
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2019-12-04T11:12:25Z"
+                    }
+                ],
+                "hostIP": "10.0.153.187",
+                "podIP": "10.130.0.22",
+                "startTime": "2019-12-04T11:12:25Z",
+                "containerStatuses": [
+                    {
+                        "name": "spark-operator",
+                        "state": {
+                            "running": {
+                                "startedAt": "2019-12-04T11:12:51Z"
+                            }
+                        },
+                        "lastState": {},
+                        "ready": true,
+                        "restartCount": 0,
+                        "image": "gcr.io/spark-operator/spark-operator:v2.4.0-v1beta1-latest",
+                        "imageID": "gcr.io/spark-operator/spark-operator@sha256:deb7bb731c8354d15d5afe857016a79d81355e967ecd3aa8a95e7c7df916171a",
+                        "containerID": "cri-o://7fb4fb2bad03bd08b0d24f91598dde5523d94ba17eda9b4bbced9b7735c14332"
+                    }
+                ],
+                "qosClass": "BestEffort"
             }
         }
-    ],
-    "kind": "PodList",
-    "metadata": {
-        "resourceVersion": "19510",
-        "selfLink": "/api/v1/namespaces/default/pods"
-    }
+    ]
 }

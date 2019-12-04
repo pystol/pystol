@@ -7,3 +7,5 @@ nohup.out
 *env-config.js*
 *pystol-ui/.env
 *pystol-ui/dist
+
+*package-lock.json

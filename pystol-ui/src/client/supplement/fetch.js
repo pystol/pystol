@@ -57,9 +57,15 @@ const fetchData = (nodes, edges, graph, that) => {
                     newServiceObject.label = serviceObject.items[i].metadata.name; // service display title
                     newServiceObject.timeStamp = serviceObject.items[i].metadata.creationTimestamp;  // service timestamp
                     newServiceObject.selector = serviceObject.items[i].spec.selector; // service selector
-                    newServiceObject.clusterIP = serviceObject.items[i].spec.clusterIP; // service IP 
-                    newServiceObject.port = serviceObject.items[i].spec.ports[0].port; // service port 
-                    newServiceObject.targetPort = serviceObject.items[i].spec.ports[0].targetPort; // service targetport 
+                    newServiceObject.clusterIP = serviceObject.items[i].spec.clusterIP; // service IP
+                    if (typeof serviceObject.items[i].spec.ports != 'undefined') {
+                      newServiceObject.port = serviceObject.items[i].spec.ports[0].port; // service port
+                      newServiceObject.targetPort = serviceObject.items[i].spec.ports[0].targetPort; // service targetport
+                    }else{
+                      //This means the service does not have any port configured, like OpenShift service
+                      newServiceObject.port = 0; // service port
+                      newServiceObject.targetPort = 0; // service targetport
+                    }
                     // designing service object
                     newServiceObject.color = "orange";
                     newServiceObject.shape = "box";
