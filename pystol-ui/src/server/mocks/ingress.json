@@ -2,8 +2,8 @@
     "kind": "IngressList",
     "apiVersion": "extensions/v1beta1",
     "metadata": {
-        "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses",
-        "resourceVersion": "42251"
+        "selfLink": "/apis/extensions/v1beta1/namespaces//ingresses",
+        "resourceVersion": "57907"
     },
     "items": [
         {
@@ -33,7 +33,7 @@
                                     "path": "/ui",
                                     "backend": {
                                         "serviceName": "pystol-ui",
-                                        "servicePort": 3030
+                                        "servicePort": 8088
                                     }
                                 }
                             ]
