@@ -41,7 +41,11 @@ app.get('/main.js', (req, res) => {
 });
 
 app.get('/pod', (req, res) => {
-  k8sApi.listNamespacedPod('default')
+  /*
+    If we specify the namespace as '' it should get all namespaces
+    otherwise use for example default. TODO: make this configurable
+  */
+  k8sApi.listNamespacedPod('')
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -51,7 +55,7 @@ app.get('/pod', (req, res) => {
 });
 
 app.get('/service', (req, res) => {
-  k8sApi.listNamespacedService('default')
+  k8sApi.listNamespacedService('')
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -61,7 +65,7 @@ app.get('/service', (req, res) => {
 });
 
 app.get('/ingress', (req, res) => {
-  k8sApi2.listNamespacedIngress('default')
+  k8sApi2.listNamespacedIngress('')
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -71,7 +75,7 @@ app.get('/ingress', (req, res) => {
 });
 
 app.get('/deployment', (req, res) => {
-  k8sApi2.listNamespacedDeployment('default')
+  k8sApi2.listNamespacedDeployment('')
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -81,7 +85,7 @@ app.get('/deployment', (req, res) => {
 });
 
 app.get('/daemonset', (req, res) => {
-  k8sApi2.listNamespacedDaemonSet('default')
+  k8sApi2.listNamespacedDaemonSet('')
     .then((re) => {
       res.json(re.body);
     });

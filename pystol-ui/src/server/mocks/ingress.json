@@ -1,56 +1,40 @@
 {
+    "kind": "IngressList",
     "apiVersion": "extensions/v1beta1",
+    "metadata": {
+        "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses",
+        "resourceVersion": "42251"
+    },
     "items": [
         {
             "metadata": {
-                "annotations": {
-                    "nginx.ingress.kubernetes.io/rewrite-target": "/"
-                },
-                "creationTimestamp": "2019-11-18T11:14:47Z",
-                "generation": 1,
-                "name": "ingress-tutorial",
+                "name": "pystol-ingress",
                 "namespace": "default",
-                "resourceVersion": "13183",
-                "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses/ingress-tutorial",
-                "uid": "fb7966f6-15e1-4923-a8df-e3a6b2392aaa"
+                "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses/pystol-ingress",
+                "uid": "24bb9d5b-168c-11ea-a90c-02bc9d6eed04",
+                "resourceVersion": "42177",
+                "generation": 1,
+                "creationTimestamp": "2019-12-04T11:49:35Z"
             },
             "spec": {
-                "backend": {
-                    "serviceName": "default-http-backend",
-                    "servicePort": 80
-                },
+                "tls": [
+                    {
+                        "hosts": [
+                            "demo.pystol.org"
+                        ]
+                    }
+                ],
                 "rules": [
                     {
-                        "host": "myminikube.info",
+                        "host": "demo.pystol.org",
                         "http": {
                             "paths": [
                                 {
+                                    "path": "/ui",
                                     "backend": {
-                                        "serviceName": "echoserver",
-                                        "servicePort": 8080
-                                    },
-                                    "path": "/"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "host": "cheeses.all",
-                        "http": {
-                            "paths": [
-                                {
-                                    "backend": {
-                                        "serviceName": "stilton-cheese",
-                                        "servicePort": 80
-                                    },
-                                    "path": "/stilton"
-                                },
-                                {
-                                    "backend": {
-                                        "serviceName": "cheddar-cheese",
-                                        "servicePort": 80
-                                    },
-                                    "path": "/cheddar"
+                                        "serviceName": "pystol-ui",
+                                        "servicePort": 3030
+                                    }
                                 }
                             ]
                         }
@@ -58,19 +42,8 @@
                 ]
             },
             "status": {
-                "loadBalancer": {
-                    "ingress": [
-                        {
-                            "ip": "10.0.2.15"
-                        }
-                    ]
-                }
+                "loadBalancer": {}
             }
         }
-    ],
-    "kind": "IngressList",
-    "metadata": {
-        "resourceVersion": "20050",
-        "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses"
-    }
+    ]
 }
