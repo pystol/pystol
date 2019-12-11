@@ -1,0 +1,49 @@
+{
+    "apiVersion": "extensions/v1beta1",
+    "items": [
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T11:49:35Z",
+                "generation": 1,
+                "name": "pystol-ingress",
+                "namespace": "default",
+                "resourceVersion": "42177",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/default/ingresses/pystol-ingress",
+                "uid": "24bb9d5b-168c-11ea-a90c-02bc9d6eed04"
+            },
+            "spec": {
+                "rules": [
+                    {
+                        "host": "demo.pystol.org",
+                        "http": {
+                            "paths": [
+                                {
+                                    "backend": {
+                                        "serviceName": "pystol-ui",
+                                        "servicePort": 8088
+                                    },
+                                    "path": "/ui"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "tls": [
+                    {
+                        "hosts": [
+                            "demo.pystol.org"
+                        ]
+                    }
+                ]
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ],
+    "kind": "IngressList",
+    "metadata": {
+        "resourceVersion": "57907",
+        "selfLink": "/apis/extensions/v1beta1/namespaces//ingresses"
+    }
+}

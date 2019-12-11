@@ -29,10 +29,7 @@ do
   [[ -z $value ]] && value=${varvalue}
 
   # Append configuration property to JS file
-  tee -a ./env-config.js <<< "${varname}: ${value}"
-  echo "," >> ./env-config.js
+  echo "  $varname: \"$value\"," >> ./env-config.js
 done < .env
 
 echo "}" >> ./env-config.js
-
-cat ./env-config.js
