@@ -1,0 +1,2070 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes and load balances the application pods",
+                    "openshift.io/generated-by": "OpenShiftNewApp",
+                    "service.alpha.openshift.io/dependencies": "[{\"name\": \"mysql\", \"kind\": \"Service\"}]"
+                },
+                "creationTimestamp": "2019-12-04T10:48:59Z",
+                "labels": {
+                    "app": "cakephp-mysql-example",
+                    "template": "cakephp-mysql-example"
+                },
+                "name": "cakephp-mysql-example",
+                "namespace": "cakephp-example",
+                "resourceVersion": "27688",
+                "selfLink": "/api/v1/namespaces/cakephp-example/services/cakephp-mysql-example",
+                "uid": "adbeae2a-1683-11ea-a90c-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.174.56",
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "name": "cakephp-mysql-example"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "description": "Exposes the database server",
+                    "openshift.io/generated-by": "OpenShiftNewApp"
+                },
+                "creationTimestamp": "2019-12-04T10:49:00Z",
+                "labels": {
+                    "app": "cakephp-mysql-example",
+                    "template": "cakephp-mysql-example"
+                },
+                "name": "mysql",
+                "namespace": "cakephp-example",
+                "resourceVersion": "27696",
+                "selfLink": "/api/v1/namespaces/cakephp-example/services/mysql",
+                "uid": "adc7e718-1683-11ea-a90c-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.227.55",
+                "ports": [
+                    {
+                        "name": "mysql",
+                        "port": 3306,
+                        "protocol": "TCP",
+                        "targetPort": 3306
+                    }
+                ],
+                "selector": {
+                    "name": "mysql"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:46:58Z",
+                "labels": {
+                    "component": "apiserver",
+                    "provider": "kubernetes"
+                },
+                "name": "kubernetes",
+                "namespace": "default",
+                "resourceVersion": "179",
+                "selfLink": "/api/v1/namespaces/default/services/kubernetes",
+                "uid": "036f42f1-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.0.1",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 6443
+                    }
+                ],
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:59:06Z",
+                "name": "openshift",
+                "namespace": "default",
+                "resourceVersion": "12077",
+                "selfLink": "/api/v1/namespaces/default/services/openshift",
+                "uid": "b58a66fb-167c-11ea-a61a-02bc9d6eed04"
+            },
+            "spec": {
+                "externalName": "kubernetes.default.svc.cluster.local",
+                "sessionAffinity": "None",
+                "type": "ExternalName"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T10:57:47Z",
+                "name": "pystol-ui",
+                "namespace": "default",
+                "resourceVersion": "30693",
+                "selfLink": "/api/v1/namespaces/default/services/pystol-ui",
+                "uid": "e7e4b4e4-1684-11ea-a90c-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.24.250",
+                "ports": [
+                    {
+                        "port": 3030,
+                        "protocol": "TCP",
+                        "targetPort": 3000
+                    }
+                ],
+                "selector": {
+                    "name": "pystol-ui"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T10:17:43Z",
+                "name": "minio",
+                "namespace": "gpte-minio",
+                "resourceVersion": "19883",
+                "selfLink": "/api/v1/namespaces/gpte-minio/services/minio",
+                "uid": "4f87e745-167f-11ea-bccc-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.143.28",
+                "ports": [
+                    {
+                        "port": 9000,
+                        "protocol": "TCP",
+                        "targetPort": 9000
+                    }
+                ],
+                "selector": {
+                    "app": "minio"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:57:52Z",
+                "labels": {
+                    "k8s-app": "kubelet"
+                },
+                "name": "kubelet",
+                "namespace": "kube-system",
+                "resourceVersion": "11512",
+                "selfLink": "/api/v1/namespaces/kube-system/services/kubelet",
+                "uid": "8991b35c-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "https-metrics",
+                        "port": 10250,
+                        "protocol": "TCP",
+                        "targetPort": 10250
+                    }
+                ],
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "openshift-apiserver-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:36Z",
+                "labels": {
+                    "app": "openshift-apiserver-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-apiserver-operator",
+                "resourceVersion": "3184",
+                "selfLink": "/api/v1/namespaces/openshift-apiserver-operator/services/metrics",
+                "uid": "1a3b0fad-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.28.34",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "openshift-apiserver-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "prometheus.io/scheme": "https",
+                    "prometheus.io/scrape": "true",
+                    "service.alpha.openshift.io/serving-cert-secret-name": "serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:52:37Z",
+                "name": "api",
+                "namespace": "openshift-apiserver",
+                "resourceVersion": "4969",
+                "selfLink": "/api/v1/namespaces/openshift-apiserver/services/api",
+                "uid": "cd925f97-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.215.74",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "apiserver": "true"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:34Z",
+                "labels": {
+                    "app": "authentication-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-authentication-operator",
+                "resourceVersion": "3111",
+                "selfLink": "/api/v1/namespaces/openshift-authentication-operator/services/metrics",
+                "uid": "192c6063-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.12.179",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "authentication-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "v4-0-config-system-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:57:53Z",
+                "labels": {
+                    "app": "oauth-openshift"
+                },
+                "name": "oauth-openshift",
+                "namespace": "openshift-authentication",
+                "resourceVersion": "11552",
+                "selfLink": "/api/v1/namespaces/openshift-authentication/services/oauth-openshift",
+                "uid": "89b26ecb-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.184.28",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 6443
+                    }
+                ],
+                "selector": {
+                    "app": "oauth-openshift"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:47:28Z",
+                "labels": {
+                    "control-plane": "controller-manager",
+                    "controller-tools.k8s.io": "1.0"
+                },
+                "name": "controller-manager-service",
+                "namespace": "openshift-cloud-credential-operator",
+                "resourceVersion": "830",
+                "selfLink": "/api/v1/namespaces/openshift-cloud-credential-operator/services/controller-manager-service",
+                "uid": "15350586-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.124.252",
+                "ports": [
+                    {
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 443
+                    }
+                ],
+                "selector": {
+                    "control-plane": "controller-manager",
+                    "controller-tools.k8s.io": "1.0"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:46:55Z",
+                "labels": {
+                    "k8s-app": "cluster-version-operator"
+                },
+                "name": "cluster-version-operator",
+                "namespace": "openshift-cluster-version",
+                "resourceVersion": "31",
+                "selfLink": "/api/v1/namespaces/openshift-cluster-version/services/cluster-version-operator",
+                "uid": "01854fa1-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.152.244",
+                "ports": [
+                    {
+                        "name": "metrics",
+                        "port": 9099,
+                        "protocol": "TCP",
+                        "targetPort": 9099
+                    }
+                ],
+                "selector": {
+                    "k8s-app": "cluster-version-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:55:36Z",
+                "labels": {
+                    "name": "console-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-console-operator",
+                "resourceVersion": "9019",
+                "selfLink": "/api/v1/namespaces/openshift-console-operator/services/metrics",
+                "uid": "38139abd-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.235.102",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "name": "console-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "console-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:57:53Z",
+                "labels": {
+                    "app": "console"
+                },
+                "name": "console",
+                "namespace": "openshift-console",
+                "resourceVersion": "11556",
+                "selfLink": "/api/v1/namespaces/openshift-console/services/console",
+                "uid": "89b36885-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.86.30",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "console",
+                    "component": "ui"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:56:57Z",
+                "name": "downloads",
+                "namespace": "openshift-console",
+                "resourceVersion": "9867",
+                "selfLink": "/api/v1/namespaces/openshift-console/services/downloads",
+                "uid": "68b6aa1c-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.82.225",
+                "ports": [
+                    {
+                        "name": "http",
+                        "port": 80,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "app": "console",
+                    "component": "downloads"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "openshift-controller-manager-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:35Z",
+                "labels": {
+                    "app": "openshift-controller-manager-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-controller-manager-operator",
+                "resourceVersion": "3251",
+                "selfLink": "/api/v1/namespaces/openshift-controller-manager-operator/services/metrics",
+                "uid": "197b46da-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.67.238",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "openshift-controller-manager-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "prometheus.io/scheme": "https",
+                    "prometheus.io/scrape": "true",
+                    "service.alpha.openshift.io/serving-cert-secret-name": "serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:49:48Z",
+                "name": "controller-manager",
+                "namespace": "openshift-controller-manager",
+                "resourceVersion": "3202",
+                "selfLink": "/api/v1/namespaces/openshift-controller-manager/services/controller-manager",
+                "uid": "68c8d09b-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.27.174",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "controller-manager": "true"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:49:46Z",
+                "labels": {
+                    "dns.operator.openshift.io/owning-dns": "default"
+                },
+                "name": "dns-default",
+                "namespace": "openshift-dns",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "operator.openshift.io/v1",
+                        "controller": true,
+                        "kind": "DNS",
+                        "name": "default",
+                        "uid": "6772d64d-167b-11ea-8ce6-0287a1a0e522"
+                    }
+                ],
+                "resourceVersion": "2203",
+                "selfLink": "/api/v1/namespaces/openshift-dns/services/dns-default",
+                "uid": "67960c2c-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.0.10",
+                "ports": [
+                    {
+                        "name": "dns",
+                        "port": 53,
+                        "protocol": "UDP",
+                        "targetPort": "dns"
+                    },
+                    {
+                        "name": "dns-tcp",
+                        "port": 53,
+                        "protocol": "TCP",
+                        "targetPort": "dns-tcp"
+                    },
+                    {
+                        "name": "metrics",
+                        "port": 9153,
+                        "protocol": "TCP",
+                        "targetPort": "metrics"
+                    }
+                ],
+                "selector": {
+                    "dns.operator.openshift.io/daemonset-dns": "default"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:46:57Z",
+                "labels": {
+                    "k8s-app": "etcd"
+                },
+                "name": "etcd",
+                "namespace": "openshift-etcd",
+                "resourceVersion": "163",
+                "selfLink": "/api/v1/namespaces/openshift-etcd/services/etcd",
+                "uid": "030a77c3-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.200.59",
+                "ports": [
+                    {
+                        "name": "etcd",
+                        "port": 2379,
+                        "protocol": "TCP",
+                        "targetPort": 2379
+                    },
+                    {
+                        "name": "etcd-metrics",
+                        "port": 9979,
+                        "protocol": "TCP",
+                        "targetPort": 9979
+                    }
+                ],
+                "selector": {
+                    "k8s-app": "etcd"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:47:07Z",
+                "labels": {
+                    "k8s-app": "etcd"
+                },
+                "name": "host-etcd",
+                "namespace": "openshift-etcd",
+                "resourceVersion": "423",
+                "selfLink": "/api/v1/namespaces/openshift-etcd/services/host-etcd",
+                "uid": "08c36600-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "etcd",
+                        "port": 2379,
+                        "protocol": "TCP",
+                        "targetPort": 2379
+                    }
+                ],
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "imageregistry.operator.openshift.io/checksum": "sha256:1c19715a76014ae1d56140d6390a08f14f453c1a59dc36c15718f40c638ef63d",
+                    "service.alpha.openshift.io/serving-cert-secret-name": "image-registry-tls",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:57:23Z",
+                "labels": {
+                    "docker-registry": "default"
+                },
+                "name": "image-registry",
+                "namespace": "openshift-image-registry",
+                "resourceVersion": "10431",
+                "selfLink": "/api/v1/namespaces/openshift-image-registry/services/image-registry",
+                "uid": "780a7858-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.61.252",
+                "ports": [
+                    {
+                        "name": "5000-tcp",
+                        "port": 5000,
+                        "protocol": "TCP",
+                        "targetPort": 5000
+                    }
+                ],
+                "selector": {
+                    "docker-registry": "default"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.beta.kubernetes.io/aws-load-balancer-proxy-protocol": "*"
+                },
+                "creationTimestamp": "2019-12-04T09:57:23Z",
+                "finalizers": [
+                    "ingress.openshift.io/operator"
+                ],
+                "labels": {
+                    "app": "router",
+                    "ingresscontroller.operator.openshift.io/owning-ingresscontroller": "default",
+                    "router": "router-default"
+                },
+                "name": "router-default",
+                "namespace": "openshift-ingress",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "controller": true,
+                        "kind": "Deployment",
+                        "name": "router-default",
+                        "uid": "785fc6aa-167c-11ea-b573-02bc9d6eed04"
+                    }
+                ],
+                "resourceVersion": "10638",
+                "selfLink": "/api/v1/namespaces/openshift-ingress/services/router-default",
+                "uid": "7864c1a4-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.93.91",
+                "externalTrafficPolicy": "Local",
+                "healthCheckNodePort": 31983,
+                "ports": [
+                    {
+                        "name": "http",
+                        "nodePort": 30184,
+                        "port": 80,
+                        "protocol": "TCP",
+                        "targetPort": "http"
+                    },
+                    {
+                        "name": "https",
+                        "nodePort": 32144,
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": "https"
+                    }
+                ],
+                "selector": {
+                    "ingresscontroller.operator.openshift.io/deployment-ingresscontroller": "default"
+                },
+                "sessionAffinity": "None",
+                "type": "LoadBalancer"
+            },
+            "status": {
+                "loadBalancer": {
+                    "ingress": [
+                        {
+                            "hostname": "a7864c1a4167c11eab57302bc9d6eed0-694540411.eu-west-1.elb.amazonaws.com"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "router-metrics-certs-default",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:57:24Z",
+                "labels": {
+                    "ingresscontroller.operator.openshift.io/owning-ingresscontroller": "default"
+                },
+                "name": "router-internal-default",
+                "namespace": "openshift-ingress",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "controller": true,
+                        "kind": "Deployment",
+                        "name": "router-default",
+                        "uid": "785fc6aa-167c-11ea-b573-02bc9d6eed04"
+                    }
+                ],
+                "resourceVersion": "10550",
+                "selfLink": "/api/v1/namespaces/openshift-ingress/services/router-internal-default",
+                "uid": "78675f0f-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.160.191",
+                "ports": [
+                    {
+                        "name": "http",
+                        "port": 80,
+                        "protocol": "TCP",
+                        "targetPort": "http"
+                    },
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": "https"
+                    },
+                    {
+                        "name": "metrics",
+                        "port": 1936,
+                        "protocol": "TCP",
+                        "targetPort": 1936
+                    }
+                ],
+                "selector": {
+                    "ingresscontroller.operator.openshift.io/deployment-ingresscontroller": "default"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "kube-apiserver-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:34Z",
+                "labels": {
+                    "app": "kube-apiserver-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-kube-apiserver-operator",
+                "resourceVersion": "3246",
+                "selfLink": "/api/v1/namespaces/openshift-kube-apiserver-operator/services/metrics",
+                "uid": "19256507-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.133.197",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "kube-apiserver-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "prometheus.io/scheme": "https",
+                    "prometheus.io/scrape": "true"
+                },
+                "creationTimestamp": "2019-12-04T09:50:06Z",
+                "name": "apiserver",
+                "namespace": "openshift-kube-apiserver",
+                "resourceVersion": "3230",
+                "selfLink": "/api/v1/namespaces/openshift-kube-apiserver/services/apiserver",
+                "uid": "73d51a4e-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.171.45",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 6443
+                    }
+                ],
+                "selector": {
+                    "apiserver": "true"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "kube-controller-manager-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:34Z",
+                "labels": {
+                    "app": "kube-controller-manager-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-kube-controller-manager-operator",
+                "resourceVersion": "3131",
+                "selfLink": "/api/v1/namespaces/openshift-kube-controller-manager-operator/services/metrics",
+                "uid": "190cc34c-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.201.81",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "kube-controller-manager-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "prometheus.io/scheme": "https",
+                    "prometheus.io/scrape": "true",
+                    "service.alpha.openshift.io/serving-cert-secret-name": "serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:49:51Z",
+                "name": "kube-controller-manager",
+                "namespace": "openshift-kube-controller-manager",
+                "resourceVersion": "3160",
+                "selfLink": "/api/v1/namespaces/openshift-kube-controller-manager/services/kube-controller-manager",
+                "uid": "6ad86bd4-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.91.152",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 10257
+                    }
+                ],
+                "selector": {
+                    "kube-controller-manager": "true"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "kube-scheduler-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:34Z",
+                "labels": {
+                    "app": "openshift-kube-scheduler-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-kube-scheduler-operator",
+                "resourceVersion": "3117",
+                "selfLink": "/api/v1/namespaces/openshift-kube-scheduler-operator/services/metrics",
+                "uid": "19392fd4-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.144.212",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "openshift-kube-scheduler-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "prometheus.io/scheme": "https",
+                    "prometheus.io/scrape": "true",
+                    "service.alpha.openshift.io/serving-cert-secret-name": "serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:49:53Z",
+                "name": "scheduler",
+                "namespace": "openshift-kube-scheduler",
+                "resourceVersion": "3256",
+                "selfLink": "/api/v1/namespaces/openshift-kube-scheduler/services/scheduler",
+                "uid": "6c141c2d-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.208.27",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 10259
+                    }
+                ],
+                "selector": {
+                    "scheduler": "true"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-secret-name": "cluster-autoscaler-operator-cert",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:30Z",
+                "labels": {
+                    "k8s-app": "cluster-autoscaler-operator"
+                },
+                "name": "cluster-autoscaler-operator",
+                "namespace": "openshift-machine-api",
+                "resourceVersion": "3098",
+                "selfLink": "/api/v1/namespaces/openshift-machine-api/services/cluster-autoscaler-operator",
+                "uid": "16d0f0f7-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.120.249",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    },
+                    {
+                        "name": "metrics",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": "metrics"
+                    }
+                ],
+                "selector": {
+                    "k8s-app": "cluster-autoscaler-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:48:16Z",
+                "labels": {
+                    "k8s-app": "machine-api-operator"
+                },
+                "name": "machine-api-operator",
+                "namespace": "openshift-machine-api",
+                "resourceVersion": "1724",
+                "selfLink": "/api/v1/namespaces/openshift-machine-api/services/machine-api-operator",
+                "uid": "32087402-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.254.132",
+                "ports": [
+                    {
+                        "name": "metrics",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": "metrics"
+                    }
+                ],
+                "selector": {
+                    "k8s-app": "machine-api-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:57:21Z",
+                "labels": {
+                    "opsrc-owner-name": "certified-operators",
+                    "opsrc-owner-namespace": "openshift-marketplace"
+                },
+                "name": "certified-operators",
+                "namespace": "openshift-marketplace",
+                "resourceVersion": "10245",
+                "selfLink": "/api/v1/namespaces/openshift-marketplace/services/certified-operators",
+                "uid": "77097678-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.89.115",
+                "ports": [
+                    {
+                        "name": "grpc",
+                        "port": 50051,
+                        "protocol": "TCP",
+                        "targetPort": 50051
+                    }
+                ],
+                "selector": {
+                    "marketplace.operatorSource": "certified-operators"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:57:22Z",
+                "labels": {
+                    "opsrc-owner-name": "community-operators",
+                    "opsrc-owner-namespace": "openshift-marketplace"
+                },
+                "name": "community-operators",
+                "namespace": "openshift-marketplace",
+                "resourceVersion": "10280",
+                "selfLink": "/api/v1/namespaces/openshift-marketplace/services/community-operators",
+                "uid": "779eaaf0-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.38.229",
+                "ports": [
+                    {
+                        "name": "grpc",
+                        "port": 50051,
+                        "protocol": "TCP",
+                        "targetPort": 50051
+                    }
+                ],
+                "selector": {
+                    "marketplace.operatorSource": "community-operators"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:47:29Z",
+                "labels": {
+                    "name": "marketplace-operator"
+                },
+                "name": "marketplace-operator-metrics",
+                "namespace": "openshift-marketplace",
+                "resourceVersion": "929",
+                "selfLink": "/api/v1/namespaces/openshift-marketplace/services/marketplace-operator-metrics",
+                "uid": "161d28fb-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.84.41",
+                "ports": [
+                    {
+                        "name": "metrics",
+                        "port": 8383,
+                        "protocol": "TCP",
+                        "targetPort": 8383
+                    }
+                ],
+                "selector": {
+                    "name": "marketplace-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:57:21Z",
+                "labels": {
+                    "opsrc-owner-name": "redhat-operators",
+                    "opsrc-owner-namespace": "openshift-marketplace"
+                },
+                "name": "redhat-operators",
+                "namespace": "openshift-marketplace",
+                "resourceVersion": "10202",
+                "selfLink": "/api/v1/namespaces/openshift-marketplace/services/redhat-operators",
+                "uid": "76a193ff-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.94.237",
+                "ports": [
+                    {
+                        "name": "grpc",
+                        "port": 50051,
+                        "protocol": "TCP",
+                        "targetPort": 50051
+                    }
+                ],
+                "selector": {
+                    "marketplace.operatorSource": "redhat-operators"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "alertmanager-main-tls"
+                },
+                "creationTimestamp": "2019-12-04T09:58:06Z",
+                "labels": {
+                    "alertmanager": "main"
+                },
+                "name": "alertmanager-main",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "12104",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/alertmanager-main",
+                "uid": "91c6f5b9-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.202.9",
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 9094,
+                        "protocol": "TCP",
+                        "targetPort": "web"
+                    }
+                ],
+                "selector": {
+                    "alertmanager": "main",
+                    "app": "alertmanager"
+                },
+                "sessionAffinity": "ClientIP",
+                "sessionAffinityConfig": {
+                    "clientIP": {
+                        "timeoutSeconds": 10800
+                    }
+                },
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:58:08Z",
+                "labels": {
+                    "operated-alertmanager": "true"
+                },
+                "name": "alertmanager-operated",
+                "namespace": "openshift-monitoring",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "monitoring.coreos.com/v1",
+                        "kind": "Alertmanager",
+                        "name": "main",
+                        "uid": "92bbe2f1-167c-11ea-b573-02bc9d6eed04"
+                    }
+                ],
+                "resourceVersion": "11833",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/alertmanager-operated",
+                "uid": "92bd9477-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 9093,
+                        "protocol": "TCP",
+                        "targetPort": 9093
+                    },
+                    {
+                        "name": "mesh-tcp",
+                        "port": 9094,
+                        "protocol": "TCP",
+                        "targetPort": 9094
+                    },
+                    {
+                        "name": "mesh-udp",
+                        "port": 9094,
+                        "protocol": "UDP",
+                        "targetPort": 9094
+                    }
+                ],
+                "selector": {
+                    "app": "alertmanager"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:57:20Z",
+                "labels": {
+                    "app": "cluster-monitoring-operator"
+                },
+                "name": "cluster-monitoring-operator",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "10192",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/cluster-monitoring-operator",
+                "uid": "766d1c9e-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "http",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": "http"
+                    }
+                ],
+                "selector": {
+                    "app": "cluster-monitoring-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "grafana-tls"
+                },
+                "creationTimestamp": "2019-12-04T09:58:12Z",
+                "labels": {
+                    "app": "grafana"
+                },
+                "name": "grafana",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "13257",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/grafana",
+                "uid": "9597a7ec-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.96.124",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 3000,
+                        "protocol": "TCP",
+                        "targetPort": "https"
+                    }
+                ],
+                "selector": {
+                    "app": "grafana"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "kube-state-metrics-tls"
+                },
+                "creationTimestamp": "2019-12-04T09:57:25Z",
+                "labels": {
+                    "k8s-app": "kube-state-metrics"
+                },
+                "name": "kube-state-metrics",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "11739",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/kube-state-metrics",
+                "uid": "792313ec-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "https-main",
+                        "port": 8443,
+                        "protocol": "TCP",
+                        "targetPort": "https-main"
+                    },
+                    {
+                        "name": "https-self",
+                        "port": 9443,
+                        "protocol": "TCP",
+                        "targetPort": "https-self"
+                    }
+                ],
+                "selector": {
+                    "app": "kube-state-metrics"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "node-exporter-tls"
+                },
+                "creationTimestamp": "2019-12-04T09:57:25Z",
+                "labels": {
+                    "k8s-app": "node-exporter"
+                },
+                "name": "node-exporter",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "11764",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/node-exporter",
+                "uid": "7986a8fe-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 9100,
+                        "protocol": "TCP",
+                        "targetPort": "https"
+                    }
+                ],
+                "selector": {
+                    "app": "node-exporter"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "openshift-state-metrics-tls"
+                },
+                "creationTimestamp": "2019-12-04T09:57:22Z",
+                "labels": {
+                    "k8s-app": "openshift-state-metrics"
+                },
+                "name": "openshift-state-metrics",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "11750",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/openshift-state-metrics",
+                "uid": "779e5097-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "https-main",
+                        "port": 8443,
+                        "protocol": "TCP",
+                        "targetPort": "https-main"
+                    },
+                    {
+                        "name": "https-self",
+                        "port": 9443,
+                        "protocol": "TCP",
+                        "targetPort": "https-self"
+                    }
+                ],
+                "selector": {
+                    "k8s-app": "openshift-state-metrics"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "prometheus-adapter-tls"
+                },
+                "creationTimestamp": "2019-12-04T09:57:25Z",
+                "labels": {
+                    "name": "prometheus-adapter"
+                },
+                "name": "prometheus-adapter",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "11840",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/prometheus-adapter",
+                "uid": "792fa362-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.162.168",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 6443
+                    }
+                ],
+                "selector": {
+                    "name": "prometheus-adapter"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "prometheus-k8s-tls"
+                },
+                "creationTimestamp": "2019-12-04T10:00:13Z",
+                "labels": {
+                    "prometheus": "k8s"
+                },
+                "name": "prometheus-k8s",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "15704",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/prometheus-k8s",
+                "uid": "dd6afe3f-167c-11ea-a61a-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.186.126",
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 9091,
+                        "protocol": "TCP",
+                        "targetPort": "web"
+                    },
+                    {
+                        "name": "tenancy",
+                        "port": 9092,
+                        "protocol": "TCP",
+                        "targetPort": "tenancy"
+                    }
+                ],
+                "selector": {
+                    "app": "prometheus",
+                    "prometheus": "k8s"
+                },
+                "sessionAffinity": "ClientIP",
+                "sessionAffinityConfig": {
+                    "clientIP": {
+                        "timeoutSeconds": 10800
+                    }
+                },
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T10:00:15Z",
+                "labels": {
+                    "operated-prometheus": "true"
+                },
+                "name": "prometheus-operated",
+                "namespace": "openshift-monitoring",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "monitoring.coreos.com/v1",
+                        "kind": "Prometheus",
+                        "name": "k8s",
+                        "uid": "de7beea8-167c-11ea-a61a-02bc9d6eed04"
+                    }
+                ],
+                "resourceVersion": "13208",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/prometheus-operated",
+                "uid": "de8fd356-167c-11ea-a61a-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "web",
+                        "port": 9090,
+                        "protocol": "TCP",
+                        "targetPort": "web"
+                    }
+                ],
+                "selector": {
+                    "app": "prometheus"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:57:23Z",
+                "labels": {
+                    "app.kubernetes.io/component": "controller",
+                    "app.kubernetes.io/name": "prometheus-operator",
+                    "app.kubernetes.io/version": "v0.33.0"
+                },
+                "name": "prometheus-operator",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "10427",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/prometheus-operator",
+                "uid": "782f452a-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "http",
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": "http"
+                    }
+                ],
+                "selector": {
+                    "app.kubernetes.io/component": "controller",
+                    "app.kubernetes.io/name": "prometheus-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "telemeter-client-tls"
+                },
+                "creationTimestamp": "2019-12-04T10:20:37Z",
+                "labels": {
+                    "k8s-app": "telemeter-client"
+                },
+                "name": "telemeter-client",
+                "namespace": "openshift-monitoring",
+                "resourceVersion": "21141",
+                "selfLink": "/api/v1/namespaces/openshift-monitoring/services/telemeter-client",
+                "uid": "b6c57b5a-167f-11ea-a90c-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 8443,
+                        "protocol": "TCP",
+                        "targetPort": "https"
+                    }
+                ],
+                "selector": {
+                    "k8s-app": "telemeter-client"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "multus-admission-controller-secret",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:54Z",
+                "labels": {
+                    "app": "multus-admission-controller"
+                },
+                "name": "multus-admission-controller",
+                "namespace": "openshift-multus",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "operator.openshift.io/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Network",
+                        "name": "cluster",
+                        "uid": "23b9c7f3-167b-11ea-8ce6-0287a1a0e522"
+                    }
+                ],
+                "resourceVersion": "3109",
+                "selfLink": "/api/v1/namespaces/openshift-multus/services/multus-admission-controller",
+                "uid": "24c4ae8a-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.32.150",
+                "ports": [
+                    {
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 6443
+                    }
+                ],
+                "selector": {
+                    "app": "multus-admission-controller"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "catalog-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:27Z",
+                "labels": {
+                    "app": "catalog-operator"
+                },
+                "name": "catalog-operator-metrics",
+                "namespace": "openshift-operator-lifecycle-manager",
+                "resourceVersion": "3119",
+                "selfLink": "/api/v1/namespaces/openshift-operator-lifecycle-manager/services/catalog-operator-metrics",
+                "uid": "14c4c037-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.155.226",
+                "ports": [
+                    {
+                        "name": "https-metrics",
+                        "port": 8081,
+                        "protocol": "TCP",
+                        "targetPort": "metrics"
+                    }
+                ],
+                "selector": {
+                    "app": "catalog-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "olm-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:26Z",
+                "labels": {
+                    "app": "olm-operator"
+                },
+                "name": "olm-operator-metrics",
+                "namespace": "openshift-operator-lifecycle-manager",
+                "resourceVersion": "3096",
+                "selfLink": "/api/v1/namespaces/openshift-operator-lifecycle-manager/services/olm-operator-metrics",
+                "uid": "1451731a-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.90.201",
+                "ports": [
+                    {
+                        "name": "https-metrics",
+                        "port": 8081,
+                        "protocol": "TCP",
+                        "targetPort": "metrics"
+                    }
+                ],
+                "selector": {
+                    "app": "olm-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:54:49Z",
+                "name": "v1-packages-operators-coreos-com",
+                "namespace": "openshift-operator-lifecycle-manager",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "operators.coreos.com/v1alpha1",
+                        "blockOwnerDeletion": false,
+                        "controller": false,
+                        "kind": "ClusterServiceVersion",
+                        "name": "packageserver",
+                        "uid": "2ed401f2-167b-11ea-8ce6-0287a1a0e522"
+                    },
+                    {
+                        "apiVersion": "operators.coreos.com/v1alpha1",
+                        "blockOwnerDeletion": false,
+                        "controller": false,
+                        "kind": "ClusterServiceVersion",
+                        "name": "packageserver",
+                        "uid": "2ed401f2-167b-11ea-8ce6-0287a1a0e522"
+                    },
+                    {
+                        "apiVersion": "operators.coreos.com/v1alpha1",
+                        "blockOwnerDeletion": false,
+                        "controller": false,
+                        "kind": "ClusterServiceVersion",
+                        "name": "packageserver",
+                        "uid": "2ed401f2-167b-11ea-8ce6-0287a1a0e522"
+                    }
+                ],
+                "resourceVersion": "7689",
+                "selfLink": "/api/v1/namespaces/openshift-operator-lifecycle-manager/services/v1-packages-operators-coreos-com",
+                "uid": "1c09f6a2-167c-11ea-b573-02bc9d6eed04"
+            },
+            "spec": {
+                "clusterIP": "172.30.13.182",
+                "ports": [
+                    {
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 5443
+                    }
+                ],
+                "selector": {
+                    "app": "packageserver"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "creationTimestamp": "2019-12-04T09:48:02Z",
+                "labels": {
+                    "app": "sdn"
+                },
+                "name": "sdn",
+                "namespace": "openshift-sdn",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "operator.openshift.io/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "Network",
+                        "name": "cluster",
+                        "uid": "23b9c7f3-167b-11ea-8ce6-0287a1a0e522"
+                    }
+                ],
+                "resourceVersion": "1516",
+                "selfLink": "/api/v1/namespaces/openshift-sdn/services/sdn",
+                "uid": "29b8fd91-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "None",
+                "ports": [
+                    {
+                        "name": "metrics",
+                        "port": 9101,
+                        "protocol": "TCP",
+                        "targetPort": 9101
+                    }
+                ],
+                "selector": {
+                    "app": "sdn"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "openshift-service-catalog-apiserver-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:36Z",
+                "labels": {
+                    "app": "openshift-service-catalog-apiserver-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-service-catalog-apiserver-operator",
+                "resourceVersion": "3190",
+                "selfLink": "/api/v1/namespaces/openshift-service-catalog-apiserver-operator/services/metrics",
+                "uid": "1a408cd0-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.148.34",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "openshift-service-catalog-apiserver-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "annotations": {
+                    "service.alpha.openshift.io/serving-cert-secret-name": "openshift-service-catalog-controller-manager-operator-serving-cert",
+                    "service.alpha.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990",
+                    "service.beta.openshift.io/serving-cert-signed-by": "openshift-service-serving-signer@1575452990"
+                },
+                "creationTimestamp": "2019-12-04T09:47:35Z",
+                "labels": {
+                    "app": "openshift-service-catalog-controller-manager-operator"
+                },
+                "name": "metrics",
+                "namespace": "openshift-service-catalog-controller-manager-operator",
+                "resourceVersion": "3179",
+                "selfLink": "/api/v1/namespaces/openshift-service-catalog-controller-manager-operator/services/metrics",
+                "uid": "1968a5a3-167b-11ea-8ce6-0287a1a0e522"
+            },
+            "spec": {
+                "clusterIP": "172.30.197.223",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "app": "openshift-service-catalog-controller-manager-operator"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ],
+    "kind": "ServiceList",
+    "metadata": {
+        "resourceVersion": "57874",
+        "selfLink": "/api/v1/namespaces//services"
+    }
+}
