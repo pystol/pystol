@@ -1,6 +1,7 @@
 /*k8s javascript client require*/
 //const k8s = require('@kubernetes/client-node');
 
+/*
 import * as k8s from '@kubernetes/client-node';
 
 var servicesData = {};
@@ -33,5 +34,9 @@ try {
   servicesData = require('./servicesData.json');
 }
 
+*/
+
+
+const servicesData = require('./servicesData.json');
 export default servicesData
 /*End K8s*/
