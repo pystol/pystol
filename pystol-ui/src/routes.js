@@ -39,6 +39,14 @@ const Pods = React.lazy(() => import('./client/views/Pods/Pods'));
 const Ingresses = React.lazy(() => import('./client/views/Ingresses/Ingresses'));
 const Services = React.lazy(() => import('./client/views/Services/Services'));
 
+
+/*
+function getSomeData() {
+    return (
+      <h1>asdf</h1>
+    );
+}
+*/
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -84,7 +92,12 @@ const routes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/pods', exact: true,  name: 'Pods', component: Pods },
   { path: '/ingresses', exact: true,  name: 'Ingresses', component: Ingresses },
-  { path: '/services', exact: true,  name: 'Services', component: Services },
+  { path: '/services',
+    exact: true,
+    name: 'Services',
+    component: Services//,
+    //loadData: () => getSomeData()
+  },
 ];
 
 export default routes;
