@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
-import * as k8s from '@kubernetes/client-node';
+//import * as k8s from '@kubernetes/client-node';
 import usersData from './ServicesData'
 
 
@@ -55,25 +55,46 @@ class Services extends Component {
     this.state = {servicesData: usersData.items};
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     //import * as k8s from '@kubernetes/client-node';
+    const k8s = await require('@kubernetes/client-node');
+    console.log(k8s)
 
     var servicesData = {};
+    let kubeclient;
 
     try {
-      const kc = new k8s.KubeConfig();
+      const kc = await new k8s.KubeConfig();
       kc.loadFromDefault();
+      console.log('Kubernetes config:', kc);
 
       // Core_v1Api docs: https://github.com/kubernetes-client/java/blob/master/kubernetes/docs/CoreV1Api.md //
       // core_v1api -- pods, services (may include nodeport, loadbalancer)
       // optional: serviceaccount, resourcequota, replication controller if needed
-      const k8sApi = kc.makeApiClient(k8s.Core_v1Api);
+      var k8sApi = kc.makeApiClient(k8s.CoreV1Api);
       // Extensions_v1beta1Api docs: https://github.com/kubernetes-client/java/blob/master/kubernetes/docs/ExtensionsV1beta1Api.md //
       // extensions_v1beta1api -- ingress, deployment
       // optional: daemonset, and network policy as well as replica set if needed
-      const k8sApi2 = kc.makeApiClient(k8s.Extensions_v1beta1Api);
+      var k8sApi2 = kc.makeApiClient(k8s.ExtensionsV1beta1Api);
+    } catch(e) {
+      console.log("Problem creating the K8s client");
+      console.log(e);
+    } finally {
+      servicesData = require('./servicesData.json');
+    }
 
+
+    // Get all services
+    try {
+      const servic = await k8sApi.listNamespacedService('default')
+      console.log('Services data:', servic);
+    } catch (e) {
+      console.log("Problem fetching data");
+      console.log(e);
+    }
+
+/*
       k8sApi.listNamespacedService('')
         .then((re) => {
           servicesData = re.body;
@@ -82,12 +103,8 @@ class Services extends Component {
           console.log(err);
           servicesData = require('./servicesData.json');
         })
+*/
 
-    } catch(e) {
-      console.log(e.message);
-    } finally {
-      servicesData = require('./servicesData.json');
-    }
 
     //var userList = servicesData.items;
 

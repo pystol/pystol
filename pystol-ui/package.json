@@ -47,8 +47,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "chmod +x ./env.sh && ./env.sh && mkdir -p ./dist/ && cp env-config.js ./dist/ && react-scripts build",
-    "k8s-server": "chmod +x ./env.sh && ./env.sh && mkdir -p ./dist/ && cp env-config.js ./dist/ && react-scripts start",
+    "build": "chmod +x ./env.sh && ./env.sh && mkdir -p ./public/assets/js && cp env-config.js ./public/assets/js/ && react-scripts build",
+    "k8s-server": "chmod +x ./env.sh && ./env.sh && mkdir -p ./public/assets/js && cp env-config.js ./public/assets/js/ && react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
