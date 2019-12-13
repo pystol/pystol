@@ -1,5 +1,5 @@
-# version 8 of node
-FROM node:8
+# version 10 of node
+FROM node:10
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=3w
 
