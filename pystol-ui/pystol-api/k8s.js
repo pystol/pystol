@@ -20,7 +20,13 @@ const k8sApi2 = kc.makeApiClient(k8s.ExtensionsV1beta1Api);
 Endpoint: /api/
 */
 router.get('/', function(req, res, next) {
-	res.json(['A', 'B', 'C']);
+	res.json([
+                  Math.random().toString(36).substring(7),
+                  Math.random().toString(36).substring(7),
+                  Math.random().toString(36).substring(7),
+                  Math.random().toString(36).substring(7),
+                  Math.random().toString(36).substring(7)
+                 ]);
 });
 
 /*
@@ -48,9 +54,9 @@ router.get('/getPods', (req, res) => {
 });
 
 /*
-Endpoint: /api/getService
+Endpoint: /api/getServices
 */
-router.get('/getService', (req, res) => {
+router.get('/getServices', (req, res) => {
   k8sApi.listNamespacedService('')
     .then((re) => {
       return res.status(200).json(re.body);
