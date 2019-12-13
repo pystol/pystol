@@ -5,10 +5,11 @@
 	"scripts": {
 		"start": "node ./bin/www",
 		"build": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && cd pystol-wui && npm run-script build && cd .. && cp -R pystol-wui/build/* public/",
-                "k8s-server": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && npm start",
+		"k8s-server": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && npm start",
 		"dev": "concurrently \"NODE_ENV=development PORT=3000 nodemon\" \" cd pystol-wui && PORT=3001 npm start\""
 	},
 	"dependencies": {
+		"@kubernetes/client-node": "^0.11.0",
 		"concurrently": "^5.0.1",
 		"cookie-parser": "~1.4.3",
 		"cors": "^2.8.5",
