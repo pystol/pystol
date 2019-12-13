@@ -5,8 +5,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./pystol-api/index');
+var usersRouter = require('./pystol-api/k8s');
 
 var app = express();
 
