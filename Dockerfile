@@ -1,7 +1,7 @@
 # version 10 of node
 FROM node:10
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
-LABEL quay.expires-after=3w
+LABEL quay.expires-after=30w
 
 # Arguments
 ARG revision
@@ -25,15 +25,15 @@ RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 # Create a directory for client
 RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
+RUN ls pystol-wui
 
-## Installing the Web UI
-WORKDIR /usr/src/app/pystol-wui
+## Installing the UI dependencies (Web UI + endpoints)
+RUN npm install -g react-scripts
 RUN npm install 
+RUN npm install pystol-wui
+
+## Build the application
 RUN npm run-script build
-
-# Installing the main app with the endpoints
-WORKDIR /usr/src/app
-RUN npm install 
 
 ## Configure ports
 # bind to port 3000
