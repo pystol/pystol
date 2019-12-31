@@ -41,4 +41,4 @@ def load_crd(namespace, name):
         CRD_PLURAL,
         name,
     )
-    return {x: crd[x] for x in ('ruleType', 'selector', 'namespace')}
+    return {x: crd[x] for x in ('collection', 'selector', 'namespace')}

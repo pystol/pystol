@@ -71,6 +71,7 @@ spec:
           image: {{ .Values.appSettings.pystol.controller.image }}
           imagePullPolicy: Always
           command: ["pystol"]
+          args: ["listen"]
           env:
             - name: NAMESPACE
               valueFrom:

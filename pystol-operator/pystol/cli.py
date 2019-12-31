@@ -16,6 +16,7 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+from argparse import Action
 from argparse import ArgumentParser
 from os import getenv
 
@@ -24,7 +25,7 @@ import kubernetes
 from pystol import __version__
 from pystol.get_banner import get_banner
 from pystol.load_crd import load_crd
-from pystol.operator import handle
+from pystol.operator import handle, deploy_action
 
 pystol_version = __version__
 
@@ -38,7 +39,7 @@ def main():
     of Kubernetes events are initiated.
     """
     parser = ArgumentParser(
-        description='Pystol - copy operator.',
+        description='Pystol - CLI',
         prog='pystol'
     )
     parser.add_argument(
@@ -53,13 +54,73 @@ def main():
         action='store_true',
         help='Print Pystol.org banner'
     )
-    parser.add_argument(
+
+    subparsers = parser.add_subparsers(title="Pystol subcommands", dest="command",
+                                       help=("These are the options supported: "
+                                             "The listen option will watch for "
+                                             "CRD events. "
+                                             "The run option will execute the "
+                                             "Pystol actions against the cluster."
+                                            )
+    )
+
+    parser_run = subparsers.add_parser('run', help=("CLI options to run the Pystol "
+                                                    "actions."
+                                                   )
+    )
+
+    parser_run.add_argument(
+        '-c',
+        '--collection',
+        required=True,
+        type=str,
+        help=("Name of the collection to be installed/executed, "
+              "this can be the name of the galaxy collection like: "
+              "newswangerd.collection_demo (from galaxy), "
+              "or "
+              "https://github.com/newswangerd/collection_demo (from a github repo)."
+             )
+    )
+    parser_run.add_argument(
+        '-n',
+        '--name',
+        required=True,
+        type=str,
+        help=("Name of the role to be executed part of the --collection value, "
+              "for example, if the name is: "
+              "factoid "
+              "It will execute: "
+              "newswangerd.collection_demo.factoid "
+              "The content of the role depends on the source of the "
+              "collection, if it's from Ansible Galaxy or a Git repository."
+             )
+    )
+    parser_run.add_argument(
+        '-e',
+        '--extra-vars',
+        type=str,
+        default='{}',
+        help=("Passing additional parameters to the Galaxy collection, for example: "
+              "-e '{\"pacman\":\"mrs\",\"ghosts\":[\"inky\",\"pinky\",\"clyde\",\"sue\"]}' "
+              "This will use the sale JSON syntax as the extra vars from Ansible"
+             )
+    )
+
+    parser_listen = subparsers.add_parser('listen', help=("CLI options to "
+                                                          "watch for CRDs"
+                                                         )
+    )
+
+    parser_listen.add_argument(
+        '-n',
         '--namespace',
         type=str,
         default=getenv('NAMESPACE', 'default'),
         help='Operator Namespace (or ${NAMESPACE}), default: default'
     )
-    parser.add_argument(
+
+    parser_listen.add_argument(
+        '-r',
         '--rule-name',
         type=str,
         default=getenv('RULE_NAME', 'main-rule'),
@@ -67,6 +128,9 @@ def main():
     )
 
     args = parser.parse_args()
+
+    print("Pystol called with the folowing parameters")
+    print(parser.parse_args())
 
     if args.banner:
         print(get_banner())
@@ -80,8 +144,13 @@ def main():
         )
 
     try:
-        specs = load_crd(args.namespace, args.rule_name)
-        handle(specs)
+        if args.command == 'run':
+            print("We will run a Pystol action")
+            deploy_action(args.collection, args.name, args.extra_vars)
+        elif args.command == 'listen':
+            print("We will watch for an action")
+            specs = load_crd(args.namespace, args.rule_name)
+            handle(specs)
 
     except KeyboardInterrupt:
         pass
