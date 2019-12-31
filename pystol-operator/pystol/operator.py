@@ -28,6 +28,55 @@ __all__ = [
     'handle',
 ]
 
+#
+# Part of the operation in charge of adding the custom resources
+# to the Kubernetes cluster, this will create an object with
+# the CLI parameters.
+#
+
+def deploy_action(collection, name, extra_vars):
+    """
+    Here we will determine where we will insert the CR.
+
+    This is a main component of the input for the controller
+    """
+    print(collection)
+    print(name)
+    print(extra_vars)
+
+    resource = {
+      "apiVersion": "pystol.org/v1alpha1",
+      "kind": "PystolAction",
+      "metadata": {"name": "pystol-" + collection + "-" + name},
+      "spec": {"collection": collection, "name": name, "extra-vars": extra_vars, "result": "{}"},
+    }
+
+    create_object(resource)
+
+def create_object(resource):
+    """
+    Insert custom objects to run the actions.
+
+    This is a main component of the input for the controller
+    """
+    kubernetes.config.load_incluster_config()
+    v1 = kubernetes.client.CustomObjectsApi()
+
+    # create the resource
+    v1.create_namespaced_custom_object(
+        group="pystol.org",
+        version="v1alpha1",
+        namespace="default",
+        plural="pystolactions",
+        body=my_resource,
+    )
+
+#
+# Part of the operator which will handle the process of new
+# PystolAction objects, It will watch for them and create a
+# deployment to launch the Ansible role defining the fault
+# injection action.
+#
 
 def handle_event(v1, specs, event):
     """
@@ -35,6 +84,10 @@ def handle_event(v1, specs, event):
 
     This is a main component of the controller
     """
+    # We will here create a new pod (Pystol launcher)
+    # Todeploy the action
+    # This should call ansible runner in somehow.
+
     if event['type'] not in ALLOWED_EVENT_TYPES:
         return
 
@@ -67,6 +120,23 @@ def handle_event(v1, specs, event):
             object_
         )(v1)
 
+    # launch_batch_job()
+
+def launch_batch_job():
+    """
+    Launch the batch job
+
+    To start events processing via operator.
+    """
+
+    kubernetes.config.load_incluster_config()
+    v1 = kubernetes.client.AppsV1Api()
+
+    with open(path.join(path.dirname(__file__), "launcher.yaml")) as f:
+        dep = yaml.safe_load(f)
+        resp = v1.create_namespaced_deployment(
+            body=dep, namespace="default")
+        print("Deployment created. status='%s'" % resp.metadata.name)
 
 def handle(specs):
     """
@@ -78,7 +148,7 @@ def handle(specs):
     v1 = kubernetes.client.CoreV1Api()
 
     # Get the method to watch the objects
-    method = getattr(v1, LIST_TYPES_MAP[specs['ruleType']])
+    method = getattr(v1, LIST_TYPES_MAP[specs['collection']])
     func = partial(method, specs['namespace'])
 
     w = kubernetes.watch.Watch()
