@@ -18,11 +18,16 @@ under the License.
 
 from functools import partial
 from operator import methodcaller
+from os import getenv
 
 import kubernetes
 
-from pystol.const import ALLOWED_EVENT_TYPES, CREATE_TYPES_MAP, \
-    LIST_TYPES_MAP
+from pystol.const import CRD_GROUP, \
+                         CRD_PLURAL, \
+                         CRD_VERSION, \
+                         ALLOWED_EVENT_TYPES, \
+                         CREATE_TYPES_MAP, \
+                         LIST_TYPES_MAP
 
 __all__ = [
     'handle',
@@ -59,7 +64,14 @@ def create_object(resource):
 
     This is a main component of the input for the controller
     """
-    kubernetes.config.load_incluster_config()
+    try:
+        kubernetes.config.load_kube_config(getenv('KUBECONFIG'))
+    except IOError:
+        try:
+            kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
+        except kubernetes.config.config_exception.ConfigException:
+            raise KubernetesException("Could not configure kubernetes python client")
+
     v1 = kubernetes.client.CustomObjectsApi()
 
     # create the resource
@@ -78,79 +90,31 @@ def create_object(resource):
 # injection action.
 #
 
-def handle_event(v1, specs, event):
-    """
-    Process the events from the watch method.
-
-    This is a main component of the controller
-    """
-    # We will here create a new pod (Pystol launcher)
-    # Todeploy the action
-    # This should call ansible runner in somehow.
-
-    if event['type'] not in ALLOWED_EVENT_TYPES:
-        return
-
-    object_ = event['object']
-    labels = object_['metadata'].get('labels', {})
-
-    # Look for the matches using selector
-    for key, value in specs['selector'].items():
-        if labels.get(key) != value:
-            return
-    # Get active namespaces
-    namespaces = map(
-        lambda x: x.metadata.name,
-        filter(
-            lambda x: x.status.phase == 'Active',
-            v1.list_namespace().items
-        )
-    )
-    for namespace in namespaces:
-        # Clear the metadata, set the namespace
-        object_['metadata'] = {
-            'labels': object_['metadata']['labels'],
-            'namespace': namespace,
-            'name': object_['metadata']['name'],
-        }
-        # Call the method for creating/updating an object
-        methodcaller(
-            CREATE_TYPES_MAP[specs['ruleType']],
-            namespace,
-            object_
-        )(v1)
-
-    # launch_batch_job()
-
-def launch_batch_job():
-    """
-    Launch the batch job
-
-    To start events processing via operator.
-    """
-
-    kubernetes.config.load_incluster_config()
-    v1 = kubernetes.client.AppsV1Api()
-
-    with open(path.join(path.dirname(__file__), "launcher.yaml")) as f:
-        dep = yaml.safe_load(f)
-        resp = v1.create_namespaced_deployment(
-            body=dep, namespace="default")
-        print("Deployment created. status='%s'" % resp.metadata.name)
-
-def handle(specs):
+def process_objects():
     """
     Initiate the main method.
 
     To start events processing via operator.
     """
-    kubernetes.config.load_incluster_config()
+    try:
+        kubernetes.config.load_kube_config(getenv('KUBECONFIG'))
+    except IOError:
+        try:
+            kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
+        except kubernetes.config.config_exception.ConfigException:
+            raise KubernetesException("Could not configure kubernetes python client")
+
     v1 = kubernetes.client.CoreV1Api()
 
     # Get the method to watch the objects
-    method = getattr(v1, LIST_TYPES_MAP[specs['collection']])
-    func = partial(method, specs['namespace'])
+    # method = getattr(v1, LIST_TYPES_MAP[specs['spec']])
+    # func = partial(method, specs['namespace'])
+
+    crds = kubernetes.client.CustomObjectsApi()
 
     w = kubernetes.watch.Watch()
-    for event in w.stream(func):
-        handle_event(v1, specs, event)
+    # for event in w.stream(func):
+    for event in w.stream(crds.list_cluster_custom_object, "pystol.org", "v1alpha1", "pystolactions", resource_version=''):
+        print("---------")
+        print("---------")
+        print(event)
