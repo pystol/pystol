@@ -5,17 +5,17 @@ metadata:
   name: pystolactions.pystol.org
 spec:
   group: pystol.org
-  names:
-    kind: PystolAction
-    listKind: PystolActionList
-    plural: pystolactions
-    singular: pystolaction
-  scope: Namespaced
   version: v1alpha1
   versions:
   - name: v1alpha1
     served: true
     storage: true
+  scope: Namespaced
+  names:
+    kind: PystolAction
+    listKind: PystolActionList
+    plural: pystolactions
+    singular: pystolaction
   validation:
     openAPIV3Schema:
       required: ["spec"]

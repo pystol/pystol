@@ -18,8 +18,8 @@ under the License.
 
 # CRD Settings
 CRD_GROUP = 'pystol.org'
-CRD_VERSION = 'v1'
-CRD_PLURAL = 'pystols'
+CRD_VERSION = 'v1alpha1'
+CRD_PLURAL = 'pystolactions'
 
 # Type methods maps
 LIST_TYPES_MAP = {

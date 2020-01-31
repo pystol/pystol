@@ -10,9 +10,12 @@ var usersRouter = require('./pystol-api/k8s');
 
 var app = express();
 
+console.log('Starting app.js');
+
 if (process.env.NODE_ENV === 'development') {
-	var cors = require('cors');
-	app.use(cors());
+    console.log('Entering NODE_ENV as development mode');
+    var cors = require('cors');
+    app.use(cors());
 }
 
 // view engine setup

@@ -44,13 +44,21 @@ router.get('/getPods', (req, res) => {
     If we specify the namespace as '' it should get all namespaces
     otherwise use for example default. TODO: make this configurable
   */
-  k8sApi.listNamespacedPod('')
-    .then((re) => {
-      return res.status(200).json(re.body);
+
+  /*Depending if we are executing the Web ui in Mock mode*/
+
+  if (process.env.NODE_ENV === 'mock') {
+    console.log('Mock for getPods');
+    return res.status(200).json(require('./mocks/getPods.json'));
+  }else{
+    k8sApi.listNamespacedPod('')
+      .then((re) => {
+        return res.status(200).json(re.body);
+      })
+      .catch((err) => {
+        res.send(err);
     })
-    .catch((err) => {
-      res.send(err);
-    })
+  }
 });
 
 /*

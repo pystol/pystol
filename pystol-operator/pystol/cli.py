@@ -24,8 +24,7 @@ import kubernetes
 
 from pystol import __version__
 from pystol.get_banner import get_banner
-from pystol.load_crd import load_crd
-from pystol.operator import handle, deploy_action
+from pystol.operator import process_objects, deploy_action
 
 pystol_version = __version__
 
@@ -54,7 +53,6 @@ def main():
         action='store_true',
         help='Print Pystol.org banner'
     )
-
     subparsers = parser.add_subparsers(title="Pystol subcommands", dest="command",
                                        help=("These are the options supported: "
                                              "The listen option will watch for "
@@ -63,14 +61,11 @@ def main():
                                              "Pystol actions against the cluster."
                                             )
     )
-
     parser_run = subparsers.add_parser('run', help=("CLI options to run the Pystol "
                                                     "actions."
                                                    )
     )
-
     parser_run.add_argument(
-        '-c',
         '--collection',
         required=True,
         type=str,
@@ -82,7 +77,6 @@ def main():
              )
     )
     parser_run.add_argument(
-        '-n',
         '--name',
         required=True,
         type=str,
@@ -96,7 +90,6 @@ def main():
              )
     )
     parser_run.add_argument(
-        '-e',
         '--extra-vars',
         type=str,
         default='{}',
@@ -105,26 +98,21 @@ def main():
               "This will use the sale JSON syntax as the extra vars from Ansible"
              )
     )
-
     parser_listen = subparsers.add_parser('listen', help=("CLI options to "
                                                           "watch for CRDs"
                                                          )
     )
-
     parser_listen.add_argument(
-        '-n',
         '--namespace',
         type=str,
         default=getenv('NAMESPACE', 'default'),
         help='Operator Namespace (or ${NAMESPACE}), default: default'
     )
-
     parser_listen.add_argument(
-        '-r',
-        '--rule-name',
+        '--name',
         type=str,
-        default=getenv('RULE_NAME', 'main-rule'),
-        help='CRD Name (or ${RULE_NAME}), default: main-rule'
+        default=getenv('NAME', 'pystolactions'),
+        help='CRD Name (or ${NAME}), default: pystolactions'
     )
 
     args = parser.parse_args()
@@ -137,23 +125,20 @@ def main():
         exit()
 
     try:
-        kubernetes.config.load_incluster_config()
-    except kubernetes.config.config_exception.ConfigException:
-        raise RuntimeError(
-            'Can not read Kubernetes cluster configuration.'
-        )
-
+        kubernetes.config.load_kube_config(getenv('KUBECONFIG'))
+    except IOError:
+        try:
+            kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
+        except kubernetes.config.config_exception.ConfigException:
+            raise KubernetesException("Could not configure kubernetes python client")
     try:
         if args.command == 'run':
             print("We will run a Pystol action")
             deploy_action(args.collection, args.name, args.extra_vars)
         elif args.command == 'listen':
-            print("We will watch for an action")
-            specs = load_crd(args.namespace, args.rule_name)
-            handle(specs)
-
+            print("We will watch for object to process")
+            process_objects()
     except KeyboardInterrupt:
         pass
-
     except Exception as err:
-        raise RuntimeError('Oh no! I am dying...' + err)
+        raise RuntimeError('There is something wrong...' + err)
