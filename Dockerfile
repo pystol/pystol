@@ -38,7 +38,7 @@ RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 RUN mkdir /etc/ansible/ /ansible
 RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # Install the collection codebase
-RUN ansible-galaxy collection install pystol.action
+RUN ansible-galaxy collection install pystol.actions
 
 ## Copying the UI files
 # Create a directory for client
