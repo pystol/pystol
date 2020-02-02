@@ -104,16 +104,6 @@ def main():
               "pystol.actions.kill-pods "
              )
     )
-    parser_run.add_argument(
-        '-e',
-        '--extra-vars',
-        type=str,
-        default='{}',
-        help=("Passing additional parameters to the role execution, for example: "
-              "\"{'pacman':'mrs','ghosts':['inky','pinky','clyde','sue']}\" "
-              "This will use the same JSON syntax as the extra vars from Ansible"
-             )
-    )
     parser_listen = subparsers.add_parser('listen', help=("CLI options to "
                                                           "watch for CRDs"
                                                          )
@@ -141,7 +131,7 @@ def main():
     try:
         if args.command == 'run':
             print("We will run a Pystol action")
-            insert_action(args.namespace, args.collection, args.role, args.extra_vars)
+            insert_action(args.namespace, args.collection, args.role)
         elif args.command == 'listen':
             print("We will watch for objects to process")
             try:
