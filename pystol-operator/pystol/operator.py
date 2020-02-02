@@ -166,10 +166,8 @@ def kube_create_job_object(name, container_image, namespace="default", container
         env_list.append( kubernetes.client.V1EnvVar(name=env_name, value=env_value) )
 
     command = ["/bin/bash"]
-    args = ["-c", "ansible-galaxy collection install newswangerd.collection_demo; \
-                   ansible localhost -m newswangerd.collection_demo.real_facts; exit 0"]
-    #               ansible-playbook /path/to/collection/collectoin_in_playbook.yml -i /etc/ansible/hosts -vv; exit 0"]
-    # args = ["-c", "kubectl get pods"]
+    args = ["-c", "ansible-galaxy collection install pystol.actions; \
+                   ansible -m include_role -a 'name=pystol.actions.pingtest' localhost -vv; exit 0"]
 
     container = kubernetes.client.V1Container(name=container_name, image=container_image, command=command, args=args, env=env_list)
     template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
