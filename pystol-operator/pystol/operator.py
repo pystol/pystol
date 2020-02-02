@@ -197,7 +197,7 @@ def kube_create_job_object(name,
 
     command = ["/bin/bash"]
     args = ["-c", "ansible-galaxy collection install " + action_namespace + "." + action_collection + "; \
-                   ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' localhost -vv; exit 0"]
+                   ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e 'ansible_python_interpreter=/usr/bin/python3' localhost -vv; exit 0"]
 
     container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)
     template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
