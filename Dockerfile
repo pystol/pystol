@@ -36,8 +36,7 @@ RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 
 # Configure Ansible inventory
 RUN mkdir /etc/ansible/ /ansible
-RUN echo "[local]" >> /etc/ansible/hosts
-RUN echo "127.0.0.1" >> /etc/ansible/hosts
+RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 
 ## Copying the UI files
 # Create a directory for client

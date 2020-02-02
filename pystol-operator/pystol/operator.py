@@ -88,7 +88,11 @@ def insert_pystol_object(collection, name, extra_vars):
 # the selected Pystol action.
 #
 
-def watch_for_pystol_actions():
+def watch_for_pystol_jobs(stop):
+    while True:
+      a = 2
+
+def watch_for_pystol_objects(stop):
     """
     Initiate the main listening method.
 
@@ -96,18 +100,6 @@ def watch_for_pystol_actions():
     added to the cluster.
     The watcher is defined here.
     """
-    try:
-        if 'KUBECONFIG' in os.environ:
-            kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
-        else:
-            kubernetes.config.load_kube_config()
-    except IOError:
-        try:
-            kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
-        except kubernetes.config.config_exception.ConfigException:
-            raise KubernetesException("Could not configure kubernetes python client")
-
-
     w = kubernetes.watch.Watch()
     for event in w.stream(custom_obj.list_cluster_custom_object, CRD_DOMAIN, CRD_VERSION, CRD_PLURAL, resource_version=''):
         obj = event["object"]
@@ -147,9 +139,8 @@ def execute_pystol_action(crds, obj):
     api_instance = kubernetes.client.BatchV1Api()
 
     container_image = "quay.io/pystol/pystol-operator-stable:latest"
-    job_name = name + "-" + id_generator()
 
-    body = kube_create_job_object(job_name, container_image, env_vars={"VAR": "TESTING"})
+    body = kube_create_job_object(name, container_image, env_vars={"VAR": "TESTING"})
     try: 
         api_response = api_instance.create_namespaced_job("default", body, pretty=True)
         print(api_response)
@@ -175,8 +166,10 @@ def kube_create_job_object(name, container_image, namespace="default", container
         env_list.append( kubernetes.client.V1EnvVar(name=env_name, value=env_value) )
 
     command = ["/bin/bash"]
-    # args = ["-c", "ansible-playbook /path/to/collection/collectoin_in_playbook.yml -i /etc/ansible/hosts -vv; exit 0"]
-    args = ["-c", "kubectl", "get", "pods"]
+    args = ["-c", "ansible-galaxy collection install newswangerd.collection_demo; \
+                   ansible localhost -m newswangerd.collection_demo.real_facts; exit 0"]
+    #               ansible-playbook /path/to/collection/collectoin_in_playbook.yml -i /etc/ansible/hosts -vv; exit 0"]
+    # args = ["-c", "kubectl get pods"]
 
     container = kubernetes.client.V1Container(name=container_name, image=container_image, command=command, args=args, env=env_list)
     template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
