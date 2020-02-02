@@ -21,13 +21,16 @@ from argparse import ArgumentParser
 
 import kubernetes
 import os
+import threading
 
 from pystol import __version__
 from pystol.get_banner import get_banner
-from pystol.operator import watch_for_pystol_actions, insert_pystol_object
+from pystol.operator import watch_for_pystol_objects, watch_for_pystol_jobs, insert_pystol_object
 
 pystol_version = __version__
 
+t1_stop = threading.Event()
+t2_stop = threading.Event()
 
 def main():
     """
@@ -141,8 +144,18 @@ def main():
             insert_action(args.namespace, args.collection, args.role, args.extra_vars)
         elif args.command == 'listen':
             print("We will watch for objects to process")
-            watch_for_pystol_actions()
+            try:
+                t1 = threading.Thread(target=watch_for_pystol_objects, args=(t1_stop,))
+                t1.start()
+                t2 = threading.Thread(target=watch_for_pystol_jobs, args=(t2_stop,))
+                t2.start()
+            except:
+                print ("Error: unable to start thread")
+
     except KeyboardInterrupt:
         pass
     except Exception as err:
         raise RuntimeError('There is something wrong...' + err)
+
+    while not t2_stop.is_set() or not not t1_stop.is_set():
+        pass

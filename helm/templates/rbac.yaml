@@ -28,7 +28,6 @@ subjects:
 - kind: ServiceAccount
   name: pystol-acc
   namespace: default
-#- kind: ServiceAccount
-#  # Reference to upper's `metadata.name`
-#  name: default
-#  # Reference to upper's `metadata.namespace`
+- kind: ServiceAccount
+  name: default
+  namespace: default
