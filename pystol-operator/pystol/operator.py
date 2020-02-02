@@ -55,7 +55,7 @@ v1 = kubernetes.client.CoreV1Api()
 # the CLI parameters.
 #
 
-def insert_pystol_object(collection, name, extra_vars):
+def insert_pystol_object(collection, name):
     """
     Here we will determine where we will insert the CR.
 
@@ -63,13 +63,12 @@ def insert_pystol_object(collection, name, extra_vars):
     """
     print(collection)
     print(name)
-    print(extra_vars)
 
     resource = {
       "apiVersion": "pystol.org/v1alpha1",
       "kind": "PystolAction",
       "metadata": {"name": "pystol-" + collection + "-" + name},
-      "spec": {"collection": collection, "name": name, "extra-vars": extra_vars, "result": "{}"},
+      "spec": {"collection": collection, "name": name, "result": "{}"},
     }
 
     # create the resource
@@ -132,6 +131,20 @@ def execute_pystol_action(crds, obj):
     namespace = metadata.get("namespace")
     obj["spec"]["executed"] = True
 
+    # The main Pystol object initial info are the parameters:
+    # action_namespace
+    # action_collection
+    # action_role
+    # action_result
+    # action_executed
+
+    action_spec_params = obj.get("spec")
+    action_namespace = action_spec_params["namespace"]
+    action_collection = action_spec_params["collection"]
+    action_role = action_spec_params["role"]
+    action_result = action_spec_params["result"]
+    action_executed = action_spec_params["executed"]
+
     print("Updating: %s" % name)
     crds.replace_namespaced_custom_object(CRD_DOMAIN, CRD_VERSION, namespace, CRD_PLURAL, name, obj)
 
@@ -140,7 +153,16 @@ def execute_pystol_action(crds, obj):
 
     container_image = "quay.io/pystol/pystol-operator-stable:latest"
 
-    body = kube_create_job_object(name, container_image, env_vars={"VAR": "TESTING"})
+    body = kube_create_job_object(name=name,
+                                  container_image=container_image,
+                                  namespace=namespace,
+                                  env_vars={"VAR": "TESTING"},
+                                  action_namespace=action_namespace,
+                                  action_collection=action_collection,
+                                  action_role=action_role,
+                                  action_result=action_result,
+                                  action_executed=action_executed)
+
     try: 
         api_response = api_instance.create_namespaced_job("default", body, pretty=True)
         print(api_response)
@@ -148,7 +170,15 @@ def execute_pystol_action(crds, obj):
         print("Exception when calling BatchV1Api->create_namespaced_job: %s\n" % e)
     return
 
-def kube_create_job_object(name, container_image, namespace="default", container_name="jobcontainer", env_vars={}):
+def kube_create_job_object(name,
+                           container_image,
+                           namespace,
+                           env_vars,
+                           action_namespace,
+                           action_collection,
+                           action_role,
+                           action_result,
+                           action_executed):
 
     # Body is the object Body
     body = kubernetes.client.V1Job(api_version="batch/v1", kind="Job")
@@ -157,7 +187,7 @@ def kube_create_job_object(name, container_image, namespace="default", container
     body.metadata = kubernetes.client.V1ObjectMeta(namespace=namespace, name=name)
     # And a Status
     body.status = kubernetes.client.V1JobStatus()
-     # Now we start with the Template...
+    # Now we start with the Template...
     template = kubernetes.client.V1PodTemplate()
     template.template = kubernetes.client.V1PodTemplateSpec()
     # Passing Arguments in Env:
@@ -166,10 +196,10 @@ def kube_create_job_object(name, container_image, namespace="default", container
         env_list.append( kubernetes.client.V1EnvVar(name=env_name, value=env_value) )
 
     command = ["/bin/bash"]
-    args = ["-c", "ansible-galaxy collection install pystol.actions; \
-                   ansible -m include_role -a 'name=pystol.actions.pingtest' localhost -vv; exit 0"]
+    args = ["-c", "ansible-galaxy collection install " + action_namespace + "." + action_collection + "; \
+                   ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' localhost -vv; exit 0"]
 
-    container = kubernetes.client.V1Container(name=container_name, image=container_image, command=command, args=args, env=env_list)
+    container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)
     template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
     # And finaly we can create our V1JobSpec!
     body.spec = kubernetes.client.V1JobSpec(ttl_seconds_after_finished=600, template=template.template)
