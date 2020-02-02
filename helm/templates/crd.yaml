@@ -21,14 +21,14 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["collection","name","extra-vars"]
+          required: ["namespace","collection","role"]
           properties:
+            namespace:
+              type: "string"
+              minimum: 1
             collection:
               type: "string"
               minimum: 1
-            name:
-              type: "string"
-              minimum: 1
-            extra-vars:
+            role:
               type: "string"
               minimum: 1
