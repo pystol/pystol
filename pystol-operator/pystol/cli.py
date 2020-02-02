@@ -18,13 +18,13 @@ under the License.
 
 from argparse import Action
 from argparse import ArgumentParser
-from os import getenv
 
 import kubernetes
+import os
 
 from pystol import __version__
 from pystol.get_banner import get_banner
-from pystol.operator import process_objects, deploy_action
+from pystol.operator import watch_for_pystol_actions, insert_pystol_object
 
 pystol_version = __version__
 
@@ -66,53 +66,54 @@ def main():
                                                    )
     )
     parser_run.add_argument(
+       '-n',
+       '--namespace',
+        required=True,
+        type=str,
+        help=("Name of the namespace to be referenced, "
+              "this will be the Galaxy handler, like: "
+              "pystol (from galaxy), "
+              "which will be referenced as "
+              "https://galaxy.ansible.com/pystol"
+             )
+    )
+    parser_run.add_argument(
+        '-c',
         '--collection',
         required=True,
         type=str,
         help=("Name of the collection to be installed/executed, "
               "this can be the name of the galaxy collection like: "
-              "newswangerd.collection_demo (from galaxy), "
-              "or "
-              "https://github.com/newswangerd/collection_demo (from a github repo)."
+              "actions (from galaxy), "
+              "which will be referenced as "
+              "https://galaxy.ansible.com/pystol/actions"
              )
     )
     parser_run.add_argument(
-        '--name',
+        '-r',
+        '--role',
         required=True,
         type=str,
-        help=("Name of the role to be executed part of the --collection value, "
+        help=("Name of the role to be executed part of the namespace and collection value, "
               "for example, if the name is: "
-              "factoid "
+              "kill-pods "
               "It will execute: "
-              "newswangerd.collection_demo.factoid "
-              "The content of the role depends on the source of the "
-              "collection, if it's from Ansible Galaxy or a Git repository."
+              "pystol.actions.kill-pods "
              )
     )
     parser_run.add_argument(
+        '-e',
         '--extra-vars',
         type=str,
         default='{}',
-        help=("Passing additional parameters to the Galaxy collection, for example: "
-              "-e '{\"pacman\":\"mrs\",\"ghosts\":[\"inky\",\"pinky\",\"clyde\",\"sue\"]}' "
-              "This will use the sale JSON syntax as the extra vars from Ansible"
+        help=("Passing additional parameters to the role execution, for example: "
+              "\"{'pacman':'mrs','ghosts':['inky','pinky','clyde','sue']}\" "
+              "This will use the same JSON syntax as the extra vars from Ansible"
              )
     )
     parser_listen = subparsers.add_parser('listen', help=("CLI options to "
                                                           "watch for CRDs"
                                                          )
-    )
-    parser_listen.add_argument(
-        '--namespace',
-        type=str,
-        default=getenv('NAMESPACE', 'default'),
-        help='Operator Namespace (or ${NAMESPACE}), default: default'
-    )
-    parser_listen.add_argument(
-        '--name',
-        type=str,
-        default=getenv('NAME', 'pystolactions'),
-        help='CRD Name (or ${NAME}), default: pystolactions'
     )
 
     args = parser.parse_args()
@@ -125,7 +126,10 @@ def main():
         exit()
 
     try:
-        kubernetes.config.load_kube_config(getenv('KUBECONFIG'))
+        if 'KUBECONFIG' in os.environ:
+            kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
+        else:
+            kubernetes.config.load_kube_config()
     except IOError:
         try:
             kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
@@ -134,10 +138,10 @@ def main():
     try:
         if args.command == 'run':
             print("We will run a Pystol action")
-            deploy_action(args.collection, args.name, args.extra_vars)
+            insert_action(args.namespace, args.collection, args.role, args.extra_vars)
         elif args.command == 'listen':
-            print("We will watch for object to process")
-            process_objects()
+            print("We will watch for objects to process")
+            watch_for_pystol_actions()
     except KeyboardInterrupt:
         pass
     except Exception as err:

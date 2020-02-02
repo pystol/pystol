@@ -17,7 +17,7 @@ under the License.
 """
 
 # CRD Settings
-CRD_GROUP = 'pystol.org'
+CRD_DOMAIN = 'pystol.org'
 CRD_VERSION = 'v1alpha1'
 CRD_PLURAL = 'pystolactions'
 
