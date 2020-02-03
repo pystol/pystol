@@ -29,13 +29,15 @@ if version_info[:2] < (3, 5):
 _NAME = 'pystol'
 _REVISION = '0.0.1'
 
-pystol_revision = os.environ.get('PYSTOL_REVISION', default="")
+pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
     _REVISION = _REVISION + "." + pystol_revision
 
 setup(
     name=_NAME,
     version=_REVISION,
+    license='Apache-2.0',
+    url = 'https://github.com/pystol/pystol',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',
