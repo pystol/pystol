@@ -152,6 +152,7 @@ def execute_pystol_action(crds, obj):
     # action_namespace
     # action_collection
     # action_role
+    # action_source
     # action_result
     # action_executed
 
@@ -159,6 +160,7 @@ def execute_pystol_action(crds, obj):
     action_namespace = action_spec_params["namespace"]
     action_collection = action_spec_params["collection"]
     action_role = action_spec_params["role"]
+    action_source = action_spec_params["source"]
     action_result = action_spec_params["result"]
     action_executed = action_spec_params["executed"]
 
@@ -177,6 +179,7 @@ def execute_pystol_action(crds, obj):
                                   action_namespace=action_namespace,
                                   action_collection=action_collection,
                                   action_role=action_role,
+                                  action_source=action_source,
                                   action_result=action_result,
                                   action_executed=action_executed)
 
@@ -194,6 +197,7 @@ def kube_create_job_object(name,
                            action_namespace,
                            action_collection,
                            action_role,
+                           action_source,
                            action_result,
                            action_executed):
 
@@ -213,7 +217,11 @@ def kube_create_job_object(name,
         env_list.append( kubernetes.client.V1EnvVar(name=env_name, value=env_value) )
 
     command = ["/bin/bash"]
-    args = ["-c", "ansible-galaxy collection install " + action_namespace + "." + action_collection + "; \
+    args = ["-c", "echo '---' > requirements.yml; \
+                   echo 'collections:' >> requirements.yml; \
+                   echo '- name: " + action_namespace + "." + action_collection + "' >> requirements.yml; \
+                   echo '  source: " + action_source + "' >> requirements.yml; \
+                   ansible-galaxy collection install --force -r requirements.yml; \
                    ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e 'ansible_python_interpreter=/usr/bin/python3' localhost -vv; exit 0"]
 
     container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)

@@ -104,6 +104,17 @@ def main():
               "pystol.actions.kill-pods "
              )
     )
+    parser_run.add_argument(
+        '-s',
+        '--source',
+        default="galaxy.ansible.com",
+        type=str,
+        help=("The source URL where we will fetch the collection with the Pystol actions."
+              "It can be i.e. git+http://github.com/pystol/pystol-galaxy.git\n"
+              "Defaults to: galaxy.ansible.com"
+             )
+    )
+
     parser_listen = subparsers.add_parser('listen', help=("CLI options to "
                                                           "watch for CRDs"
                                                          )
@@ -121,7 +132,7 @@ def main():
     try:
         if args.command == 'run':
             print("We will run a Pystol action")
-            insert_action(args.namespace, args.collection, args.role)
+            insert_action(args.namespace, args.collection, args.role, args.source)
         elif args.command == 'listen':
             print("We will watch for objects to process")
             try:

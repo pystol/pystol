@@ -21,7 +21,7 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["namespace","collection","role"]
+          required: ["namespace","collection","role","source"]
           properties:
             namespace:
               type: "string"
@@ -29,6 +29,6 @@ spec:
             collection:
               type: "string"
               minimum: 1
-            role:
+            source:
               type: "string"
               minimum: 1
