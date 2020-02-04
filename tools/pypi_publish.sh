@@ -56,7 +56,8 @@ done
 
 if [ "$publish" == "1" ]; then
     echo 'This version is not published, publishing!...'
-    python ./pystol-operator/setup.py sdist
+    cd ./pystol-operator
+    python setup.py sdist
     twine check dist/*
 
 cat <<EOF > ~/.pypirc
@@ -78,5 +79,5 @@ username = __token__
 password = $KARG
 EOF
 
-    twine upload --verbose --repository pystol dist/*
+#    twine upload --verbose --repository pystol dist/*
 fi

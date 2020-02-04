@@ -27,13 +27,13 @@ if version_info[:2] < (3, 5):
     )
 
 _NAME = 'pystol'
-_REVISION = '0.0.7'
+_REVISION = '0.0.9'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
     _REVISION = _REVISION + "." + pystol_revision
 
-with open('./README.md') as f:
+with open('../README.md') as f:
     long_description = f.read()
 
 setup(
@@ -42,7 +42,7 @@ setup(
     description='The Pystol CLI',
     long_description_content_type='text/markdown',
     long_description=long_description,
-    url = 'https://github.com/pystol/pystol',
+    url = 'https://www.pystol.org',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -52,7 +52,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    author='Pystol',
+    author='Carlos Camacho',
     author_email='carloscamachoucv@gmail.com',
     include_package_data=True,
     install_requires=[
