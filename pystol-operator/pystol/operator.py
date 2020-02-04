@@ -49,7 +49,8 @@ except IOError:
     try:
         kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
     except:
-        message = ("The Python Kubernetes client could not be configured at this time.\n"
+        message = ("---\n"
+                   "The Python Kubernetes client could not be configured at this time.\n"
                    "You need a working Kubernetes deployment to make Pystol work.\n"
                    "Check the following:\n"
                    "Use the env var KUBECONFIG with the path to your K8s config file like:\n"
@@ -60,7 +61,7 @@ except IOError:
         print("The current Pystol version is: %s"%(pystol_version))
         print("")
         print("Bye...")
-        sys.exit(1)
+        sys.exit(0)
 
 custom_obj = kubernetes.client.CustomObjectsApi()
 v1 = kubernetes.client.CoreV1Api()
