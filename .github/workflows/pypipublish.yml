@@ -27,10 +27,8 @@ jobs:
     - name: Create pypi package and publish
       run: |
         ./tools/pypi_publish.sh -k ${{ secrets.GITHUB_PYPI_PYSTOL_TOKEN }}
-    - name: Install latest Pystol version build locally
+    - name: Install latest Pystol version build locally if we published a new version
       run: |
         cd ./pystol-operator
-        python -m pip install dist/*
-        pystol -h
-        pystol -v
-        pystol -b
+        [ -d "dist" ] && python -m pip install dist/*
+        [ -d "dist" ] && pystol -v
