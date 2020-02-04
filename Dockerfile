@@ -32,6 +32,7 @@ RUN apt-get install python3-pip -y
 RUN echo "The pystol revision is ${revision}"
 
 RUN pip3 install -r /pystol-operator/requirements.txt
+RUN touch README.md
 RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 
 # Configure Ansible inventory

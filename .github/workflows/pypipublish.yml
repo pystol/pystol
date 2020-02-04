@@ -3,6 +3,7 @@ on:
   push:
     paths:
     - 'pystol-operator/setup.py'
+    - '.github/workflows/pypipublish.yml'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +29,9 @@ jobs:
         ./tools/pypi_publish.sh -k ${{ secrets.GITHUB_PYPI_PYSTOL_TOKEN }}
     - name: Install latest Pystol version from pypi
       run: |
-        pip install pystol
+        sleep 1m
+        current_pystol_version=$(cat ./pystol-operator/setup.py | grep "_REVISION = '" | cut -d "'" -f 2)
+        pip install pystol==$current_pystol_version --force-reinstall
         pystol -h
         pystol -v
         pystol -b

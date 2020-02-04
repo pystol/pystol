@@ -27,19 +27,23 @@ if version_info[:2] < (3, 5):
     )
 
 _NAME = 'pystol'
+_DESCRIPTION = 'The Pystol CLI'
 _REVISION = '0.0.9'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
     _REVISION = _REVISION + "." + pystol_revision
 
-with open('../README.md') as f:
-    long_description = f.read()
+if os.path.isfile('../README.md'):
+    with open('../README.md') as f:
+        long_description = f.read()
+else:
+        long_description = _DESCRIPTION
 
 setup(
     name=_NAME,
     version=_REVISION,
-    description='The Pystol CLI',
+    description=_DESCRIPTION,
     long_description_content_type='text/markdown',
     long_description=long_description,
     url = 'https://www.pystol.org',
