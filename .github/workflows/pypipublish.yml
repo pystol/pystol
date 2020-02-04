@@ -27,11 +27,10 @@ jobs:
     - name: Create pypi package and publish
       run: |
         ./tools/pypi_publish.sh -k ${{ secrets.GITHUB_PYPI_PYSTOL_TOKEN }}
-    - name: Install latest Pystol version from pypi
+    - name: Install latest Pystol version build locally
       run: |
-        sleep 1m
-        current_pystol_version=$(cat ./pystol-operator/setup.py | grep "_REVISION = '" | cut -d "'" -f 2)
-        pip install pystol==$current_pystol_version --force-reinstall
+        cd ./pystol-operator
+        python -m pip install dist/*
         pystol -h
         pystol -v
         pystol -b
