@@ -1,0 +1,28 @@
+name: pypi-publish-build
+on:
+  push:
+    paths:
+    - 'pystol-operator/setup.py'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        sudo apt update -y
+        sudo apt install ansible jq -y
+        python -m pip install --upgrade pip
+        pip install tox shyaml
+        pip install twine
+    - name: Create pypi package and publish
+      run: |
+        ./tools/pypi_publish.sh -k ${{ secrets.GITHUB_PYPI_PYSTOL_TOKEN }}

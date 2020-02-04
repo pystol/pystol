@@ -7,6 +7,6 @@ nohup.out
 *env-config.js*
 *pystol-ui/.env
 *pystol-ui/dist
-*pystol-operator/dist
-*pystol-operator/pystol.egg-info
+*dist
+*pystol.egg-info
 *package-lock.json

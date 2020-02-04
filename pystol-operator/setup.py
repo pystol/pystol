@@ -27,16 +27,21 @@ if version_info[:2] < (3, 5):
     )
 
 _NAME = 'pystol'
-_REVISION = '0.0.1'
+_REVISION = '0.0.6'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
     _REVISION = _REVISION + "." + pystol_revision
 
+with open('./README.md') as f:
+    long_description = f.read()
+
 setup(
     name=_NAME,
     version=_REVISION,
-    license='Apache-2.0',
+    description='The Pystol CLI',
+    long_description_content_type='text/markdown',
+    long_description=long_description,
     url = 'https://github.com/pystol/pystol',
     packages=find_packages(),
     classifiers=[
