@@ -27,7 +27,7 @@ if version_info[:2] < (3, 5):
     )
 
 _NAME = 'pystol'
-_REVISION = '0.0.6'
+_REVISION = '0.0.7'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
