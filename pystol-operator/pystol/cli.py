@@ -119,16 +119,6 @@ def main():
         exit()
 
     try:
-        if 'KUBECONFIG' in os.environ:
-            kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
-        else:
-            kubernetes.config.load_kube_config()
-    except IOError:
-        try:
-            kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
-        except kubernetes.config.config_exception.ConfigException:
-            raise KubernetesException("Could not configure kubernetes python client")
-    try:
         if args.command == 'run':
             print("We will run a Pystol action")
             insert_action(args.namespace, args.collection, args.role)

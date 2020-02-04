@@ -23,7 +23,9 @@ import kubernetes
 import os
 import random
 import string
+import sys
 
+from pystol import __version__
 from pystol.const import CRD_DOMAIN, \
                          CRD_PLURAL, \
                          CRD_VERSION, \
@@ -35,6 +37,9 @@ __all__ = [
     'handle',
 ]
 
+
+pystol_version = __version__
+
 try:
     if 'KUBECONFIG' in os.environ:
         kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
@@ -43,8 +48,19 @@ try:
 except IOError:
     try:
         kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
-    except kubernetes.config.config_exception.ConfigException:
-        raise KubernetesException("Could not configure kubernetes python client")
+    except:
+        message = ("The Python Kubernetes client could not be configured at this time.\n"
+                   "You need a working Kubernetes deployment to make Pystol work.\n"
+                   "Check the following:\n"
+                   "Use the env var KUBECONFIG with the path to your K8s config file like:\n"
+                   "    export KUBECONFIG=~/.kube/config\n"
+                   "Or run Pystol from within the cluster to make use of load_incluster_config.")
+        print(message)
+        print("---")
+        print("The current Pystol version is: %s"%(pystol_version))
+        print("")
+        print("Bye...")
+        sys.exit(1)
 
 custom_obj = kubernetes.client.CustomObjectsApi()
 v1 = kubernetes.client.CoreV1Api()
