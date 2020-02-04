@@ -30,5 +30,9 @@ jobs:
     - name: Install latest Pystol version build locally if we published a new version
       run: |
         cd ./pystol-operator
-        [ -d "dist" ] && python -m pip install dist/*
-        [ -d "dist" ] && pystol -v
+        if [ -d "./dist" ] 
+        then
+            python -m pip install dist/*
+            pystol -v
+        fi
+
