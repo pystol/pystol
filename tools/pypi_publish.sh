@@ -79,5 +79,5 @@ username = __token__
 password = $KARG
 EOF
 
-#    twine upload --verbose --repository pystol dist/*
+    twine upload --verbose --repository pystol dist/*
 fi
