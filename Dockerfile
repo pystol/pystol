@@ -1,5 +1,4 @@
-# version 10 of node
-FROM node:10
+FROM centos:latest
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
@@ -10,30 +9,34 @@ ARG revision
 # Bundle app source
 COPY . .
 
-## Install requisites for getting curl with https
-RUN apt-get update && apt-get install apt-transport-https -y
-
-## Install kubectl repository
-RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-
-## Update repos
-RUN apt-get update
-
 ## Installing pystol launcher requirements
 # Install kubectl
-RUN apt-get install kubectl -y
+RUN echo -e "\
+[kubernetes] \n\
+name=Kubernetes \n\
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64 \n\
+enabled=1 \n\
+gpgcheck=1 \n\
+repo_gpgcheck=1 \n\
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg \
+" > /etc/yum.repos.d/kubernetes.repo
+
+RUN yum install -y kubectl
 
 ## Installing the operator code
 # Installing Python3
-RUN apt-get install python3 -y
-RUN apt-get install python3-pip -y
+RUN yum install python3 -y
+RUN yum install python3-pip -y
+RUN yum install git -y
+
 # We install the operator and dependencies
 RUN echo "The pystol revision is ${revision}"
-
-RUN pip3 install -r /pystol-operator/requirements.txt
+RUN pip3 install -r /pystol-operator/requirements.txt --verbose --no-cache-dir
 RUN touch README.md
 RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
+
+# Install NodeJS
+RUN yum install nodejs -y
 
 # Configure Ansible inventory
 RUN mkdir /etc/ansible/ /ansible

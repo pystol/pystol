@@ -19,6 +19,7 @@ under the License.
 from functools import partial
 from operator import methodcaller
 
+import json
 import kubernetes
 import os
 import random
@@ -37,17 +38,29 @@ __all__ = [
     'handle',
 ]
 
-
 pystol_version = __version__
 
-try:
-    if 'KUBECONFIG' in os.environ:
-        kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
-    else:
-        kubernetes.config.load_kube_config()
-except IOError:
+#custom_obj = kubernetes.client.CustomObjectsApi()
+#v1 = kubernetes.client.CoreV1Api()
+
+#
+# We load the Kubernetes cluster config depending
+# where we execute the operator from.
+#
+
+def load_kubernetes_config():
+    """
+    Here we will load the initial config details
+
+    We load the config depending where we execute the code from
+    """
     try:
-        kubernetes.config.load_incluster_config()  # We set up the client from within a k8s pod
+        if 'KUBERNETES_PORT' in os.environ:
+            kubernetes.config.load_incluster_config() # We set up the client from within a k8s pod
+        elif 'KUBECONFIG' in os.environ:
+            kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
+        else:
+            kubernetes.config.load_kube_config()
     except:
         message = ("---\n"
                    "The Python Kubernetes client could not be configured at this time.\n"
@@ -63,9 +76,6 @@ except IOError:
         print("Bye...")
         sys.exit(0)
 
-custom_obj = kubernetes.client.CustomObjectsApi()
-v1 = kubernetes.client.CoreV1Api()
-
 #
 # Part of the operation in charge of adding the custom resources
 # to the Kubernetes cluster, this will create an object with
@@ -78,6 +88,10 @@ def insert_pystol_object(collection, name):
 
     This is a main component of the input for the controller
     """
+    load_kubernetes_config()
+    custom_obj = kubernetes.client.CustomObjectsApi()
+    v1 = kubernetes.client.CoreV1Api()
+
     print(collection)
     print(name)
 
@@ -116,6 +130,10 @@ def watch_for_pystol_objects(stop):
     added to the cluster.
     The watcher is defined here.
     """
+    load_kubernetes_config()
+    custom_obj = kubernetes.client.CustomObjectsApi()
+    v1 = kubernetes.client.CoreV1Api()
+
     w = kubernetes.watch.Watch()
     for event in w.stream(custom_obj.list_cluster_custom_object, CRD_DOMAIN, CRD_VERSION, CRD_PLURAL, resource_version=''):
         obj = event["object"]
@@ -139,6 +157,9 @@ def execute_pystol_action(crds, obj):
     This method will execute the Pystol action
     defined in the custom object.
     """
+    load_kubernetes_config()
+    custom_obj = kubernetes.client.CustomObjectsApi()
+    v1 = kubernetes.client.CoreV1Api()
 
     metadata = obj.get("metadata")
     if not metadata:
@@ -153,6 +174,7 @@ def execute_pystol_action(crds, obj):
     # action_collection
     # action_role
     # action_source
+    # action_extra_vars
     # action_result
     # action_executed
 
@@ -161,6 +183,7 @@ def execute_pystol_action(crds, obj):
     action_collection = action_spec_params["collection"]
     action_role = action_spec_params["role"]
     action_source = action_spec_params["source"]
+    action_extra_vars = action_spec_params["extra-vars"]
     action_result = action_spec_params["result"]
     action_executed = action_spec_params["executed"]
 
@@ -180,10 +203,11 @@ def execute_pystol_action(crds, obj):
                                   action_collection=action_collection,
                                   action_role=action_role,
                                   action_source=action_source,
+                                  action_extra_vars=action_extra_vars,
                                   action_result=action_result,
                                   action_executed=action_executed)
 
-    try: 
+    try:
         api_response = api_instance.create_namespaced_job("default", body, pretty=True)
         print(api_response)
     except ApiException as e:
@@ -198,8 +222,12 @@ def kube_create_job_object(name,
                            action_collection,
                            action_role,
                            action_source,
+                           action_extra_vars,
                            action_result,
                            action_executed):
+    load_kubernetes_config()
+    custom_obj = kubernetes.client.CustomObjectsApi()
+    v1 = kubernetes.client.CoreV1Api()
 
     # Body is the object Body
     body = kubernetes.client.V1Job(api_version="batch/v1", kind="Job")
@@ -216,14 +244,34 @@ def kube_create_job_object(name,
     for env_name, env_value in env_vars.items():
         env_list.append( kubernetes.client.V1EnvVar(name=env_name, value=env_value) )
 
-    command = ["/bin/bash"]
-    args = ["-c", "echo '---' > requirements.yml; \
-                   echo 'collections:' >> requirements.yml; \
-                   echo '- name: " + action_namespace + "." + action_collection + "' >> requirements.yml; \
-                   echo '  source: " + action_source + "' >> requirements.yml; \
-                   ansible-galaxy collection install --force -r requirements.yml; \
-                   ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e 'ansible_python_interpreter=/usr/bin/python3' localhost -vv; exit 0"]
+    # Python interpreter as an extra variable
+    # python object to be appended
+    y = {"ansible_python_interpreter":"/usr/bin/python3","pystol_action_id":name}
+    # parsing JSON string:
+    extra_ansible_vars = json.loads(action_extra_vars)
+    # appending the data
+    extra_ansible_vars.update(y)
 
+    command = ["/bin/bash"]
+    if (action_source == "galaxy.ansible.com"):
+        args = ["-c", "echo '---' > requirements.yml; \
+                       echo 'collections:' >> requirements.yml; \
+                       echo '- name: " + action_namespace + "." + action_collection + "' >> requirements.yml; \
+                       echo '  source: https://" + action_source + "' >> requirements.yml; \
+                       ansible-galaxy collection install --force -r requirements.yml; \
+                       ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+    else:
+        args = ["-c", "echo '---'; \
+                       git clone https://github.com/newswangerd/collection_demo.git cloned_repo; \
+                       cd cloned_repo; \
+                       cd ./collection_demo/; \
+                       mkdir -p releases; \
+                       ansible-galaxy collection build -v --force --output-path releases/; \
+                       cd releases; \
+                       LATEST=$(ls *.tar.gz | grep -v latest | sort -V | tail -n1); \
+                       ansible-galaxy collection install $LATEST; \
+                       ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+    #-e 'ansible_python_interpreter=/usr/bin/python3'
     container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)
     template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
     # And finaly we can create our V1JobSpec!

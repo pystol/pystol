@@ -60,7 +60,7 @@ setup(
     author_email='carloscamachoucv@gmail.com',
     include_package_data=True,
     install_requires=[
-        'kubernetes==9.0.0',
+        'kubernetes',
     ],
     entry_points={
         'console_scripts': [

@@ -114,6 +114,16 @@ def main():
               "Defaults to: galaxy.ansible.com"
              )
     )
+    parser_run.add_argument(
+        '-e',
+        '--extra-vars',
+        default="",
+        type=str,
+        help=("The extra vars."
+              "It can be i.e. --extra-vars '{\"pacman\":\"mrs\",\"ghosts\":[\"inky\",\"pinky\",\"clyde\",\"sue\"]}'\n"
+              "Defaults to: ''"
+             )
+    )
 
     parser_listen = subparsers.add_parser('listen', help=("CLI options to "
                                                           "watch for CRDs"
@@ -132,7 +142,7 @@ def main():
     try:
         if args.command == 'run':
             print("We will run a Pystol action")
-            insert_action(args.namespace, args.collection, args.role, args.source)
+            insert_action(args.namespace, args.collection, args.role, args.source, args.extra_vars)
         elif args.command == 'listen':
             print("We will watch for objects to process")
             try:
