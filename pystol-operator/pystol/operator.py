@@ -262,9 +262,9 @@ def kube_create_job_object(name,
                        ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
     else:
         args = ["-c", "echo '---'; \
-                       git clone https://github.com/newswangerd/collection_demo.git cloned_repo; \
+                       git clone " + action_source + " cloned_repo; \
                        cd cloned_repo; \
-                       cd ./collection_demo/; \
+                       cd " + action_collection + "; \
                        mkdir -p releases; \
                        ansible-galaxy collection build -v --force --output-path releases/; \
                        cd releases; \
