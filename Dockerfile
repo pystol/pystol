@@ -42,7 +42,9 @@ RUN yum install nodejs -y
 RUN mkdir /etc/ansible/ /ansible
 RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # Install the collection codebase
-RUN ansible-galaxy collection install pystol.actions
+# Maybe if in the future we want to deliver some default roles
+# it might be a good idea.
+#RUN ansible-galaxy collection install pystol.actions
 
 ## Copying the UI files
 # Create a directory for client
