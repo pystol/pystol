@@ -59,5 +59,3 @@ Here you will find all the container images from the stable branches.
 
 Pystol is open source software
 licensed under the [Apache license](LICENSE).
-
-[![Winter is coming](https://forthebadge.com/images/badges/winter-is-coming.svg)](https://www.pystol.org)
