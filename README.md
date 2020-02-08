@@ -2,7 +2,8 @@
 
 **The open source, self-hosted and cloud-native fault injection platform**
 
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+[![made-with-python](http://forthebadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+[![made-with-love](https://forthebadge.com/images/badges/built-with-love.svg)](https://www.pystol.org)
 
 | [pystol](https://github.com/pystol/pystol) | [pystol-galaxy](https://github.com/pystol/pystol-galaxy) | [pystol-ansible](https://github.com/pystol/pystol-ansible) | [pystol-docs](https://github.com/pystol/pystol-docs) | [quay.io](https://quay.io/organization/pystol) | info |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -59,4 +60,4 @@ Here you will find all the container images from the stable branches.
 Pystol is open source software
 licensed under the [Apache license](LICENSE).
 
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Winter is coming](https://forthebadge.com/images/badges/winter-is-coming.svg)](https://www.pystol.org)
