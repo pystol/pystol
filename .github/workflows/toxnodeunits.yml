@@ -1,4 +1,4 @@
-name: tox-nodeunits-build
+name: tox-nodeunits
 
 on: [push, pull_request]
 

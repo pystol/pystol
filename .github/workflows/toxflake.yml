@@ -1,4 +1,4 @@
-name: tox-flake-build
+name: tox-flake
 
 on: [push, pull_request]
 

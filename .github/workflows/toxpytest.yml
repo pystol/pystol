@@ -1,4 +1,4 @@
-name: tox-pytest-build
+name: tox-pytest
 
 on: [push, pull_request]
 

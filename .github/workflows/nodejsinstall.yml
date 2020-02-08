@@ -1,4 +1,4 @@
-name: nodejs-install-build
+name: nodejs-install
 
 on: [push, pull_request]
 

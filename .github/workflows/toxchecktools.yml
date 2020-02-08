@@ -1,4 +1,4 @@
-name: tox-checktools-build
+name: tox-checktools
 
 on: [push, pull_request]
 

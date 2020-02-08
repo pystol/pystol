@@ -1,4 +1,4 @@
-name: tox-eslint-build
+name: tox-eslint
 
 on: [push, pull_request]
 
