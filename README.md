@@ -2,10 +2,10 @@
 
 **The open source, self-hosted and cloud-native fault injection platform**
 
-[![made-with-python](https://raw.github.com/pystol/pystol-docs/master/assets/badges/made-with-python.svg)](https://www.python.org/)
-[![made-with-ansible](https://raw.github.com/pystol/pystol-docs/master/assets/badges/made-with-ansible.svg)](https://www.ansible.com/)
-[![made-with-love](https://raw.github.com/pystol/pystol-docs/master/assets/badges/made-with-love.svg)](https://www.pystol.org/)
-[![cloud-native](https://raw.github.com/pystol/pystol-docs/master/assets/badges/cloud-native.svg)](https://www.pystol.org/)
+[![made-with-python](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-python.svg)](https://www.python.org/)
+[![made-with-ansible](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-ansible.svg)](https://www.ansible.com/)
+[![made-with-love](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-love.svg)](https://www.pystol.org/)
+[![cloud-native](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/cloud-native.svg)](https://www.pystol.org/)
 
 | [pystol](https://github.com/pystol/pystol) | [pystol-galaxy](https://github.com/pystol/pystol-galaxy) | [pystol-ansible](https://github.com/pystol/pystol-ansible) | [pystol-docs](https://github.com/pystol/pystol-docs) | [quay.io](https://quay.io/organization/pystol) | info |
 |:---:|:---:|:---:|:---:|:---:|:---:|
