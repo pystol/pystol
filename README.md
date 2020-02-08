@@ -3,8 +3,7 @@
 **The open source, self-hosted and cloud-native fault injection platform**
 
 <center>
-  <img src="http://forthebadge.com/images/badges/made-with-python.svg">
-  <img src="https://forthebadge.com/images/badges/built-with-love.svg">
+  <img src="http://forthebadge.com/images/badges/made-with-python.svg"><img src="https://forthebadge.com/images/badges/built-with-love.svg">
 </center>
 
 | [pystol](https://github.com/pystol/pystol) | [pystol-galaxy](https://github.com/pystol/pystol-galaxy) | [pystol-ansible](https://github.com/pystol/pystol-ansible) | [pystol-docs](https://github.com/pystol/pystol-docs) | [quay.io](https://quay.io/organization/pystol) | info |
