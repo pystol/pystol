@@ -1,4 +1,4 @@
-name: pypi-publish
+name: pypipublish
 on:
   push:
     paths:
