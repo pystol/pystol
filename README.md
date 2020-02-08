@@ -2,24 +2,19 @@
 
 **The open source, self-hosted and cloud-native fault injection platform**
 
-### pystol tests
 
-  [![Docker image build](https://github.com/pystol/pystol/workflows/docker-image-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=docker-image-build)
-  [![NodeJS install build](https://github.com/pystol/pystol/workflows/nodejs-install-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=nodejs-install-build)
-  [![TOX ESlint build](https://github.com/pystol/pystol/workflows/tox-eslint-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-eslint-build)
-  [![TOX Flake8 build](https://github.com/pystol/pystol/workflows/tox-flake-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-flake-build)
-  [![TOX NodeJS units build](https://github.com/pystol/pystol/workflows/tox-nodeunits-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-nodeunits-build)
-  [![TOX Pytest build](https://github.com/pystol/pystol/workflows/tox-pytest-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-pytest-build)
-  [![TOX CheckTools build](https://github.com/pystol/pystol/workflows/tox-checktools-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-checktools-build)
-  [![E2E base install](https://github.com/pystol/pystol/workflows/e2e-deploy-base-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=e2e-deploy-base-build)
 
-### pystol-galaxy tests
+| pystol  | pystol-galaxy | pystol-ansible | pystol-docs | quay.io | info |
+|:--------|:--------------|:---------------|:------------|:--------|:-----|
+| [![Docker image build](https://github.com/pystol/pystol/workflows/docker-image-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=docker-image-build) ||||||
+| [![NodeJS install build](https://github.com/pystol/pystol/workflows/nodejs-install-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=nodejs-install-build) ||||||
+| [![TOX ESlint build](https://github.com/pystol/pystol/workflows/tox-eslint-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-eslint-build) ||||||
+| [![TOX Flake8 build](https://github.com/pystol/pystol/workflows/tox-flake-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-flake-build) ||||||
+| [![TOX NodeJS units build](https://github.com/pystol/pystol/workflows/tox-nodeunits-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-nodeunits-build) ||||||
+| [![TOX Pytest build](https://github.com/pystol/pystol/workflows/tox-pytest-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-pytest-build) ||||||
+| [![TOX CheckTools build](https://github.com/pystol/pystol/workflows/tox-checktools-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-checktools-build) ||||||
+| [![E2E base install](https://github.com/pystol/pystol/workflows/e2e-deploy-base-build/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=e2e-deploy-base-build) ||||||
 
-    Badges go here
-
-### pystol-ansible tests
-
-    Badges go here
 
 ### pystol-docs tests
 
