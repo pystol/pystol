@@ -4,8 +4,8 @@
 
 
 
-| pystol  | pystol-galaxy | pystol-ansible | pystol-docs | quay.io | info |
-|:-------:|:-------------:|:--------------:|:-----------:|:-------:|:----:|
+| [pystol](https://github.com/pystol/pystol) | [pystol-galaxy](https://github.com/pystol/pystol-galaxy) | [pystol-ansible](https://github.com/pystol/pystol-ansible) | [pystol-docs](https://github.com/pystol/pystol-docs) | [quay.io](https://quay.io/organization/pystol) | info |
+|:---:|:---:|:---:|:---:|:---:|:---:|
 | [![Container image build](https://github.com/pystol/pystol/workflows/container-image/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=container-image) | [![Galaxy publish](https://github.com/pystol/pystol-galaxy/workflows/galaxy-publish/badge.svg?event=push)](https://github.com/pystol/pystol-galaxy/actions?workflow=galaxy-publish) | [![Galaxy publish](https://github.com/pystol/pystol-ansible/workflows/ansible-lint/badge.svg?event=push)](https://github.com/pystol/pystol-ansible/actions?workflow=ansible-lint) | [![Docs build](https://github.com/pystol/pystol-docs/workflows/build/badge.svg?event=push)](https://github.com/pystol/pystol-docs/actions?workflow=build) | [![Docker registry STAGING status](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker registry STAGING status")](https://quay.io/repository/pystol/pystol-operator-staging) | [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) |
 | [![NodeJS install build](https://github.com/pystol/pystol/workflows/nodejs-install/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=nodejs-install) | | | | [![Docker registry STABLE status](https://quay.io/repository/pystol/pystol-operator-stable/status "Docker registry STABLE status")](https://quay.io/repository/pystol/pystol-operator-stable) | [![GitHub issues](https://img.shields.io/github/issues/pystol/pystol)](https://github.com/pystol/pystol/issues) |
 | [![TOX ESlint build](https://github.com/pystol/pystol/workflows/tox-eslint/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-eslint) | | | | | |
