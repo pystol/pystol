@@ -6,14 +6,14 @@
 
 | pystol  | pystol-galaxy | pystol-ansible | pystol-docs | quay.io | info |
 |:-------:|:-------------:|:--------------:|:-----------:|:-------:|:----:|
-| [![Docker image build](https://github.com/pystol/pystol/workflows/docker-image/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=docker-image) | | | [![Docs build](https://github.com/pystol/pystol-docs/workflows/jekyll-docs/badge.svg?event=push)](https://github.com/pystol/pystol-docs/actions?workflow=jekyll-docs) | [![Docker registry STAGING status](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker registry STAGING status")](https://quay.io/repository/pystol/pystol-operator-staging) | [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) |
+| [![Container image build](https://github.com/pystol/pystol/workflows/container-image/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=container-image) | | | [![Docs build](https://github.com/pystol/pystol-docs/workflows/jekyll-docs/badge.svg?event=push)](https://github.com/pystol/pystol-docs/actions?workflow=jekyll-docs) | [![Docker registry STAGING status](https://quay.io/repository/pystol/pystol-operator-staging/status "Docker registry STAGING status")](https://quay.io/repository/pystol/pystol-operator-staging) | [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) |
 | [![NodeJS install build](https://github.com/pystol/pystol/workflows/nodejs-install/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=nodejs-install) | | | | [![Docker registry STABLE status](https://quay.io/repository/pystol/pystol-operator-stable/status "Docker registry STABLE status")](https://quay.io/repository/pystol/pystol-operator-stable) | [![GitHub issues](https://img.shields.io/github/issues/pystol/pystol)](https://github.com/pystol/pystol/issues) |
 | [![TOX ESlint build](https://github.com/pystol/pystol/workflows/tox-eslint/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-eslint) | | | | | |
 | [![TOX Flake8 build](https://github.com/pystol/pystol/workflows/tox-flake/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-flake) | | | | | |
 | [![TOX NodeJS units build](https://github.com/pystol/pystol/workflows/tox-nodeunits/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-nodeunits) | | | | | |
 | [![TOX Pytest build](https://github.com/pystol/pystol/workflows/tox-pytest/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-pytest) | | | | | |
 | [![TOX CheckTools build](https://github.com/pystol/pystol/workflows/tox-checktools/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=tox-checktools) | | | | | |
-| [![E2E base install](https://github.com/pystol/pystol/workflows/e2e-deploy-base/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=e2e-deploy-base) | | | | | |
+| [![E2E install](https://github.com/pystol/pystol/workflows/e2e-deploy/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=e2e-deploy) | | | | | |
 
 
 ## Documentation
