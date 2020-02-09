@@ -51,7 +51,7 @@ RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # Create a directory for client
 RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
-RUN ["/bin/bash", "-c", "ls pystol-wui"]
+RUN ls pystol-wui
 
 ## Installing the UI dependencies (Web UI + endpoints)
 RUN npm install -g react-scripts && npm install && npm install pystol-wui

@@ -17,9 +17,9 @@ jobs:
       run: |
         # We use ppa:projectatomic repo to install podman
         sudo add-apt-repository -y ppa:projectatomic/ppa
-        sudo apt install podman -y
+        sudo apt install podman buildah -y
     - name: Print podman version
       run: |
         podman -v
     - name: Build the Docker image
-      run: podman build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: buildah bud -t my-image-name:$(date +%s) .
