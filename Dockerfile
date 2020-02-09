@@ -1,7 +1,7 @@
 # We should use CentOS 8 as soon as possible but
 # the container fails when building.
 # FROM registry.centos.org/centos/centos:centos8
-FROM registry.centos.org/centos/centos:latest
+FROM registry.fedoraproject.org/fedora:latest
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
