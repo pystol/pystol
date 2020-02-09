@@ -23,7 +23,7 @@ repo_gpgcheck=1 \n\
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg \
 " > /etc/yum.repos.d/kubernetes.repo
 
-RUN yum install -y kubectl
+RUN /bin/bash -c "yum install -y kubectl"
 
 ## Installing the operator code
 # Installing Python3
@@ -51,7 +51,7 @@ RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # Create a directory for client
 RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
-RUN ls pystol-wui
+RUN ["/bin/bash", "-c", "ls pystol-wui"]
 
 ## Installing the UI dependencies (Web UI + endpoints)
 RUN npm install -g react-scripts && npm install && npm install pystol-wui
