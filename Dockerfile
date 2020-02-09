@@ -1,7 +1,6 @@
 # We should use CentOS 8 as soon as possible but
 # the container fails when building.
-# FROM registry.centos.org/centos/centos:centos8
-FROM registry.fedoraproject.org/fedora:latest
+FROM registry.centos.org/centos/centos:centos8
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
@@ -52,6 +51,7 @@ RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # Create a directory for client
 RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
+RUN ls pystol-wui
 
 ## Installing the UI dependencies (Web UI + endpoints)
 RUN npm install -g react-scripts && npm install && npm install pystol-wui
