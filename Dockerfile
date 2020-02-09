@@ -1,4 +1,4 @@
-FROM registry.centos.org/centos/centos:latest
+FROM registry.centos.org/centos/centos:centos8
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
