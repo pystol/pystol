@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/images/logo_readme.png)
+![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/images/logo_readme.svg?sanitize=true)
 
 **The open source, self-hosted and cloud-native fault injection platform**
 
