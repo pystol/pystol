@@ -50,7 +50,6 @@ RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # Create a directory for client
 RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
-RUN ls
 
 ## Installing the UI dependencies (Web UI + endpoints)
 RUN npm install -g react-scripts
