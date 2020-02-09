@@ -3,7 +3,7 @@ LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
 # Shell
-RUN alias /bin/sh='/bin/bash' && export /bin/sh
+RUN ln -s /bin/bash /bin/sh || true
 
 # Arguments
 ARG revision
