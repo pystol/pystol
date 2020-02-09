@@ -3,7 +3,7 @@ LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
 # Shell
-SHELL ["/bin/bash", "-c"]
+RUN alias /bin/sh='/bin/bash' && export /bin/sh
 
 # Arguments
 ARG revision
@@ -28,9 +28,7 @@ RUN yum install -y kubectl
 
 ## Installing the operator code
 # Installing Python3
-RUN yum install python3 -y
-RUN yum install python3-pip -y
-RUN yum install git -y
+RUN yum install python3 python3-pip git -y
 
 # We install the operator and dependencies
 RUN echo "The pystol revision is ${revision}"
@@ -55,9 +53,7 @@ RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
 
 ## Installing the UI dependencies (Web UI + endpoints)
-RUN npm install -g react-scripts
-RUN npm install 
-RUN npm install pystol-wui
+RUN npm install -g react-scripts && npm install && npm install pystol-wui
 
 ## Build the application
 RUN npm run-script build
