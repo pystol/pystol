@@ -1,9 +1,9 @@
-FROM registry.centos.org/centos/centos:centos8
+# We should use CentOS 8 as soon as possible but
+# the container fails when building.
+# FROM registry.centos.org/centos/centos:centos8
+FROM registry.centos.org/centos/centos:latest
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
-
-# Shell
-RUN ln -s /bin/bash /bin/sh || true
 
 # Arguments
 ARG revision
@@ -37,6 +37,7 @@ RUN touch README.md
 RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 
 # Install NodeJS
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum install nodejs -y
 
 # Configure Ansible inventory
