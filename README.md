@@ -1,15 +1,15 @@
-<p style="text-align: center;">
-    <img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/images/logo_readme.svg?sanitize=true" alt="The open source, self-hosted and cloud-native fault injection platform"/>
+<p style="text-align: center" align="center">
+    <a href="https://www.pystol.org"><img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/images/logo_readme.svg?sanitize=true" alt="The open source, self-hosted and cloud-native fault injection platform"/></a>
 </p>
 
 **The open source, self-hosted and cloud-native fault injection platform**
 
 
-<p style="text-align: center">
-    <img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-python.svg?sanitize=true"/>
-    <img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-ansible.svg?sanitize=true"/>
-    <img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-love.svg?sanitize=true"/>
-    <img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/cloud-native.svg?sanitize=true"/>
+<p style="text-align: center" align="center">
+    <a href="https://www.pystol.org"><img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-python.svg?sanitize=true"/> </a>
+    <a href="https://www.pystol.org"><img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-ansible.svg?sanitize=true"/> </a>
+    <a href="https://www.pystol.org"><img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-love.svg?sanitize=true"/> </a>
+    <a href="https://www.pystol.org"><img src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/cloud-native.svg?sanitize=true"/> </a>
 </p>
 
 | [![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/pystol.svg?sanitize=true)](https://github.com/pystol/pystol) | [![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/pystol-galaxy.svg?sanitize=true)](https://github.com/pystol/pystol-galaxy) | [![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/pystol-ansible.svg?sanitize=true)](https://github.com/pystol/pystol-ansible) | [![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/pystol-docs.svg?sanitize=true)](https://github.com/pystol/pystol-docs) | [![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/quay.io.svg?sanitize=true)](https://quay.io/organization/pystol) | [![](https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/information.svg?sanitize=true)](https://docs.pystol.org) |
