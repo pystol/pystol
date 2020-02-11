@@ -103,11 +103,12 @@ def insert_pystol_object(namespace, collection, role, source, extra_vars):
                "extra_vars": extra_vars,
                "action_state": "CRE",
                "workflow_state": "WFA",
-               "action_output": "{}"},
+               "action_stderr": "{}",
+               "action_stdout": "{}"},
     }
 
     # create the resource
-    custom_obj.create_namespaced_custom_object(
+    api_response = custom_obj.create_namespaced_custom_object(
         group="pystol.org",
         version="v1alpha1",
         # TODO: Move this to a specific namespace
@@ -115,6 +116,7 @@ def insert_pystol_object(namespace, collection, role, source, extra_vars):
         plural="pystolactions",
         body=resource,
     )
+    return api_response
 
 #
 # Part of the operator which will handle the process of new
@@ -185,7 +187,8 @@ def execute_pystol_action(crds, obj):
     action_extra_vars = action_spec_params["extra_vars"]
     action_action_state = action_spec_params["action_state"]
     action_workflow_state = action_spec_params["workflow_state"]
-    action_action_output = action_spec_params["action_output"]
+    action_action_stdout = action_spec_params["action_stdout"]
+    action_action_stderr = action_spec_params["action_stderr"]
 
     print("Updating: %s" % name)
     crds.replace_namespaced_custom_object(CRD_DOMAIN, CRD_VERSION, namespace, CRD_PLURAL, name, obj)
@@ -193,6 +196,7 @@ def execute_pystol_action(crds, obj):
     # Create the job definition
     api_instance = kubernetes.client.BatchV1Api()
 
+    # TODO: This should be configurable
     container_image = "quay.io/pystol/pystol-operator-stable:latest"
 
     body = kube_create_job_object(name=name,
@@ -207,7 +211,8 @@ def execute_pystol_action(crds, obj):
                                   action_extra_vars=action_extra_vars,
                                   action_action_state=action_action_state,
                                   action_workflow_state=action_workflow_state,
-                                  action_action_output=action_action_output)
+                                  action_action_stdout=action_action_stdout,
+                                  action_action_stderr=action_action_stderr)
 
     try:
         api_response = api_instance.create_namespaced_job("default", body, pretty=True)
@@ -227,7 +232,8 @@ def kube_create_job_object(name,
                            action_extra_vars,
                            action_action_state,
                            action_workflow_state,
-                           action_action_output):
+                           action_action_stdout,
+                           action_action_stderr):
     load_kubernetes_config()
     custom_obj = kubernetes.client.CustomObjectsApi()
     v1 = kubernetes.client.CoreV1Api()
@@ -272,7 +278,7 @@ def kube_create_job_object(name,
                        ansible-galaxy collection build -v --force --output-path releases/; \
                        cd releases; \
                        LATEST=$(ls *.tar.gz | grep -v latest | sort -V | tail -n1); \
-                       ansible-galaxy collection install $LATEST; \
+                       ansible-galaxy collection install --force $LATEST; \
                        ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
 
     container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)

@@ -21,7 +21,7 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["namespace","collection","role","source","extra_vars","action_state","workflow_state","action_output"]
+          required: ["namespace","collection","role","source","extra_vars","action_state","workflow_state","action_stdout","action_stderr"]
           properties:
             namespace:
               type: "string"
@@ -44,7 +44,10 @@ spec:
             workflow_status:
               type: "string"
               minimum: 1
-            action_output:
+            action_stdout:
+              type: "string"
+              minimum: 1
+            action_stderr:
               type: "string"
               minimum: 1
 
