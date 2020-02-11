@@ -145,6 +145,7 @@ def main():
             api_response = insert_pystol_object(args.namespace, args.collection, args.role, args.source, args.extra_vars)
             print("The following Pystol action is created:")
             print(json.dumps(api_response, indent=4, sort_keys=True))
+            exit()
         elif args.command == 'listen':
             print("We will watch for objects to process")
             try:
@@ -160,5 +161,5 @@ def main():
     except Exception as err:
         raise RuntimeError('There is something wrong...' + err)
 
-#    while not t2_stop.is_set() or not t1_stop.is_set() or not args.command == 'run':
-#        pass
+    while not t2_stop.is_set() or not t1_stop.is_set():
+        pass
