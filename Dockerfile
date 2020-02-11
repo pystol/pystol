@@ -42,17 +42,18 @@ RUN yum install nodejs -y
 # Configure Ansible inventory
 RUN mkdir /etc/ansible/ /ansible
 RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
+
 # Install the collection codebase
-# Maybe if in the future we want to deliver some default roles
-# it might be a good idea.
-#RUN ansible-galaxy collection install pystol.actions
+# Maybe if in the future we want to
+# deliver some default roles and modules
+# it might be a good idea, to have it already in the image.
+# This needs to use also --force if we install it from
+# source (check the operator code)
+RUN ansible-galaxy collection install pystol.actions
 
-## Copying the UI files
-# Create a directory for client
-RUN mkdir -p /usr/src/app
-COPY /pystol-ui .
-RUN ls pystol-wui
-
+## Moving to the UI install
+# Change the current working directory
+WORKDIR "/pystol-ui"
 ## Installing the UI dependencies (Web UI + endpoints) and Build the application
 RUN npm install -g react-scripts && npm install && npm install pystol-wui && npm run-script build
 
