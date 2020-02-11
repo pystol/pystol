@@ -38,10 +38,10 @@ spec:
             extra_vars:
               type: "string"
               minimum: 1
-            action_status:
+            action_state:
               type: "string"
               minimum: 1
-            workflow_status:
+            workflow_state:
               type: "string"
               minimum: 1
             action_stdout:
