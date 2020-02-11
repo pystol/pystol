@@ -21,7 +21,7 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["namespace","collection","role","source"]
+          required: ["namespace","collection","role","source","extra_vars","action_state","workflow_state","action_output"]
           properties:
             namespace:
               type: "string"
@@ -29,6 +29,22 @@ spec:
             collection:
               type: "string"
               minimum: 1
+            role:
+              type: "string"
+              minimum: 1
             source:
               type: "string"
               minimum: 1
+            extra_vars:
+              type: "string"
+              minimum: 1
+            action_status:
+              type: "string"
+              minimum: 1
+            workflow_status:
+              type: "string"
+              minimum: 1
+            action_output:
+              type: "string"
+              minimum: 1
+

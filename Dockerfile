@@ -53,11 +53,8 @@ RUN mkdir -p /usr/src/app
 COPY /pystol-ui .
 RUN ls pystol-wui
 
-## Installing the UI dependencies (Web UI + endpoints)
-RUN npm install -g react-scripts && npm install && npm install pystol-wui
-
-## Build the application
-RUN npm run-script build
+## Installing the UI dependencies (Web UI + endpoints) and Build the application
+RUN npm install -g react-scripts && npm install && npm install pystol-wui && npm run-script build
 
 ## Configure ports
 # bind to port 3000

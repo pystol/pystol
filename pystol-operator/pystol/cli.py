@@ -25,7 +25,7 @@ import threading
 
 from pystol import __version__
 from pystol.get_banner import get_banner
-from pystol.operator import watch_for_pystol_objects, watch_for_pystol_jobs, insert_pystol_object
+from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts, insert_pystol_object
 
 pystol_version = __version__
 
@@ -117,7 +117,7 @@ def main():
     parser_run.add_argument(
         '-e',
         '--extra-vars',
-        default="",
+        default="{}",
         type=str,
         help=("The extra vars."
               "It can be i.e. --extra-vars '{\"pacman\":\"mrs\",\"ghosts\":[\"inky\",\"pinky\",\"clyde\",\"sue\"]}'\n"
@@ -142,13 +142,13 @@ def main():
     try:
         if args.command == 'run':
             print("We will run a Pystol action")
-            insert_action(args.namespace, args.collection, args.role, args.source, args.extra_vars)
+            insert_pystol_object(args.namespace, args.collection, args.role, args.source, args.extra_vars)
         elif args.command == 'listen':
             print("We will watch for objects to process")
             try:
                 t1 = threading.Thread(target=watch_for_pystol_objects, args=(t1_stop,))
                 t1.start()
-                t2 = threading.Thread(target=watch_for_pystol_jobs, args=(t2_stop,))
+                t2 = threading.Thread(target=watch_for_pystol_timeouts, args=(t2_stop,))
                 t2.start()
             except:
                 print ("Error: unable to start thread")

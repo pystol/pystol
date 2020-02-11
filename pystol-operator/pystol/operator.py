@@ -82,7 +82,7 @@ def load_kubernetes_config():
 # the CLI parameters.
 #
 
-def insert_pystol_object(collection, name):
+def insert_pystol_object(namespace, collection, role, source, extra_vars):
     """
     Here we will determine where we will insert the CR.
 
@@ -92,23 +92,28 @@ def insert_pystol_object(collection, name):
     custom_obj = kubernetes.client.CustomObjectsApi()
     v1 = kubernetes.client.CoreV1Api()
 
-    print(collection)
-    print(name)
-
     resource = {
       "apiVersion": "pystol.org/v1alpha1",
       "kind": "PystolAction",
-      "metadata": {"name": "pystol-" + collection + "-" + name},
-      "spec": {"collection": collection, "name": name, "result": "{}"},
+      "metadata": {"name": "pystol-action-" + namespace + "-" + collection + "-" + role + "-" + id_generator()},
+      "spec": {"namespace": namespace,
+               "collection": collection,
+               "role": role,
+               "source": source,
+               "extra_vars": extra_vars,
+               "action_state": "CRE",
+               "workflow_state": "WFA",
+               "action_output": "{}"},
     }
 
     # create the resource
     custom_obj.create_namespaced_custom_object(
         group="pystol.org",
         version="v1alpha1",
+        # TODO: Move this to a specific namespace
         namespace="default",
         plural="pystolactions",
-        body=my_resource,
+        body=resource,
     )
 
 #
@@ -118,7 +123,7 @@ def insert_pystol_object(collection, name):
 # the selected Pystol action.
 #
 
-def watch_for_pystol_jobs(stop):
+def watch_for_pystol_timeouts(stop):
     while True:
       a = 2
 
@@ -170,22 +175,17 @@ def execute_pystol_action(crds, obj):
     obj["spec"]["executed"] = True
 
     # The main Pystol object initial info are the parameters:
-    # action_namespace
-    # action_collection
-    # action_role
-    # action_source
-    # action_extra_vars
-    # action_result
-    # action_executed
+    # These values should be the ones defined in the CRD.
 
     action_spec_params = obj.get("spec")
     action_namespace = action_spec_params["namespace"]
     action_collection = action_spec_params["collection"]
     action_role = action_spec_params["role"]
     action_source = action_spec_params["source"]
-    action_extra_vars = action_spec_params["extra-vars"]
-    action_result = action_spec_params["result"]
-    action_executed = action_spec_params["executed"]
+    action_extra_vars = action_spec_params["extra_vars"]
+    action_action_state = action_spec_params["action_state"]
+    action_workflow_state = action_spec_params["workflow_state"]
+    action_action_output = action_spec_params["action_output"]
 
     print("Updating: %s" % name)
     crds.replace_namespaced_custom_object(CRD_DOMAIN, CRD_VERSION, namespace, CRD_PLURAL, name, obj)
@@ -199,13 +199,15 @@ def execute_pystol_action(crds, obj):
                                   container_image=container_image,
                                   namespace=namespace,
                                   env_vars={"VAR": "TESTING"},
+                                  # CRD variables
                                   action_namespace=action_namespace,
                                   action_collection=action_collection,
                                   action_role=action_role,
                                   action_source=action_source,
                                   action_extra_vars=action_extra_vars,
-                                  action_result=action_result,
-                                  action_executed=action_executed)
+                                  action_action_state=action_action_state,
+                                  action_workflow_state=action_workflow_state,
+                                  action_action_output=action_action_output)
 
     try:
         api_response = api_instance.create_namespaced_job("default", body, pretty=True)
@@ -223,8 +225,9 @@ def kube_create_job_object(name,
                            action_role,
                            action_source,
                            action_extra_vars,
-                           action_result,
-                           action_executed):
+                           action_action_state,
+                           action_workflow_state,
+                           action_action_output):
     load_kubernetes_config()
     custom_obj = kubernetes.client.CustomObjectsApi()
     v1 = kubernetes.client.CoreV1Api()
@@ -271,7 +274,7 @@ def kube_create_job_object(name,
                        LATEST=$(ls *.tar.gz | grep -v latest | sort -V | tail -n1); \
                        ansible-galaxy collection install $LATEST; \
                        ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
-    #-e 'ansible_python_interpreter=/usr/bin/python3'
+
     container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)
     template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
     # And finaly we can create our V1JobSpec!
