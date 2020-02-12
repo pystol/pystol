@@ -1,5 +1,6 @@
 include *.py
 include *.yaml
+include requirements.txt
 recursive-include pystol *
 global-exclude *pyc
 global-exclude .project
