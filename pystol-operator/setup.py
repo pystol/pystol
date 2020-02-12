@@ -40,6 +40,9 @@ if os.path.isfile('../README.md'):
 else:
         long_description = _DESCRIPTION
 
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
 setup(
     name=_NAME,
     version=_REVISION,
@@ -59,9 +62,7 @@ setup(
     author='Carlos Camacho',
     author_email='carloscamachoucv@gmail.com',
     include_package_data=True,
-    install_requires=[
-        'kubernetes',
-    ],
+    install_requires=requirements,
     entry_points={
         'console_scripts': [
             '{0} = {0}.cli:main'.format(_NAME),

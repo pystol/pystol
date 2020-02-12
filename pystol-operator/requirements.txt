@@ -4,3 +4,4 @@ ansible
 openshift
 j2cli
 jinja2
+kubernetes
