@@ -32,7 +32,7 @@ jobs:
         cd ./pystol-operator
         if [ -d "./dist" ] 
         then
-            python -m pip install dist/*
+            python -m pip install --force dist/*
             pystol -v
         fi
 

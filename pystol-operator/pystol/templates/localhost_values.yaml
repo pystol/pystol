@@ -1,0 +1,11 @@
+appSettings:
+  pystol:
+    controller:
+      image: localhost:5000/operator:latest
+    ui:
+      image: localhost:5000/operator:latest
+      # The pystol UI API is exposed in 3000 port by default
+      api_port: 3000
+      # This is the host where the Pystol API
+      # is supossed to be listening the UI
+      api_host: labbserver

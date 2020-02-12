@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pystol-ui
+spec:
+  selector:
+    matchLabels:
+      name: pystol-ui
+      component: pystol-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: pystol-ui
+        component: pystol-ui
+    spec:
+      containers:
+        - name: pystol-ui
+          image: {{ appSettings.pystol.ui.image }}
+          ports:
+            - containerPort: {{ appSettings.pystol.ui.api_port }}
+          command: ["npm"]
+          args: ["run", "k8s-server"]
+          imagePullPolicy: Always
+          env:
+            - name: PYSTOL_UI_API_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: PYSTOL_UI_API_HOST
+                  name: pystol-config
+            - name: PYSTOL_UI_API_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PYSTOL_UI_API_PORT
+                  name: pystol-config
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+      serviceAccountName: pystol-acc

@@ -57,7 +57,7 @@ done
 if [ "$publish" == "1" ]; then
     echo 'This version is not published, publishing!...'
     cd ./pystol-operator
-    python setup.py sdist
+    python3 setup.py sdist
     twine check dist/*
 
 cat <<EOF > ~/.pypirc

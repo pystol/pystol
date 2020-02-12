@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pystol-config
+data:
+  PYSTOL_UI_API_PORT: "{{ appSettings.pystol.ui.api_port }}"
+  PYSTOL_UI_API_HOST: "{{ appSettings.pystol.ui.api_host }}"

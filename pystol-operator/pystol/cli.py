@@ -27,6 +27,7 @@ import json
 from pystol import __version__
 from pystol.get_banner import get_banner
 from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts, insert_pystol_object
+from pystol.deployer import deploy_pystol
 
 pystol_version = __version__
 
@@ -131,6 +132,12 @@ def main():
                                                          )
     )
 
+    parser_deploy = subparsers.add_parser('deploy', help=("Install the Pystol operator "
+                                                          "includes, deployment, RBAC rules "
+                                                          "and CRD"
+                                                         )
+    )
+
     args = parser.parse_args()
 
     print("Pystol called with the folowing parameters")
@@ -155,6 +162,9 @@ def main():
                 t2.start()
             except:
                 print ("Error: unable to start thread")
+        elif args.command == 'deploy':
+            deploy_pystol()
+            exit()
 
     except KeyboardInterrupt:
         pass
