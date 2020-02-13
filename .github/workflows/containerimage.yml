@@ -7,10 +7,17 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag localbuild/testimage:latest
+    - name: Create policy file
+      run: |
+        cat <<EOF > ~/.anchore/policy.json
+        *:*:WARN
+        EOF
     - uses: anchore/scan-action@master
       with:
         image-reference: "localbuild/testimage:latest"
         dockerfile-path: "./Dockerfile"
         fail-build: false
+        include-app-packages: true
+        custom-policy-path: ~/.anchore/policy.json
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
