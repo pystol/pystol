@@ -7,9 +7,9 @@ spec:
   group: pystol.org
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
+    - name: v1alpha1
+      served: true
+      storage: true
   scope: Namespaced
   names:
     kind: PystolAction
@@ -21,7 +21,15 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["namespace","collection","role","source","extra_vars","action_state","workflow_state","action_stdout","action_stderr"]
+          required: ["namespace",
+                     "collection",
+                     "role",
+                     "source",
+                     "extra_vars",
+                     "action_state",
+                     "workflow_state",
+                     "action_stdout",
+                     "action_stderr"]
           properties:
             namespace:
               type: "string"
@@ -50,4 +58,3 @@ spec:
             action_stderr:
               type: "string"
               minimum: 1
-

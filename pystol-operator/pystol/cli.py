@@ -16,23 +16,21 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
-from argparse import Action
+import json
+import threading
 from argparse import ArgumentParser
 
-import kubernetes
-import os
-import threading
-import json
-
 from pystol import __version__
-from pystol.get_banner import get_banner
-from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts, insert_pystol_object
 from pystol.deployer import deploy_pystol
+from pystol.get_banner import get_banner
+from pystol.operator import insert_pystol_object
+from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts
 
 pystol_version = __version__
 
 t1_stop = threading.Event()
 t2_stop = threading.Event()
+
 
 def main():
     """
@@ -46,42 +44,45 @@ def main():
         description='Pystol - CLI',
         prog='pystol'
     )
+
     parser.add_argument(
         '-v',
         '--version',
         action='version',
         version='%(prog)s ' + pystol_version
     )
+
     parser.add_argument(
         '-b',
         '--banner',
         action='store_true',
         help='Print Pystol.org banner'
     )
-    subparsers = parser.add_subparsers(title="Pystol subcommands", dest="command",
-                                       help=("These are the options supported: "
-                                             "The listen option will watch for "
-                                             "CRD events. "
-                                             "The run option will execute the "
-                                             "Pystol actions against the cluster."
-                                            )
-    )
-    parser_run = subparsers.add_parser('run', help=("CLI options to run the Pystol "
-                                                    "actions."
-                                                   )
-    )
+
+    subparsers = parser.add_subparsers(title="Pystol subcommands",
+                                       dest="command",
+                                       help=("These are the options "
+                                             "supported: \n"
+                                             "The listen option will "
+                                             "watch for CRD events. "
+                                             "The run option will "
+                                             "execute the Pystol "
+                                             "actions against the cluster."))
+
+    parser_run = subparsers.add_parser('run', help=("CLI options to run the "
+                                                    "Pystol actions."))
+
     parser_run.add_argument(
-       '-n',
-       '--namespace',
+        '-n',
+        '--namespace',
         required=True,
         type=str,
         help=("Name of the namespace to be referenced, "
               "this will be the Galaxy handler, like: "
               "pystol (from galaxy), "
               "which will be referenced as "
-              "https://galaxy.ansible.com/pystol"
-             )
-    )
+              "https://galaxy.ansible.com/pystol"))
+
     parser_run.add_argument(
         '-c',
         '--collection',
@@ -91,52 +92,46 @@ def main():
               "this can be the name of the galaxy collection like: "
               "actions (from galaxy), "
               "which will be referenced as "
-              "https://galaxy.ansible.com/pystol/actions"
-             )
-    )
+              "https://galaxy.ansible.com/pystol/actions"))
+
     parser_run.add_argument(
         '-r',
         '--role',
         required=True,
         type=str,
-        help=("Name of the role to be executed part of the namespace and collection value, "
+        help=("Name of the role to be executed part of the "
+              "namespace and collection value, "
               "for example, if the name is: "
               "kill-pods "
               "It will execute: "
-              "pystol.actions.kill-pods "
-             )
-    )
+              "pystol.actions.kill-pods "))
+
     parser_run.add_argument(
         '-s',
         '--source',
         default="galaxy.ansible.com",
         type=str,
-        help=("The source URL where we will fetch the collection with the Pystol actions."
+        help=("The source URL where we will fetch the collection "
+              "with the Pystol actions.\n"
               "It can be i.e. git+http://github.com/pystol/pystol-galaxy.git\n"
-              "Defaults to: galaxy.ansible.com"
-             )
-    )
+              "Defaults to: galaxy.ansible.com"))
+
     parser_run.add_argument(
         '-e',
         '--extra-vars',
         default="{}",
         type=str,
-        help=("The extra vars."
-              "It can be i.e. --extra-vars '{\"pacman\":\"mrs\",\"ghosts\":[\"inky\",\"pinky\",\"clyde\",\"sue\"]}'\n"
-              "Defaults to: ''"
-             )
-    )
+        help=("The extra vars for example:"
+              "--extra-vars '{\"a\":\"b\",\"c\":[\",\"d\",\"e\"]}'\n"
+              "Defaults to: ''"))
 
-    parser_listen = subparsers.add_parser('listen', help=("CLI options to "
-                                                          "watch for CRDs"
-                                                         )
-    )
+    subparsers.add_parser('listen', help=("CLI options to "
+                                          "watch for CRDs"))
 
-    parser_deploy = subparsers.add_parser('deploy', help=("Install the Pystol operator "
-                                                          "includes, deployment, RBAC rules "
-                                                          "and CRD"
-                                                         )
-    )
+    subparsers.add_parser('deploy',
+                          help=("Install the Pystol operator "
+                                "includes, deployment, "
+                                "RBAC rules, and CRD"))
 
     args = parser.parse_args()
 
@@ -148,21 +143,27 @@ def main():
         exit()
 
     try:
-        if args.command == 'run':
-            api_response = insert_pystol_object(args.namespace, args.collection, args.role, args.source, args.extra_vars)
+        if (args.command == 'run'):
+            api_response = insert_pystol_object(args.namespace,
+                                                args.collection,
+                                                args.role,
+                                                args.source,
+                                                args.extra_vars)
             print("The following Pystol action is created:")
             print(json.dumps(api_response, indent=4, sort_keys=True))
             exit()
-        elif args.command == 'listen':
+        elif (args.command == 'listen'):
             print("We will watch for objects to process")
             try:
-                t1 = threading.Thread(target=watch_for_pystol_objects, args=(t1_stop,))
+                t1 = threading.Thread(target=watch_for_pystol_objects,
+                                      args=(t1_stop,))
                 t1.start()
-                t2 = threading.Thread(target=watch_for_pystol_timeouts, args=(t2_stop,))
+                t2 = threading.Thread(target=watch_for_pystol_timeouts,
+                                      args=(t2_stop,))
                 t2.start()
-            except:
-                print ("Error: unable to start thread")
-        elif args.command == 'deploy':
+            except Exception as err:
+                print("Error: unable to start thread: " + err)
+        elif (args.command == 'deploy'):
             deploy_pystol()
             exit()
 

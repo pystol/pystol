@@ -38,7 +38,7 @@ if os.path.isfile('../README.md'):
     with open('../README.md') as f:
         long_description = f.read()
 else:
-        long_description = _DESCRIPTION
+    long_description = _DESCRIPTION
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()

@@ -16,63 +16,61 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
-from functools import partial
-from operator import methodcaller
-
 import json
-import kubernetes
 import os
 import random
 import string
 import sys
 
-from pystol import __version__
-from pystol.const import CRD_DOMAIN, \
-                         CRD_PLURAL, \
-                         CRD_VERSION, \
-                         ALLOWED_EVENT_TYPES, \
-                         CREATE_TYPES_MAP, \
-                         LIST_TYPES_MAP
+import kubernetes
+from kubernetes.client.config_exception import ConfigException
+from kubernetes.client.rest import ApiException
 
-__all__ = [
-    'handle',
-]
+from pystol import __version__
+from pystol.const import CRD_DOMAIN, CRD_PLURAL, CRD_VERSION
 
 pystol_version = __version__
 
-#custom_obj = kubernetes.client.CustomObjectsApi()
-#v1 = kubernetes.client.CoreV1Api()
+# custom_obj = kubernetes.client.CustomObjectsApi()
+# v1 = kubernetes.client.CoreV1Api()
 
 #
 # We load the Kubernetes cluster config depending
 # where we execute the operator from.
 #
 
+
 def load_kubernetes_config():
     """
-    Here we will load the initial config details
+    Load the initial config details.
 
     We load the config depending where we execute the code from
     """
     try:
         if 'KUBERNETES_PORT' in os.environ:
-            kubernetes.config.load_incluster_config() # We set up the client from within a k8s pod
+            # We set up the client from within a k8s pod
+            kubernetes.config.load_incluster_config()
         elif 'KUBECONFIG' in os.environ:
             kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
         else:
             kubernetes.config.load_kube_config()
-    except:
+    except ConfigException as e:
         message = ("---\n"
-                   "The Python Kubernetes client could not be configured at this time.\n"
-                   "You need a working Kubernetes deployment to make Pystol work.\n"
+                   "The Python Kubernetes client could not be configured "
+                   "at this time.\n"
+                   "You need a working Kubernetes deployment to make "
+                   "Pystol work.\n"
                    "Check the following:\n"
-                   "Use the env var KUBECONFIG with the path to your K8s config file like:\n"
+                   "Use the env var KUBECONFIG with the path to your K8s "
+                   "config file like:\n"
                    "    export KUBECONFIG=~/.kube/config\n"
-                   "Or run Pystol from within the cluster to make use of load_incluster_config.")
+                   "Or run Pystol from within the cluster to make use of "
+                   "load_incluster_config.\n"
+                   "Error: " % (e))
         print(message)
         print("---")
-        print("The current Pystol version is: %s"%(pystol_version))
-        print("")
+        print("The current Pystol version is: %s" % (pystol_version))
+        print(" ")
         print("Bye...")
         sys.exit(0)
 
@@ -82,29 +80,40 @@ def load_kubernetes_config():
 # the CLI parameters.
 #
 
-def insert_pystol_object(namespace, collection, role, source, extra_vars):
+
+def insert_pystol_object(namespace,
+                         collection,
+                         role,
+                         source,
+                         extra_vars):
     """
-    Here we will determine where we will insert the CR.
+    Determine where we will insert the CR.
 
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
     custom_obj = kubernetes.client.CustomObjectsApi()
-    v1 = kubernetes.client.CoreV1Api()
 
     resource = {
-      "apiVersion": "pystol.org/v1alpha1",
-      "kind": "PystolAction",
-      "metadata": {"name": "pystol-action-" + namespace + "-" + collection + "-" + role + "-" + id_generator()},
-      "spec": {"namespace": namespace,
-               "collection": collection,
-               "role": role,
-               "source": source,
-               "extra_vars": extra_vars,
-               "action_state": "CRE",
-               "workflow_state": "WFA",
-               "action_stderr": "{}",
-               "action_stdout": "{}"},
+        "apiVersion": "pystol.org/v1alpha1",
+        "kind": "PystolAction",
+        "metadata": {"name": "pystol-action-" +
+                             namespace +
+                             "-" +
+                             collection +
+                             "-" +
+                             role +
+                             "-" +
+                             id_generator()},
+        "spec": {"namespace": namespace,
+                 "collection": collection,
+                 "role": role,
+                 "source": source,
+                 "extra_vars": extra_vars,
+                 "action_state": "CRE",
+                 "workflow_state": "WFA",
+                 "action_stderr": "{}",
+                 "action_stdout": "{}"},
     }
 
     # create the resource
@@ -125,9 +134,18 @@ def insert_pystol_object(namespace, collection, role, source, extra_vars):
 # the selected Pystol action.
 #
 
+
 def watch_for_pystol_timeouts(stop):
+    """
+    Watch for action with timeouts.
+
+    This method will listen for custom objects
+    that times out.
+    """
     while True:
-      a = 2
+        a = 2
+        print(a)
+
 
 def watch_for_pystol_objects(stop):
     """
@@ -139,23 +157,26 @@ def watch_for_pystol_objects(stop):
     """
     load_kubernetes_config()
     custom_obj = kubernetes.client.CustomObjectsApi()
-    v1 = kubernetes.client.CoreV1Api()
 
     w = kubernetes.watch.Watch()
-    for event in w.stream(custom_obj.list_cluster_custom_object, CRD_DOMAIN, CRD_VERSION, CRD_PLURAL, resource_version=''):
+    for event in w.stream(custom_obj.list_cluster_custom_object,
+                          CRD_DOMAIN,
+                          CRD_VERSION,
+                          CRD_PLURAL,
+                          resource_version=''):
         obj = event["object"]
         operation = event['type']
         spec = obj.get("spec")
         if not spec:
             continue
         metadata = obj.get("metadata")
-        resource_version = metadata['resourceVersion']
         name = metadata['name']
         print("Handling %s on %s" % (operation, name))
         done = spec.get("executed", False)
         if done:
             continue
         execute_pystol_action(custom_obj, obj)
+
 
 def execute_pystol_action(crds, obj):
     """
@@ -165,12 +186,11 @@ def execute_pystol_action(crds, obj):
     defined in the custom object.
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi()
-    v1 = kubernetes.client.CoreV1Api()
 
     metadata = obj.get("metadata")
     if not metadata:
-        print("No metadata in object, skipping: %s" % json.dumps(obj, indent=1))
+        print("No metadata in object, skipping: %s"
+              % json.dumps(obj, indent=1))
         return
     name = metadata.get("name")
     namespace = metadata.get("namespace")
@@ -191,7 +211,12 @@ def execute_pystol_action(crds, obj):
     action_action_stderr = action_spec_params["action_stderr"]
 
     print("Updating: %s" % name)
-    crds.replace_namespaced_custom_object(CRD_DOMAIN, CRD_VERSION, namespace, CRD_PLURAL, name, obj)
+    crds.replace_namespaced_custom_object(CRD_DOMAIN,
+                                          CRD_VERSION,
+                                          namespace,
+                                          CRD_PLURAL,
+                                          name,
+                                          obj)
 
     # Create the job definition
     api_instance = kubernetes.client.BatchV1Api()
@@ -215,11 +240,15 @@ def execute_pystol_action(crds, obj):
                                   action_action_stderr=action_action_stderr)
 
     try:
-        api_response = api_instance.create_namespaced_job("default", body, pretty=True)
+        api_response = api_instance.create_namespaced_job("default",
+                                                          body,
+                                                          pretty=True)
         print(api_response)
     except ApiException as e:
-        print("Exception when calling BatchV1Api->create_namespaced_job: %s\n" % e)
+        print("Exception when calling BatchV1Api->create_namespaced_job: %s\n"
+              % e)
     return
+
 
 def kube_create_job_object(name,
                            container_image,
@@ -234,15 +263,21 @@ def kube_create_job_object(name,
                            action_workflow_state,
                            action_action_stdout,
                            action_action_stderr):
+    """
+    Create the Pystol job.
+
+    This method will create the k8s job
+    that launchs the action.
+    """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi()
-    v1 = kubernetes.client.CoreV1Api()
 
     # Body is the object Body
-    body = kubernetes.client.V1Job(api_version="batch/v1", kind="Job")
+    body = kubernetes.client.V1Job(api_version="batch/v1",
+                                   kind="Job")
     # Body needs Metadata
     # Attention: Each JOB must have a different name!
-    body.metadata = kubernetes.client.V1ObjectMeta(namespace=namespace, name=name)
+    body.metadata = kubernetes.client.V1ObjectMeta(namespace=namespace,
+                                                   name=name)
     # And a Status
     body.status = kubernetes.client.V1JobStatus()
     # Now we start with the Template...
@@ -251,11 +286,13 @@ def kube_create_job_object(name,
     # Passing Arguments in Env:
     env_list = []
     for env_name, env_value in env_vars.items():
-        env_list.append( kubernetes.client.V1EnvVar(name=env_name, value=env_value) )
+        env_list.append(kubernetes.client.V1EnvVar(name=env_name,
+                                                   value=env_value))
 
     # Python interpreter as an extra variable
     # python object to be appended
-    y = {"ansible_python_interpreter":"/usr/bin/python3","pystol_action_id":name}
+    y = {"ansible_python_interpreter": "/usr/bin/python3",
+         "pystol_action_id": name}
     # parsing JSON string:
     extra_ansible_vars = json.loads(action_extra_vars)
     # appending the data
@@ -263,29 +300,51 @@ def kube_create_job_object(name,
 
     command = ["/bin/bash"]
     if (action_source == "galaxy.ansible.com"):
-        args = ["-c", "echo '---' > requirements.yml; \
-                       echo 'collections:' >> requirements.yml; \
-                       echo '- name: " + action_namespace + "." + action_collection + "' >> requirements.yml; \
-                       echo '  source: https://" + action_source + "' >> requirements.yml; \
-                       ansible-galaxy collection install --force -r requirements.yml; \
-                       ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+        args = ["-c",
+                "echo '---' > req.yml; \
+                 echo 'collections:' >> req.yml; \
+                 echo '- name: " + action_namespace + "." + action_collection + "' >> req.yml; \
+                 echo '  source: https://" + action_source + "' >> req.yml; \
+                 ansible-galaxy collection install --force -r req.yml; \
+                 ansible -m include_role \
+                   -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' \
+                   -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
     else:
-        args = ["-c", "echo '---'; \
-                       git clone " + action_source + " cloned_repo; \
-                       cd cloned_repo; \
-                       cd " + action_collection + "; \
-                       mkdir -p releases; \
-                       ansible-galaxy collection build -v --force --output-path releases/; \
-                       cd releases; \
-                       LATEST=$(ls *.tar.gz | grep -v latest | sort -V | tail -n1); \
-                       ansible-galaxy collection install --force $LATEST; \
-                       ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+        args = ["-c",
+                "echo '---'; \
+                 git clone " + action_source + " cloned_repo; \
+                 cd cloned_repo; \
+                 cd " + action_collection + "; \
+                 mkdir -p releases; \
+                 ansible-galaxy collection build -v \
+                                                 --force \
+                                                 --output-path releases/; \
+                 cd releases; \
+                 LATEST=$(ls *.tar.gz | grep -v latest | sort -V | tail -n1); \
+                 ansible-galaxy collection install --force $LATEST; \
+                 ansible -m include_role \
+                   -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' \
+                   -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
 
-    container = kubernetes.client.V1Container(name=name, image=container_image, command=command, args=args, env=env_list)
-    template.template.spec = kubernetes.client.V1PodSpec(containers=[container], restart_policy='Never')
+    container = kubernetes.client.V1Container(name=name,
+                                              image=container_image,
+                                              command=command,
+                                              args=args,
+                                              env=env_list)
+    template.template.spec = kubernetes.client.V1PodSpec(
+        containers=[container],
+        restart_policy='Never')
     # And finaly we can create our V1JobSpec!
-    body.spec = kubernetes.client.V1JobSpec(ttl_seconds_after_finished=600, template=template.template)
+    body.spec = kubernetes.client.V1JobSpec(ttl_seconds_after_finished=600,
+                                            template=template.template)
     return body
 
+
 def id_generator(size=5, chars=string.ascii_lowercase + string.digits):
+    """
+    Generate a random sufix.
+
+    This method will generate a
+    random sufix for the created resources.
+    """
     return ''.join(random.choice(chars) for _ in range(size))

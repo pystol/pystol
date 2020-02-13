@@ -8,9 +8,9 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-- kind: ServiceAccount
-  name: pystol-acc
-  namespace: default
-- kind: ServiceAccount
-  name: default
-  namespace: default
+  - kind: ServiceAccount
+    name: pystol-acc
+    namespace: default
+  - kind: ServiceAccount
+    name: default
+    namespace: default

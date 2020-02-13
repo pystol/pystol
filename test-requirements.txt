@@ -8,3 +8,5 @@ pep8-naming
 nodeenv
 pygithub
 requests
+bashate
+yamllint
