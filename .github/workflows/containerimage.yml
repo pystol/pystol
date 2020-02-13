@@ -7,31 +7,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag localbuild/testimage:latest
-    - name: Create policy file
-      run: |
-        mkdir -p .anchore
-        cat <<EOF > .anchore/policy.json
-        DOCKERFILECHECK:NOTAG:WARN
-        DOCKERFILECHECK:NOFROM:WARN
-        DOCKERFILECHECK:NOHEALTHCHECK:WARN
-        DOCKERFILECHECK:EXPOSE:WARN:DENIEDPORTS=22
-        SUIDDIFF:SUIDFILEDEL:WARN
-        SUIDDIFF:SUIDMODEDIFF:WARN
-        SUIDDIFF:SUIDFILEADD:WARN
-        IMAGECHECK:BASEOUTOFDATE:WARN
-        PKGBLACKLIST:PKGNAMEMATCH:WARN:BLACKLIST_NAMEMATCH=openssh-server
-        ANCHORESEC:FEEDOUTOFDATE:WARN:MAXAGE=2
-        ANCHORESEC:UNSUPPORTEDDISTRO:WARN
-        ANCHORESEC:VULNCRITICAL:WARN
-        ANCHORESEC:VULNHIGH:WARN
-        ANCHORESEC:VULNMEDIUM:WARN
-        EOF
     - uses: anchore/scan-action@master
       with:
         image-reference: "localbuild/testimage:latest"
         dockerfile-path: "./Dockerfile"
-        fail-build: false
         include-app-packages: true
-        custom-policy-path: .anchore/policy.json
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
