@@ -9,8 +9,8 @@ jobs:
       run: docker build . --file Dockerfile --tag localbuild/testimage:latest
     - name: Create policy file
       run: |
-        mkdir -p ~/.anchore
-        cat <<EOF > ~/.anchore/policy.json
+        mkdir -p .anchore
+        cat <<EOF > .anchore/policy.json
         *:*:WARN
         EOF
     - uses: anchore/scan-action@master
@@ -19,6 +19,6 @@ jobs:
         dockerfile-path: "./Dockerfile"
         fail-build: false
         include-app-packages: true
-        custom-policy-path: ~/.anchore/policy.json
+        custom-policy-path: .anchore/policy.json
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
