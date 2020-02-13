@@ -6,8 +6,8 @@
 
 
 <p style="text-align: center" align="center">
-    <a href="https://www.pystol.org"><img height="30px" src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-python.svg?sanitize=true"/> </a>
-    <a href="https://www.pystol.org"><img height="30px" src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-ansible.svg?sanitize=true"/> </a>
+    <a href="https://www.python.org"><img height="30px" src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-python.svg?sanitize=true"/> </a>
+    <a href="https://www.ansible.com"><img height="30px" src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-ansible.svg?sanitize=true"/> </a>
     <a href="https://www.pystol.org"><img height="30px" src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/made-with-love.svg?sanitize=true"/> </a>
     <a href="https://www.pystol.org"><img height="30px" src="https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/badges/cloud-native.svg?sanitize=true"/> </a>
 </p>
@@ -21,7 +21,24 @@
 | [![pyunits](https://github.com/pystol/pystol/workflows/pyunits/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=pyunits) | | | | | |
 | [![E2E install](https://github.com/pystol/pystol/workflows/e2einstall/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=e2einstall) | | | | | |
 | [![Pypi publish](https://github.com/pystol/pystol/workflows/pypipublish/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=pypipublish) | | | | | |
+| [![container-security](https://github.com/pystol/pystol/workflows/container-security/badge.svg?event=push)](https://github.com/pystol/pystol/actions?workflow=container-security) | | | | | |
 
+
+## Running Pystol
+
+The easiest way to execute Pystol in a Kubernetes-based cluster is:
+
+```
+pip install pystol # Install the operator using a pypi package
+pystol -b # Print the Pystol banner
+pystol -v # Print the installed version
+pystol deploy # Install Pystol in the cluster
+# Run the pingtest action.
+pystol run --namespace pystol \
+           --collection actions \
+           --role pingtest
+pystol --help # Run the help for further information
+```
 
 ## Documentation
 
