@@ -9,6 +9,7 @@ jobs:
       run: docker build . --file Dockerfile --tag localbuild/testimage:latest
     - name: Create policy file
       run: |
+        mkdir -p ~/.anchore
         cat <<EOF > ~/.anchore/policy.json
         *:*:WARN
         EOF
