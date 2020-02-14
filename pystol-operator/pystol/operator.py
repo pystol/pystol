@@ -23,7 +23,6 @@ import string
 import sys
 
 import kubernetes
-from kubernetes.client.config_exception import ConfigException
 from kubernetes.client.rest import ApiException
 
 from pystol import __version__
@@ -54,7 +53,7 @@ def load_kubernetes_config():
             kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
         else:
             kubernetes.config.load_kube_config()
-    except ConfigException as e:
+    except Exception as e:
         message = ("---\n"
                    "The Python Kubernetes client could not be configured "
                    "at this time.\n"

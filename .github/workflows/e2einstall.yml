@@ -179,6 +179,9 @@ jobs:
         echo ">>> run pystol CLI pystol -h"
         kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -h
         echo
+        echo ">>> run pystol CLI pystol run --namespace pystol --collection actions --role pingtest"
+        kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol run --namespace pystol --collection actions --role pingtest
+        echo
         echo ">>> run pystol CLI pystol -v"
         VERSION_OUTPUT=$(kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -v)
         echo $VERSION_OUTPUT
