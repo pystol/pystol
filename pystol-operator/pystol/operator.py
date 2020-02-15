@@ -142,8 +142,7 @@ def watch_for_pystol_timeouts(stop):
     that times out.
     """
     while True:
-        a = 2
-        print(a)
+        return True
 
 
 def watch_for_pystol_objects(stop):
