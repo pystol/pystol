@@ -23,12 +23,12 @@ from setuptools import find_packages, setup
 
 if version_info[:2] < (3, 5):
     raise RuntimeError(
-        'Unsupported python version %s.' % '.'.join(version_info)
+        'Unsupported python version %s.' % '.'.join(str(version_info))
     )
 
 _NAME = 'pystol'
 _DESCRIPTION = 'The Pystol CLI'
-_REVISION = '0.5.0'
+_REVISION = '0.5.1'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
