@@ -21,9 +21,9 @@ from sys import version_info
 
 from setuptools import find_packages, setup
 
-if version_info[:2] < (3, 5):
+if version_info < (3, 5):
     raise RuntimeError(
-        'Unsupported python version %s.' % '.'.join(str(version_info))
+        'Python 3.5 or greater is required'
     )
 
 _NAME = 'pystol'
