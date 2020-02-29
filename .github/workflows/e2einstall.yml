@@ -169,7 +169,7 @@ jobs:
         export KUBECONFIG="$(kind get kubeconfig-path)"
         kubectl get all --all-namespaces
         # We wait for all pods to be created and running
-        kubectl wait --for=condition=Ready pods -n default --all --timeout=5m
+        kubectl wait --for=condition=Ready pods -n pystol --all --timeout=5m
         kubectl wait --for=condition=Ready pods -n kube-system --all --timeout=5m
         kubectl wait --for=condition=Ready pods -n local-path-storage --all --timeout=5m
 
