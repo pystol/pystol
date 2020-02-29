@@ -49,7 +49,7 @@ def deploy_pystol():
             k8s_client=apicli,
             yaml_file=os.path.join(os.path.dirname(__file__),
                                    "templates/crd.yaml"),
-            namespace="default"
+            namespace="pystol"
         )
         print("CRD created - status='%s'" % resp.metadata.name)
     except FailToCreateError as e:
@@ -64,7 +64,7 @@ def deploy_pystol():
                            "templates/service_account.yaml")) as f:
         try:
             resp = v1.create_namespaced_service_account(
-                namespace="default",
+                namespace="pystol",
                 body=yaml.safe_load(f))
             print("Service account created - status='%s'" % resp.metadata.name)
         except ApiException as e:
@@ -100,7 +100,7 @@ def deploy_pystol():
         cm = template.render(values)
         try:
             resp = v1.create_namespaced_config_map(
-                body=yaml.safe_load(cm), namespace="default")
+                body=yaml.safe_load(cm), namespace="pystol")
             print("Config map created - status='%s'" % resp.metadata.name)
         except ApiException as e:
             print("CoreV1Api->create_namespaced_config: %s\n" % e)
@@ -112,7 +112,7 @@ def deploy_pystol():
         try:
             resp = deployment.create_namespaced_deployment(
                 body=yaml.safe_load(rendered_deployment),
-                namespace="default")
+                namespace="pystol")
             print("Deployment created - status='%s'" % resp.metadata.name)
         except ApiException as e:
             print("AppsV1Api->create_namespaced_deployment: %s\n" % e)
@@ -124,7 +124,7 @@ def deploy_pystol():
         try:
             resp = deployment.create_namespaced_deployment(
                 body=yaml.safe_load(rendered_deployment),
-                namespace="default")
+                namespace="pystol")
             print("Deployment created - status='%s'"
                   % resp.metadata.name)
         except ApiException as e:

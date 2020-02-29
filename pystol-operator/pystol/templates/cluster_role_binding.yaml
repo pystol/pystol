@@ -10,7 +10,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: pystol-acc
-    namespace: default
+    namespace: pystol
   - kind: ServiceAccount
-    name: default
-    namespace: default
+    name: pystol
+    namespace: pystol

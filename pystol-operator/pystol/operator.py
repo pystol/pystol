@@ -120,7 +120,7 @@ def insert_pystol_object(namespace,
         group="pystol.org",
         version="v1alpha1",
         # TODO: Move this to a specific namespace
-        namespace="default",
+        namespace="pystol",
         plural="pystolactions",
         body=resource,
     )
@@ -238,7 +238,7 @@ def execute_pystol_action(crds, obj):
                                   action_action_stderr=action_action_stderr)
 
     try:
-        api_response = api_instance.create_namespaced_job("default",
+        api_response = api_instance.create_namespaced_job("pystol",
                                                           body,
                                                           pretty=True)
         print(api_response)
