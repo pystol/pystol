@@ -143,7 +143,7 @@ jobs:
 
         echo
         echo ">>> Get pods 12 times"
-        for i in {1..12}; do kubectl get pod;echo;sleep 3; done
+        for i in {1..12}; do kubectl get pod --namespace pystol;echo;sleep 3; done
 
     - name: Debug pystol creation
       id: debug-pystol-deploy
@@ -151,13 +151,13 @@ jobs:
         export KUBECONFIG="$(kind get kubeconfig-path)"
         echo
         echo ">>> Debug pystol-controller pod"
-        kubectl describe pod `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1`
+        kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | cut -d' ' -f1`
         echo
         echo ">>> Debug pystol-ui pod"
-        kubectl describe pod `kubectl get pods | grep pystol-controller | head -n1 | cut -d' ' -f1`
+        kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | cut -d' ' -f1`
         echo
         echo ">>> Get pods 12 times"
-        for i in {1..12}; do kubectl get pod;echo;sleep 10; done
+        for i in {1..12}; do kubectl get pod --namespace pystol;echo;sleep 10; done
 
     - name: Build
       run: id;pwd;lsblk;df;cat /proc/mounts
@@ -178,17 +178,17 @@ jobs:
         export KUBECONFIG="$(kind get kubeconfig-path)"
         echo
         echo ">>> run pystol CLI pystol -h"
-        kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -h
+        kubectl exec `kubectl get pods --all-namespaces | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -h
         echo
         echo ">>> run pystol CLI pystol run --namespace pystol --collection actions --role pingtest"
-        kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol run --namespace pystol --collection actions --role pingtest
+        kubectl exec `kubectl get pods --all-namespaces | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol run --namespace pystol --collection actions --role pingtest
         echo
         echo ">>> run pystol CLI pystol -v"
-        VERSION_OUTPUT=$(kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -v)
+        VERSION_OUTPUT=$(kubectl exec `kubectl get pods --all-namespaces | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -v)
         echo $VERSION_OUTPUT
         echo
         echo ">>> run pystol CLI pystol -b"
-        kubectl exec `kubectl get pods | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -b
+        kubectl exec `kubectl get pods --all-namespaces | grep pystol-controller | grep Running | head -n1 | cut -d' ' -f1` -- pystol -b
         echo
         echo "Printing versions"
         echo "Version output from CLI: $VERSION_OUTPUT"
