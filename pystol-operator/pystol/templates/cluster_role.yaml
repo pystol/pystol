@@ -5,6 +5,9 @@ metadata:
   namespace: pystol
   name: pystol
 rules:
+  - apiGroups: ["pystol.org"]
+    resources: ["pystolactions"]
+    verbs: ["*"]
   - apiGroups: [""]
     resources: ["namespaces"]
     verbs: ["get", "watch", "list"]
@@ -14,3 +17,9 @@ rules:
   - apiGroups: ["", "extensions", "apps"]
     resources: ["deployments", "replicasets", "pods", "services"]
     verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch", "extensions"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
