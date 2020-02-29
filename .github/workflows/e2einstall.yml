@@ -143,7 +143,7 @@ jobs:
 
         echo
         echo ">>> Get pods 12 times"
-        for i in {1..12}; do kubectl get pod --namespace pystol;echo;sleep 3; done
+        for i in {1..12}; do kubectl get pod --all-namespaces;echo;sleep 3; done
 
     - name: Debug pystol creation
       id: debug-pystol-deploy
@@ -154,10 +154,10 @@ jobs:
         kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | cut -d' ' -f1`
         echo
         echo ">>> Debug pystol-ui pod"
-        kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | cut -d' ' -f1`
+        kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-ui | head -n1 | cut -d' ' -f1`
         echo
         echo ">>> Get pods 12 times"
-        for i in {1..12}; do kubectl get pod --namespace pystol;echo;sleep 10; done
+        for i in {1..12}; do kubectl get pod --all-namespaces;echo;sleep 10; done
 
     - name: Build
       run: id;pwd;lsblk;df;cat /proc/mounts
