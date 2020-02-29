@@ -66,7 +66,6 @@ setup(
         'Intended Audience :: System Administrators',
         'Topic :: Scientific/Engineering',
         'Topic :: Software Development :: Testing',
-        'Topic :: Software Development :: Fault Injection',
     ],
     author='Carlos Camacho',
     author_email='carloscamachoucv@gmail.com',
