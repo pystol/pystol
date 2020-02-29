@@ -9,8 +9,5 @@ roleRef:
   name: cluster-admin
 subjects:
   - kind: ServiceAccount
-    name: pystol-acc
-    namespace: pystol
-  - kind: ServiceAccount
     name: pystol
     namespace: pystol
