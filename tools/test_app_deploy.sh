@@ -21,42 +21,42 @@ set -o errexit
 #        messing up with some requests.
 
 main () {
-  local url=$1
+    local url=$1
 
-  if [[ -z "$url" ]]; then
-    echo "ERROR:
-  An URL must be provided.
+    if [[ -z "$url" ]]; then
+        echo "ERROR:
+    An URL must be provided.
 
-  Usage: check-res <url>
+    Usage: check-res <url>
 
-Aborting.
-    "
-    exit 1
-  fi
+    Aborting.
+      "
+        exit 1
+    fi
 
-  print_header
-  for i in `seq 1 10000`; do
-    make_request $url
-  done
+    print_header
+    for i in `seq 1 10000`; do
+        make_request $url
+    done
 }
 
 # This method does nothing more that just print a CSV
 # header to STDOUT so we can consume that later when
 # looking at the results.
 print_header () {
-  echo "code,time_total,time_connect,time_appconnect,time_starttransfer"
+    echo "Time;code;time_total;time_connect;time_appconnect;time_starttransfer"
 }
 
-# Make request performs the actual request using `curl`. 
+# Make request performs the actual request using `curl`.
 # It specifies those parameters that we've defined before,
 # taking a given `url` as its parameter.
 make_request () {
-  local url=$1
-
-  curl \
-    --write-out "%{http_code},%{time_total},%{time_connect},%{time_appconnect},%{time_starttransfer}\n" \
-    --silent \
-    --output /dev/null \
+    local url=$1
+    date=$(date +"%Y-%m-%dT%H:%M:%S.%3N")
+    curl \
+        --write-out "$date;%{http_code};%{time_total};%{time_connect};%{time_appconnect};%{time_starttransfer}\n" \
+        --silent \
+        --output /dev/null \
     "$url"
 }
 
