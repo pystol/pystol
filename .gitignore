@@ -10,3 +10,16 @@ nohup.out
 *dist
 *pystol.egg-info
 *package-lock.json
+.github_CODE_OF_CONDUCT.md
+.github_LICENSE
+.github_README.md
+node_modules/*
+pystol-ansible_CODE_OF_CONDUCT.md
+pystol-ansible_LICENSE
+pystol-ansible_README.md
+pystol-docs_CODE_OF_CONDUCT.md
+pystol-docs_LICENSE
+pystol-docs_README.md
+pystol-galaxy_CODE_OF_CONDUCT.md
+pystol-galaxy_LICENSE
+pystol-galaxy_README.md

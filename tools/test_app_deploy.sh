@@ -30,7 +30,7 @@ main () {
     Usage: check-res <url>
 
     Aborting.
-      "
+    "
         exit 1
     fi
 
