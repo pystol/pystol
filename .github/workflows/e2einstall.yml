@@ -32,7 +32,6 @@ jobs:
     - name: Run docker login
       id: pystol-login
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo
         echo ">>> Docker login quay.io"
         docker login -u="pystol+bot" -p="T2K5TLLL3ERE82F22SCVUF9M0ANY1ARR7NDR4CQ6P49H654WIMEQCNS0BL3O9Y2I" quay.io
@@ -47,7 +46,6 @@ jobs:
     - name: Install local-path provisioner
       id: local-path
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         kubectl wait --for=condition=Ready nodes --all --timeout=5m
         kubectl get nodes
         kubectl delete storageclass --all
@@ -71,7 +69,6 @@ jobs:
     - name: Create the container image
       id: pystol-create-image
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo ">>> Print the short GitHub commit tag"
         echo $GITHUB_SHORT_SHA
         echo
@@ -85,7 +82,6 @@ jobs:
     - name: Push the container image
       id: pystol-push-image
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo
         echo ">>> Push the container image"
         docker push $IMAGE_NAME:$GITHUB_SHORT_SHA
@@ -105,7 +101,6 @@ jobs:
     - name: Deploy pystol
       id: pystol-deploy
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo
         echo ">>> Install Pystol deployment crd and rbac"
 
@@ -151,10 +146,11 @@ jobs:
         echo ">>> Describe pystol-controller deployment"
         kubectl describe deployment pystol-controller -n pystol
 
+        echo ">>> Describe pystol-ui deployment"
+        kubectl describe replicaset `kubectl describe deployment pystol-ui -n pystol | grep NewReplicaSet: | tr -s ' ' | cut -d' ' -f2`
     - name: Debug pystol creation
       id: debug-pystol-deploy
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo
         echo ">>> Debug pystol-controller pod"
         kubectl describe pod -n pystol `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | tr -s ' ' | cut -d' ' -f2`
@@ -172,7 +168,6 @@ jobs:
       run: |
         echo
         echo ">>> Wait for all running before continue"
-        export KUBECONFIG="$(kind get kubeconfig)"
         kubectl get all --all-namespaces
         # We wait for all pods to be created and running
         kubectl wait --for=condition=Ready pods -n pystol --all --timeout=5m
@@ -181,7 +176,6 @@ jobs:
 
     - name: Test Pystol CLI
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo
         echo ">>> run pystol CLI pystol -h"
         kubectl exec `kubectl get pods --all-namespaces | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f2` -- pystol -h
@@ -213,7 +207,6 @@ jobs:
 
     - name: Test
       run: |
-        export KUBECONFIG="$(kind get kubeconfig)"
         echo
         echo ">>> run pod"
         kubectl apply -f ${GITHUB_WORKSPACE}/.github/e2e-templates/rancher-provisioner-nonroot.yaml
