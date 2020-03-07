@@ -164,11 +164,9 @@ jobs:
         echo
         echo ">>> Debug pystol-controller pod"
         kubectl describe pod -n pystol `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | tr -s ' ' | cut -d' ' -f2`
-        kubectl logs `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | tr -s ' ' | cut -d' ' -f2`
         echo
         echo ">>> Debug pystol-ui pod"
         kubectl describe pod -n pystol `kubectl get pods --all-namespaces | grep pystol-ui | head -n1 | tr -s ' ' | cut -d' ' -f2`
-        kubectl logs `kubectl get pods --all-namespaces | grep pystol-ui | head -n1 | tr -s ' ' | cut -d' ' -f2`
 
     - name: Build
       run: id;pwd;lsblk;df;cat /proc/mounts
