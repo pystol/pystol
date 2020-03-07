@@ -153,8 +153,6 @@ jobs:
         kubectl get clusterrolebindings
         echo "---"
         kubectl get events --all-namespaces
-        echo "---"
-        kubectl get serviceaccounts pystol -o yaml
 
     - name: Debug pystol creation
       id: debug-pystol-deploy
