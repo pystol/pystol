@@ -10,3 +10,4 @@ pygithub
 requests
 bashate
 yamllint
+matplotlib
