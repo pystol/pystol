@@ -44,7 +44,7 @@ main () {
 # header to STDOUT so we can consume that later when
 # looking at the results.
 print_header () {
-    echo "Time;code;time_total;time_connect;time_appconnect;time_starttransfer"
+    echo "Time;code;time_total;time_connect;time_starttransfer;speed_download"
 }
 
 # Make request performs the actual request using `curl`.
@@ -53,8 +53,9 @@ print_header () {
 make_request () {
     local url=$1
     date=$(date +"%Y-%m-%dT%H:%M:%S.%3N")
-    curl \
-        --write-out "$date;%{http_code};%{time_total};%{time_connect};%{time_appconnect};%{time_starttransfer}\n" \
+    # Only wait up to 3 secs for a reply.
+    curl -m 3 \
+        --write-out "$date;%{http_code};%{time_total};%{time_connect};%{time_starttransfer};%{speed_download}\n" \
         --silent \
         --output /dev/null \
     "$url"
