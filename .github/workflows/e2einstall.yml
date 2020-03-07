@@ -104,6 +104,8 @@ jobs:
         echo
         echo ">>> Install Pystol deployment crd and rbac"
 
+        kubectl apply -f ./pystol-operator/pystol/templates/namespace.yaml
+
         cat <<EOF > ~/ci_values.yaml
         appSettings:
           pystol:
@@ -122,7 +124,6 @@ jobs:
            ~/ci_values.yaml \
            | kubectl apply -f -
 
-        kubectl apply -f ./pystol-operator/pystol/templates/namespace.yaml
         kubectl apply -f ./pystol-operator/pystol/templates/crd.yaml
         kubectl apply -f ./pystol-operator/pystol/templates/service_account.yaml
         kubectl apply -f ./pystol-operator/pystol/templates/cluster_role.yaml

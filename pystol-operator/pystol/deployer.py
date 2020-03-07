@@ -45,6 +45,15 @@ def deploy_pystol():
     apicli = kubernetes.client.ApiClient()
 
     with open(os.path.join(os.path.dirname(__file__),
+                           "templates/namespace.yaml")) as f:
+        try:
+            resp = v1.create_namespace(
+                body=yaml.safe_load(f))
+            print("Namespace created - status='%s'" % resp.metadata.name)
+        except ApiException as e:
+            print("CoreV1Api->create_namespace: %s\n" % e)
+
+    with open(os.path.join(os.path.dirname(__file__),
                            "templates/upstream_values.yaml")) as f:
         values = yaml.safe_load(f)
 
@@ -58,15 +67,6 @@ def deploy_pystol():
             print("Config map created - status='%s'" % resp.metadata.name)
         except ApiException as e:
             print("CoreV1Api->create_namespaced_config: %s\n" % e)
-
-    with open(os.path.join(os.path.dirname(__file__),
-                           "templates/namespace.yaml")) as f:
-        try:
-            resp = v1.create_namespace(
-                body=yaml.safe_load(f))
-            print("Namespace created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("CoreV1Api->create_namespace: %s\n" % e)
 
     try:
         resp = kubernetes.utils.create_from_yaml(
