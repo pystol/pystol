@@ -143,7 +143,13 @@ jobs:
 
         echo
         echo ">>> Get pods 12 times"
-        for i in {1..12}; do kubectl get pod --all-namespaces;echo;sleep 3; done
+        for i in {1..1}; do kubectl get pod --all-namespaces;echo;sleep 3; done
+
+        echo ">>> Describe pystol-ui deployment"
+        kubectl describe deployment pystol-ui -n pystol
+
+        echo ">>> Describe pystol-controller deployment"
+        kubectl describe deployment pystol-controller -n pystol
 
     - name: Debug pystol creation
       id: debug-pystol-deploy
