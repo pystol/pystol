@@ -151,13 +151,13 @@ jobs:
         export KUBECONFIG="$(kind get kubeconfig-path)"
         echo
         echo ">>> Debug pystol-controller pod"
-        kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | tr -s ' ' | cut -d' ' -f2`
+        kubectl describe pod -n pystol `kubectl get pods --all-namespaces | grep pystol-controller | head -n1 | tr -s ' ' | cut -d' ' -f2`
         echo
         echo ">>> Debug pystol-ui pod"
-        kubectl describe pod `kubectl get pods --all-namespaces | grep pystol-ui | head -n1 | tr -s ' ' | cut -d' ' -f2`
+        kubectl describe pod -n pystol `kubectl get pods --all-namespaces | grep pystol-ui | head -n1 | tr -s ' ' | cut -d' ' -f2`
         echo
         echo ">>> Get pods 12 times"
-        for i in {1..12}; do kubectl get pod --all-namespaces;echo;sleep 10; done
+        for i in {1..12}; do kubectl get pods -n pystol;echo;sleep 10; done
 
     - name: Build
       run: id;pwd;lsblk;df;cat /proc/mounts
