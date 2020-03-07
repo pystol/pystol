@@ -104,12 +104,6 @@ jobs:
         echo
         echo ">>> Install Pystol deployment crd and rbac"
 
-        kubectl apply -f ./pystol-operator/pystol/templates/namespace.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/crd.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/service_account.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/cluster_role.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/cluster_role_binding.yaml
-
         cat <<EOF > ~/ci_values.yaml
         appSettings:
           pystol:
@@ -124,15 +118,21 @@ jobs:
               api_host: labserver
         EOF
 
+        j2 ./pystol-operator/pystol/templates/config_map.yaml.j2 \
+           ~/ci_values.yaml \
+           | kubectl apply -f -
+
+        kubectl apply -f ./pystol-operator/pystol/templates/namespace.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/crd.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/service_account.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/cluster_role.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/cluster_role_binding.yaml
+
         j2 ./pystol-operator/pystol/templates/controller.yaml.j2 \
            ~/ci_values.yaml \
            | kubectl apply -f -
 
         j2 ./pystol-operator/pystol/templates/ui.yaml.j2 \
-           ~/ci_values.yaml \
-           | kubectl apply -f -
-
-        j2 ./pystol-operator/pystol/templates/config_map.yaml.j2 \
            ~/ci_values.yaml \
            | kubectl apply -f -
 

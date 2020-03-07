@@ -45,6 +45,21 @@ def deploy_pystol():
     apicli = kubernetes.client.ApiClient()
 
     with open(os.path.join(os.path.dirname(__file__),
+                           "templates/upstream_values.yaml")) as f:
+        values = yaml.safe_load(f)
+
+    with open(os.path.join(os.path.dirname(__file__),
+                           "templates/config_map.yaml.j2")) as f:
+        template = Template(f.read())
+        cm = template.render(values)
+        try:
+            resp = v1.create_namespaced_config_map(
+                body=yaml.safe_load(cm), namespace="pystol")
+            print("Config map created - status='%s'" % resp.metadata.name)
+        except ApiException as e:
+            print("CoreV1Api->create_namespaced_config: %s\n" % e)
+
+    with open(os.path.join(os.path.dirname(__file__),
                            "templates/namespace.yaml")) as f:
         try:
             resp = v1.create_namespace(
@@ -98,21 +113,6 @@ def deploy_pystol():
         except ApiException as e:
             print("RbacAuthorizationV1Api->create_cluster_role_binding: %s\n"
                   % e)
-
-    with open(os.path.join(os.path.dirname(__file__),
-                           "templates/upstream_values.yaml")) as f:
-        values = yaml.safe_load(f)
-
-    with open(os.path.join(os.path.dirname(__file__),
-                           "templates/config_map.yaml.j2")) as f:
-        template = Template(f.read())
-        cm = template.render(values)
-        try:
-            resp = v1.create_namespaced_config_map(
-                body=yaml.safe_load(cm), namespace="pystol")
-            print("Config map created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("CoreV1Api->create_namespaced_config: %s\n" % e)
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/controller.yaml.j2")) as f:
