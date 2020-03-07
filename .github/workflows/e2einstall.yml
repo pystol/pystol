@@ -146,8 +146,12 @@ jobs:
         echo ">>> Describe pystol-controller deployment"
         kubectl describe deployment pystol-controller -n pystol
 
-        echo ">>> Get events"
-        # kubectl describe replicaset `kubectl describe deployment pystol-ui -n pystol | grep NewReplicaSet: | tr -s ' ' | cut -d' ' -f2`
+        echo ">>> Get config and events"
+        echo "---"
+        kubectl get serviceaccounts
+        echo "---"
+        kubectl get clusterrolebindings
+        echo "---"
         kubectl get events --all-namespaces
 
     - name: Debug pystol creation
