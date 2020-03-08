@@ -35,7 +35,7 @@ RUN pip3 install -r /pystol-operator/requirements.txt
 RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 
 # Install NodeJS
-RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
 RUN yum install nodejs -y
 
 # Configure Ansible inventory
