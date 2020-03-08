@@ -42,6 +42,9 @@ RUN yum install nodejs -y
 RUN mkdir /etc/ansible/ /ansible
 RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 
+# Upgrade all packages
+RUN yum upgrade -y
+
 # Install the collection codebase
 # Maybe if in the future we want to
 # deliver some default roles and modules
