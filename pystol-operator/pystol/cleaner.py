@@ -125,3 +125,21 @@ def purge_pystol():
     except ApiException:  # as e:
         print("Cluster role binding: Can't remove it, maybe it's gone...")
         # print("RbacAuthorizationV1Api->delete_cluster_role: %s\n" % e)
+
+    ext = kubernetes.client.ApiextensionsV1beta1Api()
+    name = 'pystolactions.pystol.org'
+    pretty = 'true'
+    orphans = True
+    propagation = 'Background'
+    body = kubernetes.client.V1DeleteOptions()
+    try:
+        ext.delete_custom_resource_definition(name,
+                                              pretty=pretty,
+                                              orphan_dependents=orphans,
+                                              propagation_policy=propagation,
+                                              body=body)
+        print("CRD deleted")
+        # print("CRD deleted - status='%s'" % resp)
+    except ApiException:  # as e:
+        print("CRD: Can't remove it, maybe it's gone...")
+        # print("V1beta1Api->delete_cluster_role_binding: %s\n" % e)

@@ -177,20 +177,22 @@ def main():
         elif (args.command == 'purge'):
             if not args.yes:
                 yes = {'yes', 'y', 'ye', ''}
-                msg = ("--------------------------------------------\n"
-                       "You are about to purge any Pystol resource\n"
-                       "part of the pystol namespace in this cluster.\n"
-                       "This includes any deployment, previous runs,\n"
-                       "RBAC rules, and any other Pystol resource.\n"
-                       "Write 'yes' to proceed.\n"
-                       "-------This action can not be undone.-------")
+                msg = ("----------This action can not be undone.---------\n"
+                       "| You are about to purge any Pystol resource    |\n"
+                       "| part of the pystol namespace in this cluster. |\n"
+                       "| This includes any deployment, previous runs,  |\n"
+                       "| RBAC rules, and any other Pystol resource.    |\n"
+                       "| Write 'yes' and press 'enter' to proceed.     |\n"
+                       "----------This action can not be undone.---------")
                 print(msg)
                 choice = input().lower()
                 if choice in yes:
+                    print("Purging Pystol from the cluster...")
                     purge_pystol()
                 else:
                     print("Cancelling...")
             else:
+                print("Purging Pystol from the cluster...")
                 purge_pystol()
             exit()
         elif (args.command == 'deploy'):
