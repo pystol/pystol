@@ -21,6 +21,7 @@ import threading
 from argparse import ArgumentParser
 
 from pystol import __version__
+from pystol.cleaner import purge_pystol
 from pystol.deployer import deploy_pystol
 from pystol.get_banner import get_banner
 from pystol.operator import insert_pystol_object
@@ -68,6 +69,16 @@ def main():
                                              "The run option will "
                                              "execute the Pystol "
                                              "actions against the cluster."))
+
+    parser_purge = subparsers.add_parser('purge',
+                                         help=("Purge any Pystol "
+                                               "deployed resource."))
+
+    parser_purge.add_argument(
+        '-y',
+        '--yes',
+        action='store_true',
+        help=("Run this to avoid having to write 'yes'"))
 
     parser_run = subparsers.add_parser('run', help=("CLI options to run the "
                                                     "Pystol actions."))
@@ -163,6 +174,25 @@ def main():
                 t2.start()
             except Exception as err:
                 print("Error: unable to start thread: " + err)
+        elif (args.command == 'purge'):
+            if not args.yes:
+                yes = {'yes', 'y', 'ye', ''}
+                msg = ("--------------------------------------------\n"
+                       "You are about to purge any Pystol resource\n"
+                       "part of the pystol namespace in this cluster.\n"
+                       "This includes any deployment, previous runs,\n"
+                       "RBAC rules, and any other Pystol resource.\n"
+                       "Write 'yes' to proceed.\n"
+                       "-------This action can not be undone.-------")
+                print(msg)
+                choice = input().lower()
+                if choice in yes:
+                    purge_pystol()
+                else:
+                    print("Cancelling...")
+            else:
+                purge_pystol()
+            exit()
         elif (args.command == 'deploy'):
             deploy_pystol()
             exit()
