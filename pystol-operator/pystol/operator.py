@@ -249,7 +249,7 @@ def execute_pystol_action(obj):
         print("Exception when calling BatchV1Api->create_namespaced_job: %s\n"
               % e)
 
-    # Creating job
+    # Updating the CR with - Creating job
     print("Updating: %s" % name)
     obj["spec"]["workflow_state"] = "PystolOperatorCreatingJob"
     custom_obj.replace_namespaced_custom_object(CRD_DOMAIN,

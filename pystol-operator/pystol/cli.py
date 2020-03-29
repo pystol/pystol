@@ -151,6 +151,12 @@ def main():
         type=str,
         help=("Specify the action to fetch details"))
 
+    parser_get.add_argument(
+        '-d',
+        '--debug',
+        action='store_true',
+        help=("Add the debug flag to show extra information"))
+
     subparsers.add_parser('deploy',
                           help=("Install the Pystol operator "
                                 "includes, deployment, "
@@ -211,7 +217,7 @@ def main():
             list_actions()
             exit()
         elif (args.command == 'get'):
-            get_action(args.action)
+            get_action(args.action, args.debug)
             exit()
         elif (args.command == 'deploy'):
             deploy_pystol()

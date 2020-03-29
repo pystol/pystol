@@ -46,12 +46,7 @@ def list_actions():
 
     x = PrettyTable()
     x.field_names = ["Name",
-                     # "Namespace",
                      "Creation",
-                     # "Role",
-                     # "Collection",
-                     # "Source",
-                     # "Extra vars",
                      "Action state",
                      "Workflow state"]
     try:
@@ -63,21 +58,16 @@ def list_actions():
 
         for action in resp['items']:
             x.add_row([action['metadata']['name'],
-                       # action['metadata']['namespace'],
                        action['metadata']['creationTimestamp'],
-                       # action['spec']['role'],
-                       # action['spec']['collection'],
-                       # action['spec']['source'],
-                       # action['spec']['extra_vars'],
                        action['spec']['action_state'],
                        action['spec']['workflow_state']])
     except ApiException:
         print("No objects found...")
 
     print(x)
+    print("For further information use: pystol get <action_name> [--debug]")
 
-
-def get_action(name):
+def get_action(name, debug=False):
     """
     Get Pystol action details.
 
@@ -99,3 +89,40 @@ def get_action(name):
         print(json.dumps(resp['spec'], indent=2))
     except ApiException:
         print("Object not found...")
+
+    if debug:
+
+        api = kubernetes.client.BatchV1Api()
+        namespace = "pystol"
+        pretty = 'true'
+        try:
+            resp = api.read_namespaced_job(name=name,
+                                           namespace=namespace,
+                                           pretty=pretty)
+            print("---- Job description begins ----")
+            print(resp)
+            print("---- Job description ends ----")
+        except ApiException:
+            print("Job not found...")
+
+        api = kubernetes.client.CoreV1Api()
+        namespace = "pystol"
+        pretty = 'true'
+        try:
+            resp = api.list_namespaced_pod(namespace=namespace,
+                                           pretty=pretty)
+            found = False
+            for pod in resp.items:
+                if name in pod.metadata.name:
+                    found = True
+                    resp = api.read_namespaced_pod_log(name=pod.metadata.name,
+                                                       namespace=namespace,
+                                                       pretty=pretty)
+                    print("---- Pod logs begins ----")
+                    print("Logs from: " + pod.metadata.name)
+                    print(resp)
+                    print("---- Pod logs ends ----")
+            if not found:
+                print("Pod not found")
+        except ApiException:
+            print("Pods not found...")
