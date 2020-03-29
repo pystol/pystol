@@ -67,6 +67,7 @@ def list_actions():
     print(x)
     print("For further information use: pystol get <action_name> [--debug]")
 
+
 def get_action(name, debug=False):
     """
     Get Pystol action details.
