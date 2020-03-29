@@ -24,7 +24,7 @@ from pystol import __version__
 from pystol.cleaner import purge_pystol
 from pystol.deployer import deploy_pystol
 from pystol.get_banner import get_banner
-from pystol.lister import list_actions, get_action
+from pystol.lister import get_action, list_actions
 from pystol.operator import insert_pystol_object
 from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts
 
@@ -144,7 +144,7 @@ def main():
                                         "list CRs"))
 
     parser_get = subparsers.add_parser('get',
-                                        help=("Get Pystol resource."))
+                                       help=("Get Pystol resource."))
 
     parser_get.add_argument(
         "action",

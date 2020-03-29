@@ -109,8 +109,8 @@ def insert_pystol_object(namespace,
                  "role": role,
                  "source": source,
                  "extra_vars": extra_vars,
-                 "action_state": "CRE",
-                 "workflow_state": "WFA",
+                 "action_state": "PystolActionCreating",
+                 "workflow_state": "PystolOperatorWaitingAction",
                  "action_stderr": "{}",
                  "action_stdout": "{}"},
     }
@@ -119,7 +119,6 @@ def insert_pystol_object(namespace,
     api_response = custom_obj.create_namespaced_custom_object(
         group="pystol.org",
         version="v1alpha1",
-        # TODO: Move this to a specific namespace
         namespace="pystol",
         plural="pystolactions",
         body=resource,
@@ -173,10 +172,10 @@ def watch_for_pystol_objects(stop):
         done = spec.get("executed", False)
         if done:
             continue
-        execute_pystol_action(custom_obj, obj)
+        execute_pystol_action(obj)
 
 
-def execute_pystol_action(crds, obj):
+def execute_pystol_action(obj):
     """
     Execute the Pystol action.
 
@@ -184,6 +183,7 @@ def execute_pystol_action(crds, obj):
     defined in the custom object.
     """
     load_kubernetes_config()
+    custom_obj = kubernetes.client.CustomObjectsApi()
 
     metadata = obj.get("metadata")
     if not metadata:
@@ -204,17 +204,18 @@ def execute_pystol_action(crds, obj):
     action_source = action_spec_params["source"]
     action_extra_vars = action_spec_params["extra_vars"]
     action_action_state = action_spec_params["action_state"]
-    action_workflow_state = action_spec_params["workflow_state"]
+    # action_workflow_state = action_spec_params["workflow_state"]
+    action_workflow_state = "PystolOperatorStartProcessingAction"
     action_action_stdout = action_spec_params["action_stdout"]
     action_action_stderr = action_spec_params["action_stderr"]
 
     print("Updating: %s" % name)
-    crds.replace_namespaced_custom_object(CRD_DOMAIN,
-                                          CRD_VERSION,
-                                          namespace,
-                                          CRD_PLURAL,
-                                          name,
-                                          obj)
+    custom_obj.replace_namespaced_custom_object(CRD_DOMAIN,
+                                                CRD_VERSION,
+                                                namespace,
+                                                CRD_PLURAL,
+                                                name,
+                                                obj)
 
     # Create the job definition
     api_instance = kubernetes.client.BatchV1Api()

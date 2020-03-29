@@ -16,12 +16,13 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import json
+
 import kubernetes
 from kubernetes.client.rest import ApiException
 
-import json
-
 from prettytable import PrettyTable
+
 from pystol import __version__
 from pystol.operator import load_kubernetes_config
 
@@ -70,10 +71,11 @@ def list_actions():
                        # action['spec']['extra_vars'],
                        action['spec']['action_state'],
                        action['spec']['workflow_state']])
-    except ApiException as e:
+    except ApiException:
         print("No objects found...")
 
     print(x)
+
 
 def get_action(name):
     """
@@ -95,6 +97,5 @@ def get_action(name):
                                                 plural=plural,
                                                 name=name)
         print(json.dumps(resp['spec'], indent=2))
-    except ApiException as e:
+    except ApiException:
         print("Object not found...")
-
