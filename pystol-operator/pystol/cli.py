@@ -24,6 +24,7 @@ from pystol import __version__
 from pystol.cleaner import purge_pystol
 from pystol.deployer import deploy_pystol
 from pystol.get_banner import get_banner
+from pystol.lister import list_actions, get_action
 from pystol.operator import insert_pystol_object
 from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts
 
@@ -137,7 +138,18 @@ def main():
               "Defaults to: ''"))
 
     subparsers.add_parser('listen', help=("CLI options to "
-                                          "watch for CRDs"))
+                                          "watch for CRs"))
+
+    subparsers.add_parser('list', help=("CLI options to "
+                                        "list CRs"))
+
+    parser_get = subparsers.add_parser('get',
+                                        help=("Get Pystol resource."))
+
+    parser_get.add_argument(
+        "action",
+        type=str,
+        help=("Specify the action to fetch details"))
 
     subparsers.add_parser('deploy',
                           help=("Install the Pystol operator "
@@ -194,6 +206,12 @@ def main():
             else:
                 print("Purging Pystol from the cluster...")
                 purge_pystol()
+            exit()
+        elif (args.command == 'list'):
+            list_actions()
+            exit()
+        elif (args.command == 'get'):
+            get_action(args.action)
             exit()
         elif (args.command == 'deploy'):
             deploy_pystol()

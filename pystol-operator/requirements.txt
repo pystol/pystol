@@ -6,3 +6,4 @@ j2cli
 jinja2
 kubernetes
 setuptools>=45.3.0
+PTable
