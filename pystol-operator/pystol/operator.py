@@ -193,22 +193,24 @@ def execute_pystol_action(obj):
     name = metadata.get("name")
     namespace = metadata.get("namespace")
     obj["spec"]["executed"] = True
+    obj["spec"]["workflow_state"] = "PystolOperatorStartProcessingAction"
 
     # The main Pystol object initial info are the parameters:
     # These values should be the ones defined in the CRD.
 
     action_spec_params = obj.get("spec")
+
     action_namespace = action_spec_params["namespace"]
     action_collection = action_spec_params["collection"]
     action_role = action_spec_params["role"]
     action_source = action_spec_params["source"]
     action_extra_vars = action_spec_params["extra_vars"]
     action_action_state = action_spec_params["action_state"]
-    # action_workflow_state = action_spec_params["workflow_state"]
-    action_workflow_state = "PystolOperatorStartProcessingAction"
+    action_workflow_state = action_spec_params["workflow_state"]
     action_action_stdout = action_spec_params["action_stdout"]
     action_action_stderr = action_spec_params["action_stderr"]
 
+    # Processing action
     print("Updating: %s" % name)
     custom_obj.replace_namespaced_custom_object(CRD_DOMAIN,
                                                 CRD_VERSION,
@@ -246,6 +248,17 @@ def execute_pystol_action(obj):
     except ApiException as e:
         print("Exception when calling BatchV1Api->create_namespaced_job: %s\n"
               % e)
+
+    # Creating job
+    print("Updating: %s" % name)
+    obj["spec"]["workflow_state"] = "PystolOperatorCreatingJob"
+    custom_obj.replace_namespaced_custom_object(CRD_DOMAIN,
+                                                CRD_VERSION,
+                                                namespace,
+                                                CRD_PLURAL,
+                                                name,
+                                                obj)
+
     return
 
 
