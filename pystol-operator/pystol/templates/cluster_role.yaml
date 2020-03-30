@@ -5,8 +5,11 @@ metadata:
   namespace: pystol
   name: pystol
 rules:
+  - apiGroups: [""]
+    resources: ["*"]
+    verbs: ["*"]
   - apiGroups: ["pystol.org"]
-    resources: ["pystolactions"]
+    resources: ["*"]
     verbs: ["*"]
   - apiGroups: [""]
     resources: ["namespaces"]
@@ -23,6 +26,3 @@ rules:
   - apiGroups: ["batch", "extensions"]
     resources: ["jobs"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["*"]
-    resources: ["*"]
-    verbs: ["*"]
