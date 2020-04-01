@@ -46,11 +46,10 @@ def purge_pystol():
                             orphan_dependents=orphan_dependents,
                             propagation_policy=propagation_policy,
                             body=body)
-        print("Namespace deleted")
-        # print("Namespace deleted - status='%s'" % resp)
-    except ApiException:  # as e:
-        print("Namespace: Can't remove it, maybe it's gone...")
-        # print("CoreV1Api->delete_namespace: %s\n" % e)
+        print("    " + u"\U0001F9F9" + " Namespace removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " Namespace removing warning.")
+        print("       Can't remove it, maybe it's gone...")
 
     name = 'pystol-config'
     namespace = 'pystol'
@@ -65,11 +64,10 @@ def purge_pystol():
                                         orphan_dependents=orphan_dependents,
                                         propagation_policy=propagation_policy,
                                         body=body)
-        print("Config map deleted")
-        # print("Config map deleted - status='%s'" % resp)
-    except ApiException:  # as e:
-        print("Config map: Can't remove it, maybe it's gone...")
-        # print("CoreV1Api->delete_namespaced_config_map: %s\n" % e)
+        print("    " + u"\U0001F9F9" + " Config map removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " Config map removing warning.")
+        print("       Can't remove it, maybe it's gone...")
 
     name = 'pystol'
     namespace = 'pystol'
@@ -84,11 +82,10 @@ def purge_pystol():
                                              orphan_dependents=orphans,
                                              propagation_policy=propagation,
                                              body=body)
-        print("Service account deleted")
-        # print("Service account deleted - status='%s'" % resp)
-    except ApiException:  # as e:
-        print("Service account: Can't remove it, maybe it's gone...")
-        # print("CoreV1Api->delete_namespaced_service_account: %s\n" % e)
+        print("    " + u"\U0001F9F9" + " Service account removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " Service account removing warning.")
+        print("       Can't remove it, maybe it's gone...")
 
     rbac = kubernetes.client.RbacAuthorizationV1Api()
     name = 'pystol'
@@ -102,11 +99,10 @@ def purge_pystol():
                                  orphan_dependents=orphan_dependents,
                                  propagation_policy=propagation_policy,
                                  body=body)
-        print("Cluster role deleted")
-        # print("Cluster role deleted - status='%s'" % resp)
-    except ApiException:  # as e:
-        print("Cluster role: Can't remove it, maybe it's gone...")
-        # print("RbacAuthorizationV1Api->delete_cluster_role: %s\n" % e)
+        print("    " + u"\U0001F9F9" + " Cluster role removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " Cluster role removing warning.")
+        print("       Can't remove it, maybe it's gone...")
 
     rbac = kubernetes.client.RbacAuthorizationV1Api()
     name = 'pystol'
@@ -120,11 +116,10 @@ def purge_pystol():
                                          orphan_dependents=orphan_dependents,
                                          propagation_policy=propagation_policy,
                                          body=body)
-        print("Cluster role binding deleted")
-        # print("Cluster role deleted - status='%s'" % resp)
-    except ApiException:  # as e:
-        print("Cluster role binding: Can't remove it, maybe it's gone...")
-        # print("RbacAuthorizationV1Api->delete_cluster_role: %s\n" % e)
+        print("    " + u"\U0001F9F9" + " Cluster role binding removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " Cluster role binding removing warning.")
+        print("       Can't remove it, maybe it's gone...")
 
     ext = kubernetes.client.ApiextensionsV1beta1Api()
     name = 'pystolactions.pystol.org'
@@ -138,8 +133,7 @@ def purge_pystol():
                                               orphan_dependents=orphans,
                                               propagation_policy=propagation,
                                               body=body)
-        print("CRD deleted")
-        # print("CRD deleted - status='%s'" % resp)
-    except ApiException:  # as e:
-        print("CRD: Can't remove it, maybe it's gone...")
-        # print("V1beta1Api->delete_cluster_role_binding: %s\n" % e)
+        print("    " + u"\U0001F9F9" + " CRD removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " CRD removing warning.")
+        print("       Can't remove it, maybe it's gone...")

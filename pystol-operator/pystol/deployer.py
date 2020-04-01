@@ -49,9 +49,11 @@ def deploy_pystol():
         try:
             resp = v1.create_namespace(
                 body=yaml.safe_load(f))
-            print("Namespace created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("CoreV1Api->create_namespace: %s\n" % e)
+            print("  " + u"\U0001F4E6" + " Namespace created.")
+            print("     '%s'" % resp.metadata.name)
+        except ApiException:
+            print("  " + u"\u2757" + " Namespace creation warning.")
+            print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/upstream_values.yaml")) as f:
@@ -64,9 +66,11 @@ def deploy_pystol():
         try:
             resp = v1.create_namespaced_config_map(
                 body=yaml.safe_load(cm), namespace="pystol")
-            print("Config map created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("CoreV1Api->create_namespaced_config: %s\n" % e)
+            print("  " + u"\U0001F4E6" + " Config map created.")
+            print("     '%s'" % resp.metadata.name)
+        except ApiException:
+            print("  " + u"\u2757" + " Config map creation warning.")
+            print("     Maybe it is already created.")
 
     try:
         resp = kubernetes.utils.create_from_yaml(
@@ -75,14 +79,19 @@ def deploy_pystol():
                                    "templates/crd.yaml"),
             namespace="pystol"
         )
-        print("CRD created - status='%s'" % resp.metadata.name)
-    except FailToCreateError as e:
-        print("CRD problem - ApiClient->create_from_yaml: %s\n" % e)
-    except Exception as e:
-        print("CRD problem - ApiClient->create_from_yaml: %s\n" % e)
-        print("The CRD was created but an exception is raised")
-        print("Other error, see:")
-        print("https://github.com/kubernetes-client/python/issues/1022")
+        print("  " + u"\U0001F4E6" + " CRD created.")
+        print("     '%s'" % resp.metadata.name)
+    except FailToCreateError:
+        print("  " + u"\u2757" + " CRD creation warning.")
+        print("     Maybe it is already created.")
+    except Exception:
+        print("  " + u"\U0001F4E6" + " CRD created.")
+        print("     We need to wait for a permanent fix, until then...")
+        print("     https://github.com/kubernetes-client/python/issues/1022")
+        # print("CRD problem - ApiClient->create_from_yaml: %s\n" % e)
+        # print("The CRD was created but an exception is raised")
+        # print("Other error, see:")
+        # print("https://github.com/kubernetes-client/python/issues/1022")
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/service_account.yaml")) as f:
@@ -90,29 +99,35 @@ def deploy_pystol():
             resp = v1.create_namespaced_service_account(
                 namespace="pystol",
                 body=yaml.safe_load(f))
-            print("Service account created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("CoreV1Api->create_namespaced_service_account: %s\n" % e)
+            print("  " + u"\U0001F4E6" + " Service account created.")
+            print("     '%s'" % resp.metadata.name)
+        except ApiException:
+            print("  " + u"\u2757" + " Service account creation warning.")
+            print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/cluster_role.yaml")) as f:
         try:
             resp = rbac.create_cluster_role(
                 body=yaml.safe_load(f))
-            print("Role created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("RbacAuthorizationV1Api->create_cluster_role: %s\n" % e)
+            print("  " + u"\U0001F4E6" + " Role created.")
+            print("     '%s'" % resp.metadata.name)
+        except ApiException:
+            print("  " + u"\u2757" + " Role creation warning.")
+            print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/cluster_role_binding.yaml")) as f:
         try:
             resp = rbac.create_cluster_role_binding(
                 body=yaml.safe_load(f))
-            print("Cluster role binding created - status='%s'"
+            print("  " + u"\U0001F4E6" + " Cluster role bindings created.")
+            print("     '%s'"
                   % resp.metadata.name)
-        except ApiException as e:
-            print("RbacAuthorizationV1Api->create_cluster_role_binding: %s\n"
-                  % e)
+        except ApiException:
+            print("  " + u"\u2757"
+                       + " Cluster role binding creation warning.")
+            print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/controller.yaml.j2")) as f:
@@ -122,9 +137,13 @@ def deploy_pystol():
             resp = deployment.create_namespaced_deployment(
                 body=yaml.safe_load(rendered_deployment),
                 namespace="pystol")
-            print("Deployment created - status='%s'" % resp.metadata.name)
-        except ApiException as e:
-            print("AppsV1Api->create_namespaced_deployment: %s\n" % e)
+            print("  " + u"\U0001F4E6"
+                       + " Operator deployment created.")
+            print("     '%s'" % resp.metadata.name)
+        except ApiException:
+            print("  " + u"\u2757"
+                       + " Operator deployment creation warning.")
+            print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/ui.yaml.j2")) as f:
@@ -134,7 +153,9 @@ def deploy_pystol():
             resp = deployment.create_namespaced_deployment(
                 body=yaml.safe_load(rendered_deployment),
                 namespace="pystol")
-            print("Deployment created - status='%s'"
+            print("  " + u"\U0001F4E6" + " UI operator created.")
+            print("     '%s'"
                   % resp.metadata.name)
-        except ApiException as e:
-            print("AppsV1Api->create_namespaced_deployment: %s\n" % e)
+        except ApiException:
+            print("  " + u"\u2757" + " UI deployment creation warning.")
+            print("     Maybe it is already created.")

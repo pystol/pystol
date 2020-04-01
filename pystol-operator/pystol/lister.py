@@ -16,7 +16,7 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
-import json
+import textwrap
 
 import kubernetes
 from kubernetes.client.rest import ApiException
@@ -55,7 +55,6 @@ def list_actions():
                                                  namespace=namespace,
                                                  plural=plural,
                                                  pretty=pretty)
-
         for action in resp['items']:
             x.add_row([action['metadata']['name'],
                        action['metadata']['creationTimestamp'],
@@ -63,9 +62,7 @@ def list_actions():
                        action['spec']['workflow_state']])
     except ApiException:
         print("No objects found...")
-
     print(x)
-    print("For further information use: pystol get <action_name> [--debug]")
 
 
 def get_action(name, debug=False):
@@ -87,7 +84,37 @@ def get_action(name, debug=False):
                                                 namespace=namespace,
                                                 plural=plural,
                                                 name=name)
-        print(json.dumps(resp['spec'], indent=2))
+        print("**General info**")
+        print("  Action: " + resp['spec']['namespace'] + ":" +
+              resp['spec']['collection'] + ":" +
+              resp['spec']['role'])
+
+        print("  Extra variables: " + resp['spec']['extra_vars'])
+
+        print("  Source: " + resp['spec']['source'])
+
+        print("**Action status info**")
+
+        print("  Executed: " + str(resp['spec']['executed']))
+
+        print("  Action state: " + resp['spec']['action_state'])
+
+        print("  Workflow state: " + resp['spec']['workflow_state'])
+
+        prefix = "  Std error: "
+        preferredwidth = 70
+        wrapper = textwrap.TextWrapper(initial_indent=prefix,
+                                       width=preferredwidth,
+                                       subsequent_indent=' ' * len(prefix))
+        print(wrapper.fill(resp['spec']['action_stderr']))
+
+        prefix = "  Std output: "
+        preferredwidth = 70
+        wrapper = textwrap.TextWrapper(initial_indent=prefix,
+                                       width=preferredwidth,
+                                       subsequent_indent=' ' * len(prefix))
+        print(wrapper.fill(resp['spec']['action_stdout']))
+
     except ApiException:
         print("Object not found...")
 

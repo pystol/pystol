@@ -16,7 +16,6 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
-import json
 import threading
 from argparse import ArgumentParser
 
@@ -164,8 +163,8 @@ def main():
 
     args = parser.parse_args()
 
-    print("Pystol called with the folowing parameters")
-    print(parser.parse_args())
+    # print("Pystol called with the folowing parameters")
+    # print(parser.parse_args())
 
     if args.banner:
         print(get_banner())
@@ -173,13 +172,23 @@ def main():
 
     try:
         if (args.command == 'run'):
-            api_response = insert_pystol_object(args.namespace,
-                                                args.collection,
-                                                args.role,
-                                                args.source,
-                                                args.extra_vars)
-            print("The following Pystol action is created:")
-            print(json.dumps(api_response, indent=4, sort_keys=True))
+            print(u"\U0001F52B" + " Starting a Pystol action")
+            print("  " + u"\U0001F4BE" + " Inserting the custom resource"
+                                         " in the cluster")
+            ins = insert_pystol_object(args.namespace,
+                                       args.collection,
+                                       args.role,
+                                       args.source,
+                                       args.extra_vars)
+
+            if ins:
+                print("  " + u"\U0001F4A8" + " The action was deployed OK")
+                print("  " + u"\U0001F916" + " Check its status for details")
+                print("  " + u"\U0001F92B" + " Try using the CLI list and get"
+                                             " options, 'pystol -h' helps")
+            else:
+                print("  " + u"\U0001F914" + " We can not add the resource,"
+                                             " did you deployed Pystol?")
             exit()
         elif (args.command == 'listen'):
             print("We will watch for objects to process")
@@ -194,33 +203,46 @@ def main():
                 print("Error: unable to start thread: " + err)
         elif (args.command == 'purge'):
             if not args.yes:
-                yes = {'yes', 'y', 'ye', ''}
+                yes = {'yes', 'y'}
                 msg = ("*********This action can not be undone**********\n"
                        "*  You are about to purge any Pystol resource  *\n"
                        "* part of the pystol namespace in the cluster. *\n"
                        "* This includes any deployment, previous runs, *\n"
                        "*  RBAC rules, and any other Pystol resource.  *\n"
-                       "*  Write 'yes', and press 'enter' to proceed.  *\n"
-                       "*********This action can not be undone**********")
+                       "*********This action can not be undone**********\n")
                 print(msg)
-                choice = input().lower()
+                choice = input("Write 'yes' and press 'enter' to proceed: \n")
                 if choice in yes:
-                    print("Purging Pystol from the cluster...")
+                    print(u"\U0001F480" + " Purging Pystol from the cluster.")
+                    print("  " + u"\U0001F4A3" + " Removing resources...")
                     purge_pystol()
+                    print(u"\u2728" + " Pystol was removed completely.")
                 else:
                     print("Cancelling...")
             else:
-                print("Purging Pystol from the cluster...")
+                print(u"\U0001F480" + " Purging Pystol from the cluster.")
+                print("  " + u"\U0001F4A3" + " Removing resources...")
                 purge_pystol()
+                print(u"\u2728" + " Pystol was removed completely.")
             exit()
         elif (args.command == 'list'):
+            print(u"\U0001F4DA" + " Listing the deployed actions"
+                                  " from the cluster.")
             list_actions()
+            print(u"\U0001F4A1" + " For further information use:"
+                                  " pystol get <action_name> [--debug]")
             exit()
         elif (args.command == 'get'):
+            print(u"\U0001F4E4" + " Getting the details from"
+                                  " an specific action.")
             get_action(args.action, args.debug)
             exit()
         elif (args.command == 'deploy'):
+            print(u"\U0001F680" + " Deploying Pystol in the cluster.")
             deploy_pystol()
+            print(u"\U0001F3C4" + " Done! Pystol is now deployed.")
+            print(u"\U0001F550" + " Wait a few seconds to have the"
+                                  " deployments up and running.")
             exit()
 
     except KeyboardInterrupt:

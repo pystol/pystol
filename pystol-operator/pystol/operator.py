@@ -25,6 +25,8 @@ import sys
 import kubernetes
 from kubernetes.client.rest import ApiException
 
+from prettytable import PrettyTable
+
 from pystol import __version__
 from pystol.const import CRD_DOMAIN, CRD_PLURAL, CRD_VERSION
 
@@ -115,15 +117,31 @@ def insert_pystol_object(namespace,
                  "action_stdout": "{}"},
     }
 
-    # create the resource
-    api_response = custom_obj.create_namespaced_custom_object(
-        group="pystol.org",
-        version="v1alpha1",
-        namespace="pystol",
-        plural="pystolactions",
-        body=resource,
-    )
-    return api_response
+    try:
+        # create the resource
+        api_response = custom_obj.create_namespaced_custom_object(
+            group="pystol.org",
+            version="v1alpha1",
+            namespace="pystol",
+            plural="pystolactions",
+            body=resource,
+        )
+    except ApiException:
+        return False
+
+    x = PrettyTable()
+    x.field_names = ["Name",
+                     "Creation",
+                     "Action state",
+                     "Workflow state"]
+
+    x.add_row([api_response['metadata']['name'],
+               api_response['metadata']['creationTimestamp'],
+               api_response['spec']['action_state'],
+               api_response['spec']['workflow_state']])
+
+    print(x)
+    return True
 
 #
 # Part of the operator which will handle the process of new
