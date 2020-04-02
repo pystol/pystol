@@ -338,11 +338,14 @@ def kube_create_job_object(name,
     # operator, they are calculated as long as the collection
     # is executed.
 
-    y2 = {"pystol_log_workflow_state": "PystolOperatorEnded",
+    y2 = {"ansible_python_interpreter": "/usr/bin/python3",
+          "pystol_action_id": name,
+          "pystol_log_workflow_state": "PystolOperatorEnded",
           "pystol_log_action_state": "PystolActionEndedFail",
           "pystol_log_action_stdout": "This action did not finish correctly",
           "pystol_log_action_stderr": "Probably the action was not found, check the logs"}
-    extra_ansible_vars.update(y2)
+    rec_extra_ansible_vars = json.loads("{}")
+    rec_extra_ansible_vars.update(y2)
 
     command = ["/bin/bash"]
     if (action_source == "galaxy.ansible.com"):
