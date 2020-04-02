@@ -84,39 +84,39 @@ def get_action(name, debug=False):
                                                 namespace=namespace,
                                                 plural=plural,
                                                 name=name)
-        print("**General info**")
-        print("  Action: " + resp['spec']['namespace'] + ":" +
-              resp['spec']['collection'] + ":" +
+        print("  " + u"\U0001F4AC" + " General information")
+        print("    Action: " + resp['spec']['namespace'] + "." +
+              resp['spec']['collection'] + "." +
               resp['spec']['role'])
 
-        print("  Extra variables: " + resp['spec']['extra_vars'])
+        print("    Extra variables: " + resp['spec']['extra_vars'])
 
-        print("  Source: " + resp['spec']['source'])
+        print("    Source: " + resp['spec']['source'])
 
-        print("**Action status info**")
+        print("  " + u"\U0001F4AC" + " Status information")
 
-        print("  Executed: " + str(resp['spec']['executed']))
+        print("    Executed: " + str(resp['spec']['executed']))
 
-        print("  Action state: " + resp['spec']['action_state'])
+        print("    Action state: " + resp['spec']['action_state'])
 
-        print("  Workflow state: " + resp['spec']['workflow_state'])
+        print("    Workflow state: " + resp['spec']['workflow_state'])
 
-        prefix = "  Std error: "
-        preferredwidth = 70
-        wrapper = textwrap.TextWrapper(initial_indent=prefix,
-                                       width=preferredwidth,
-                                       subsequent_indent=' ' * len(prefix))
-        print(wrapper.fill(resp['spec']['action_stderr']))
-
-        prefix = "  Std output: "
+        prefix = "    Std output: "
         preferredwidth = 70
         wrapper = textwrap.TextWrapper(initial_indent=prefix,
                                        width=preferredwidth,
                                        subsequent_indent=' ' * len(prefix))
         print(wrapper.fill(resp['spec']['action_stdout']))
 
+        prefix = "    Std error: "
+        preferredwidth = 70
+        wrapper = textwrap.TextWrapper(initial_indent=prefix,
+                                       width=preferredwidth,
+                                       subsequent_indent=' ' * len(prefix))
+        print(wrapper.fill(resp['spec']['action_stderr']))
+
     except ApiException:
-        print("Object not found...")
+        print("  " + u"\U0001F914" + " Object not found, perhaps you have a typo.")
 
     if debug:
 
@@ -131,7 +131,7 @@ def get_action(name, debug=False):
             print(resp)
             print("---- Job description ends ----")
         except ApiException:
-            print("Job not found...")
+            print("  " + u"\U0001F914" + " Job not found, perhaps you have a typo.")
 
         api = kubernetes.client.CoreV1Api()
         namespace = "pystol"
@@ -151,6 +151,6 @@ def get_action(name, debug=False):
                     print(resp)
                     print("---- Pod logs ends ----")
             if not found:
-                print("Pod not found")
+                print("  " + u"\U0001F914" + " Pod not found, perhaps you have a typo.")
         except ApiException:
-            print("Pods not found...")
+            print("  " + u"\U0001F914" + " Pod not found, perhaps you have a typo.")
