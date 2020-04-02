@@ -95,8 +95,6 @@ def get_action(name, debug=False):
 
         print("  " + u"\U0001F4AC" + " Status information")
 
-        print("    Executed: " + str(resp['spec']['executed']))
-
         print("    Action state: " + resp['spec']['action_state'])
 
         print("    Workflow state: " + resp['spec']['workflow_state'])

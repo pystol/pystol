@@ -188,7 +188,7 @@ def main():
                                              " options, 'pystol -h' helps")
             else:
                 print("  " + u"\U0001F914" + " We can not add the resource,"
-                                             " did you deployed Pystol?")
+                                             " did you deploy Pystol?")
             exit()
         elif (args.command == 'listen'):
             print("We will watch for objects to process")

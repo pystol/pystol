@@ -342,15 +342,13 @@ def kube_create_job_object(name,
                  || \
                  ansible -m include_role \
                    -a 'name=pystol.actions.log' \
-                   -e '{\'pystol_action_id\': \'" + name + "\',
-                        \'pystol_log_workflow_state\': \'PystolOperatorEnded\',
-                        \'pystol_log_action_state\': \'PystolActionEndedFail\',
-                        \'pystol_log_action_stdout\': \'This action did not finish correctly\',
-                        \'pystol_log_action_stderr\': \'Probably the action was not found, check the logs\',
-                        \'ansible_python_interpreter\': \'/usr/bin/python3\'}' \
-                   localhost \
-                   -vv \
-                "]
+                   -e '{'pystol_action_id': '" + name + "', \
+                        'pystol_log_workflow_state': 'PystolOperatorEnded', \
+                        'pystol_log_action_state': 'PystolActionEndedFail', \
+                        'pystol_log_action_stdout': 'This action did not finish correctly', \
+                        'pystol_log_action_stderr': 'Probably the action was not found, check the logs', \
+                        'ansible_python_interpreter': '/usr/bin/python3'}' \
+                   localhost -vv"]
     else:
         args = ["-c",
                 "echo '---'; \
@@ -370,15 +368,13 @@ def kube_create_job_object(name,
                  || \
                  ansible -m include_role \
                    -a 'name=pystol.actions.log' \
-                   -e '{\'pystol_action_id\': \'" + name + "\',
-                        \'pystol_log_workflow_state\': \'PystolOperatorEnded\',
-                        \'pystol_log_action_state\': \'PystolActionEndedFail\',
-                        \'pystol_log_action_stdout\': \'This action did not finish correctly\',
-                        \'pystol_log_action_stderr\': \'Probably the action was not found, check the logs\',
-                        \'ansible_python_interpreter\': \'/usr/bin/python3\'}' \
-                   localhost \
-                   -vv \
-                "]
+                   -e '{'pystol_action_id': '" + name + "', \
+                        'pystol_log_workflow_state': 'PystolOperatorEnded', \
+                        'pystol_log_action_state': 'PystolActionEndedFail', \
+                        'pystol_log_action_stdout': 'This action did not finish correctly', \
+                        'pystol_log_action_stderr': 'Probably the action was not found, check the logs', \
+                        'ansible_python_interpreter': '/usr/bin/python3'}' \
+                   localhost -vv"]
 
     container = kubernetes.client.V1Container(name=name,
                                               image=container_image,
