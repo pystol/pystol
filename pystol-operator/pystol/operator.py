@@ -328,6 +328,19 @@ def kube_create_job_object(name,
     # appending the data
     extra_ansible_vars.update(y)
 
+    # Recovery ansible variables for the log role
+    # In the case a user calls an unrecognized action
+    # the container will fail and we will not be able to log this
+    # failure
+    extra_recover_ansible_vars = {}
+    y = {"ansible_python_interpreter": "/usr/bin/python3",
+         "pystol_action_id": name,
+         "pystol_log_workflow_state": "PystolOperatorEnded",
+         "pystol_log_action_state": "PystolActionEndedFail",
+         "pystol_log_action_stdout": "This action did not finish correctly",
+         "pystol_log_action_stderr": "Probably the action was not found, check the logs"}
+    extra_recover_ansible_vars.update(y)
+
     command = ["/bin/bash"]
     if (action_source == "galaxy.ansible.com"):
         args = ["-c",
@@ -342,13 +355,7 @@ def kube_create_job_object(name,
                  || \
                  ansible -m include_role \
                    -a 'name=pystol.actions.log' \
-                   -e '{'pystol_action_id': '" + name + "', \
-                        'pystol_log_workflow_state': 'PystolOperatorEnded', \
-                        'pystol_log_action_state': 'PystolActionEndedFail', \
-                        'pystol_log_action_stdout': 'This action did not finish correctly', \
-                        'pystol_log_action_stderr': 'Probably the action was not found, check the logs', \
-                        'ansible_python_interpreter': '/usr/bin/python3'}' \
-                   localhost -vv"]
+                   -e '" + str(extra_recover_ansible_vars) + "' localhost -vv"]
     else:
         args = ["-c",
                 "echo '---'; \
@@ -368,13 +375,7 @@ def kube_create_job_object(name,
                  || \
                  ansible -m include_role \
                    -a 'name=pystol.actions.log' \
-                   -e '{'pystol_action_id': '" + name + "', \
-                        'pystol_log_workflow_state': 'PystolOperatorEnded', \
-                        'pystol_log_action_state': 'PystolActionEndedFail', \
-                        'pystol_log_action_stdout': 'This action did not finish correctly', \
-                        'pystol_log_action_stderr': 'Probably the action was not found, check the logs', \
-                        'ansible_python_interpreter': '/usr/bin/python3'}' \
-                   localhost -vv"]
+                   -e '" + str(extra_recover_ansible_vars) + "' localhost -vv"]
 
     container = kubernetes.client.V1Container(name=name,
                                               image=container_image,
