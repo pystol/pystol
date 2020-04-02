@@ -342,10 +342,11 @@ def kube_create_job_object(name,
           "pystol_action_id": name,
           "pystol_log_workflow_state": "PystolOperatorEnded",
           "pystol_log_action_state": "PystolActionEndedFail",
-          "pystol_log_action_stdout": "This action did not finish correctly",
-          "pystol_log_action_stderr": "Probably the action was not found, check the logs"}
-    rec_extra_ansible_vars = json.loads("{}")
-    rec_extra_ansible_vars.update(y2)
+          "pystol_log_action_stdout": "This-action-did-not-finish-correctly",
+          "pystol_log_action_stderr": "Probably-the-action-was-not-found-Check-the-logs"}
+    #rec_extra_ansible_vars = json.loads("{}")
+    #rec_extra_ansible_vars.update(y2)
+    extra_ansible_vars.update(y2)
 
     command = ["/bin/bash"]
     if (action_source == "galaxy.ansible.com"):
@@ -357,7 +358,9 @@ def kube_create_job_object(name,
                  ansible-galaxy collection install --force -r req.yml; \
                  ansible -m include_role \
                    -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' \
-                   -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+                   -e '" + str(extra_ansible_vars) + "' localhost -vv || \
+                 ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv; \
+                 exit 0"]
     else:
         args = ["-c",
                 "echo '---'; \
@@ -373,7 +376,9 @@ def kube_create_job_object(name,
                  ansible-galaxy collection install --force $LATEST; \
                  ansible -m include_role \
                    -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' \
-                   -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+                   -e '" + str(extra_ansible_vars) + "' localhost -vv || \
+                 ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv; \
+                 exit 0"]
 
     container = kubernetes.client.V1Container(name=name,
                                               image=container_image,
