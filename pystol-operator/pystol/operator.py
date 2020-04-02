@@ -355,7 +355,7 @@ def kube_create_job_object(name,
                  || \
                  ansible -m include_role \
                    -a 'name=pystol.actions.log' \
-                   -e '" + str(extra_recover_ansible_vars) + "' localhost -vv"]
+                   -e '" + str(extra_recover_ansible_vars) + "' localhost -vv; exit 0"]
     else:
         args = ["-c",
                 "echo '---'; \
@@ -375,7 +375,7 @@ def kube_create_job_object(name,
                  || \
                  ansible -m include_role \
                    -a 'name=pystol.actions.log' \
-                   -e '" + str(extra_recover_ansible_vars) + "' localhost -vv"]
+                   -e '" + str(extra_recover_ansible_vars) + "' localhost -vv; exit 0"]
 
     container = kubernetes.client.V1Container(name=name,
                                               image=container_image,
