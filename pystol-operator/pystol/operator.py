@@ -352,7 +352,9 @@ def kube_create_job_object(name,
                  echo '- name: " + action_namespace + "." + action_collection + "' >> req.yml; \
                  echo '  source: https://" + action_source + "' >> req.yml; \
                  ansible-galaxy collection install --force -r req.yml; \
-                 ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv || ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+                 ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv |& tee /tmp/pystol.action.out; \
+                 grep -E -i -w 'ERROR! the role .* was not found in' /tmp/pystol.action.out && ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv |& tee /tmp/pystol.action.out; \
+                 exit 0"]
     else:
         args = ["-c",
                 "echo '---'; \
@@ -366,7 +368,9 @@ def kube_create_job_object(name,
                  cd releases; \
                  LATEST=$(ls *.tar.gz | grep -v latest | sort -V | tail -n1); \
                  ansible-galaxy collection install --force $LATEST; \
-                 ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv || ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv; exit 0"]
+                 ansible -m include_role -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' -e '" + str(extra_ansible_vars) + "' localhost -vv |& tee /tmp/pystol.action.out; \
+                 grep -E -i -w 'ERROR! the role .* was not found in' /tmp/pystol.action.out && ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv |& tee /tmp/pystol.action.out; \
+                 exit 0"]
 
     container = kubernetes.client.V1Container(name=name,
                                               image=container_image,
