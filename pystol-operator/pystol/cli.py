@@ -19,9 +19,7 @@ under the License.
 import logging
 import logging.handlers
 import os
-
 import threading
-
 from argparse import ArgumentParser
 
 from pystol import __version__
