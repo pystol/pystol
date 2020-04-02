@@ -18,8 +18,10 @@ under the License.
 
 # CRD Settings
 CRD_DOMAIN = 'pystol.org'
+CRD_GROUP = 'pystol.org'
 CRD_VERSION = 'v1alpha1'
 CRD_PLURAL = 'pystolactions'
+CRD_NAMESPACE = 'pystol'
 
 # Type methods maps
 LIST_TYPES_MAP = {

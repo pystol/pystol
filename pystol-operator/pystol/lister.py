@@ -114,7 +114,8 @@ def get_action(name, debug=False):
         print(wrapper.fill(resp['spec']['action_stderr']))
 
     except ApiException:
-        print("  " + u"\U0001F914" + " Object not found, perhaps you have a typo.")
+        print("  " + u"\U0001F914" +
+              " Object not found, perhaps you have a typo.")
 
     if debug:
 
@@ -129,7 +130,8 @@ def get_action(name, debug=False):
             print(resp)
             print("---- Job description ends ----")
         except ApiException:
-            print("  " + u"\U0001F914" + " Job not found, perhaps you have a typo.")
+            print("  " + u"\U0001F914" +
+                  " Job not found, perhaps you have a typo.")
 
         api = kubernetes.client.CoreV1Api()
         namespace = "pystol"
@@ -149,6 +151,8 @@ def get_action(name, debug=False):
                     print(resp)
                     print("---- Pod logs ends ----")
             if not found:
-                print("  " + u"\U0001F914" + " Pod not found, perhaps you have a typo.")
+                print("  " + u"\U0001F914" +
+                      " Pod not found, perhaps you have a typo.")
         except ApiException:
-            print("  " + u"\U0001F914" + " Pod not found, perhaps you have a typo.")
+            print("  " + u"\U0001F914" +
+                  " Pod not found, perhaps you have a typo.")

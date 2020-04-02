@@ -16,7 +16,12 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import logging
+import logging.handlers
+import os
+
 import threading
+
 from argparse import ArgumentParser
 
 from pystol import __version__
@@ -31,6 +36,14 @@ pystol_version = __version__
 
 t1_stop = threading.Event()
 t2_stop = threading.Event()
+
+handler = logging.handlers.WatchedFileHandler(
+    os.environ.get("LOGFILE", "/var/log/pystol.log"))
+formatter = logging.Formatter(logging.BASIC_FORMAT)
+handler.setFormatter(formatter)
+root = logging.getLogger()
+root.setLevel(os.environ.get("LOGLEVEL", "INFO"))
+root.addHandler(handler)
 
 
 def main():
@@ -187,6 +200,8 @@ def main():
                 print("  " + u"\U0001F92B" + " Try using the CLI list and get"
                                              " options, 'pystol -h' helps")
             else:
+                # logging.exception(ins)
+                print(ins)
                 print("  " + u"\U0001F914" + " We can not add the resource,"
                                              " did you deploy Pystol?")
             exit()

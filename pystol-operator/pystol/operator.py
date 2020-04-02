@@ -28,7 +28,8 @@ from kubernetes.client.rest import ApiException
 from prettytable import PrettyTable
 
 from pystol import __version__
-from pystol.const import CRD_DOMAIN, CRD_PLURAL, CRD_VERSION
+from pystol.const \
+    import CRD_DOMAIN, CRD_NAMESPACE, CRD_PLURAL, CRD_VERSION
 
 pystol_version = __version__
 
@@ -96,7 +97,7 @@ def insert_pystol_object(namespace,
     custom_obj = kubernetes.client.CustomObjectsApi()
 
     resource = {
-        "apiVersion": "pystol.org/v1alpha1",
+        "apiVersion": CRD_DOMAIN + "/" + CRD_VERSION,
         "kind": "PystolAction",
         "metadata": {"name": "pystol-action-" +
                              namespace +
@@ -120,13 +121,14 @@ def insert_pystol_object(namespace,
     try:
         # create the resource
         api_response = custom_obj.create_namespaced_custom_object(
-            group="pystol.org",
-            version="v1alpha1",
-            namespace="pystol",
-            plural="pystolactions",
+            group=CRD_DOMAIN,
+            version=CRD_VERSION,
+            namespace=CRD_NAMESPACE,
+            plural=CRD_PLURAL,
             body=resource,
         )
-    except ApiException:
+    except ApiException as e:
+        print(e)
         return False
 
     x = PrettyTable()
@@ -186,10 +188,10 @@ def watch_for_pystol_objects(stop):
             continue
         metadata = obj.get("metadata")
         name = metadata['name']
-        print("Handling %s on %s" % (operation, name))
         done = spec.get("executed", False)
         if done:
             continue
+        print("Processing %s on %s" % (operation, name))
         execute_pystol_action(obj)
 
 
@@ -210,8 +212,6 @@ def execute_pystol_action(obj):
         return
     name = metadata.get("name")
     namespace = metadata.get("namespace")
-    obj["spec"]["executed"] = True
-    obj["spec"]["workflow_state"] = "PystolOperatorStartProcessingAction"
 
     # The main Pystol object initial info are the parameters:
     # These values should be the ones defined in the CRD.
@@ -228,14 +228,22 @@ def execute_pystol_action(obj):
     action_action_stdout = action_spec_params["action_stdout"]
     action_action_stderr = action_spec_params["action_stderr"]
 
+    # TODO: get object here to update it
+    updt = custom_obj.get_namespaced_custom_object(group=CRD_DOMAIN,
+                                                   version=CRD_VERSION,
+                                                   namespace=namespace,
+                                                   plural=CRD_PLURAL,
+                                                   name=name)
+    updt["spec"]["executed"] = True
+    updt["spec"]["workflow_state"] = "PystolOperatorStartProcessingAction"
     # Processing action
-    print("Updating: %s" % name)
-    custom_obj.replace_namespaced_custom_object(CRD_DOMAIN,
-                                                CRD_VERSION,
-                                                namespace,
-                                                CRD_PLURAL,
-                                                name,
-                                                obj)
+    print("Updating processing action: %s" % name)
+    custom_obj.patch_namespaced_custom_object(CRD_DOMAIN,
+                                              CRD_VERSION,
+                                              namespace,
+                                              CRD_PLURAL,
+                                              name,
+                                              updt)
 
     # Create the job definition
     api_instance = kubernetes.client.BatchV1Api()
@@ -268,14 +276,22 @@ def execute_pystol_action(obj):
               % e)
 
     # Updating the CR with - Creating job
-    print("Updating: %s" % name)
-    obj["spec"]["workflow_state"] = "PystolOperatorCreatingJob"
-    custom_obj.replace_namespaced_custom_object(CRD_DOMAIN,
-                                                CRD_VERSION,
-                                                namespace,
-                                                CRD_PLURAL,
-                                                name,
-                                                obj)
+    print("Updating creating job: %s" % name)
+    # TODO: get object here to update it
+    updt = custom_obj.get_namespaced_custom_object(group=CRD_DOMAIN,
+                                                   version=CRD_VERSION,
+                                                   namespace=namespace,
+                                                   plural=CRD_PLURAL,
+                                                   name=name)
+    updt["spec"]["workflow_state"] = "PystolOperatorCreatingJob"
+    # Processing action
+    print("Updating processing action: %s" % name)
+    custom_obj.patch_namespaced_custom_object(CRD_DOMAIN,
+                                              CRD_VERSION,
+                                              namespace,
+                                              CRD_PLURAL,
+                                              name,
+                                              updt)
 
     return
 
@@ -338,14 +354,20 @@ def kube_create_job_object(name,
     # operator, they are calculated as long as the collection
     # is executed.
 
-    y2 = {"ansible_python_interpreter": "/usr/bin/python3",
-          "pystol_action_id": name,
-          "pystol_log_workflow_state": "PystolOperatorEnded",
-          "pystol_log_action_state": "PystolActionEndedFail",
-          "pystol_log_action_stdout": "This-action-did-not-finish-correctly",
-          "pystol_log_action_stderr": "Probably-the-action-was-not-found-Check-the-logs"}
-    #rec_extra_ansible_vars = json.loads("{}")
-    #rec_extra_ansible_vars.update(y2)
+    y2 = {"ansible_python_interpreter":
+          "/usr/bin/python3",
+          "pystol_action_id":
+          name,
+          "pystol_log_workflow_state":
+          "PystolOperatorEnded",
+          "pystol_log_action_state":
+          "PystolActionEndedFail",
+          "pystol_log_action_stdout":
+          "This-action-did-not-finish-correctly",
+          "pystol_log_action_stderr":
+          "Probably-the-action-was-not-found-Check-the-logs"}
+    # rec_extra_ansible_vars = json.loads("{}")
+    # rec_extra_ansible_vars.update(y2)
     extra_ansible_vars.update(y2)
 
     command = ["/bin/bash"]
