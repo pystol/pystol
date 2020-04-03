@@ -81,7 +81,11 @@ setup(
     }
 )
 
-for handler in logging.root.handlers[:]:
-    logging.root.removeHandler(handler)
-logging.basicConfig(filename=_PYSTOL_LOG_FILE, level=logging.DEBUG)
-os.chmod(_PYSTOL_LOG_FILE, stat.S_IROTH | stat.S_IWOTH)
+try:
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+    logging.basicConfig(filename=_PYSTOL_LOG_FILE, level=logging.DEBUG)
+    os.chmod(_PYSTOL_LOG_FILE, stat.S_IROTH | stat.S_IWOTH)
+except PermissionError:
+    print("Can not use: " + _PYSTOL_LOG_FILE)
+    raise
