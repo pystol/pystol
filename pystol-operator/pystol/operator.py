@@ -30,6 +30,7 @@ from prettytable import PrettyTable
 from pystol import __version__
 from pystol.const \
     import CRD_DOMAIN, CRD_NAMESPACE, CRD_PLURAL, CRD_VERSION
+from pystol.logger import get_logger
 
 pystol_version = __version__
 
@@ -128,7 +129,7 @@ def insert_pystol_object(namespace,
             body=resource,
         )
     except ApiException as e:
-        print(e)
+        get_logger("insert_pystol_object").debug(e)
         return False
 
     x = PrettyTable()
@@ -358,13 +359,13 @@ def kube_create_job_object(name,
           "/usr/bin/python3",
           "pystol_action_id":
           name,
-          "pystol_log_workflow_state":
+          "pystol_patch_workflow_state":
           "PystolOperatorEnded",
-          "pystol_log_action_state":
+          "pystol_patch_action_state":
           "PystolActionEndedFail",
-          "pystol_log_action_stdout":
+          "pystol_patch_action_stdout":
           "This-action-did-not-finish-correctly",
-          "pystol_log_action_stderr":
+          "pystol_patch_action_stderr":
           "Probably-the-action-was-not-found-Check-the-logs"}
     # rec_extra_ansible_vars = json.loads("{}")
     # rec_extra_ansible_vars.update(y2)
@@ -381,7 +382,7 @@ def kube_create_job_object(name,
                  ansible -m include_role \
                    -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' \
                    -e '" + str(extra_ansible_vars) + "' localhost -vv || \
-                 ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv; \
+                 ansible -m include_role -a 'name=pystol.actions.patch' -e '" + str(extra_ansible_vars) + "' localhost -vv; \
                  exit 0"]
     else:
         args = ["-c",
@@ -399,7 +400,7 @@ def kube_create_job_object(name,
                  ansible -m include_role \
                    -a 'name=" + action_namespace + "." + action_collection + "." + action_role + "' \
                    -e '" + str(extra_ansible_vars) + "' localhost -vv || \
-                 ansible -m include_role -a 'name=pystol.actions.log' -e '" + str(extra_ansible_vars) + "' localhost -vv; \
+                 ansible -m include_role -a 'name=pystol.actions.patch' -e '" + str(extra_ansible_vars) + "' localhost -vv; \
                  exit 0"]
 
     container = kubernetes.client.V1Container(name=name,

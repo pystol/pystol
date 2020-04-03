@@ -16,6 +16,12 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+# Main logging file
+PYSTOL_LOG_FILE = '/var/log/pystol.log'
+
+# Current branch
+PYSTOL_BRANCH = 'master'
+
 # CRD Settings
 CRD_DOMAIN = 'pystol.org'
 CRD_GROUP = 'pystol.org'

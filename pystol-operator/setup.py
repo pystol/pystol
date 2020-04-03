@@ -16,7 +16,9 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import logging
 import os
+import stat
 from sys import version_info
 
 from setuptools import find_packages, setup
@@ -28,7 +30,8 @@ if version_info < (3, 5):
 
 _NAME = 'pystol'
 _DESCRIPTION = 'The Pystol CLI'
-_REVISION = '0.5.12'
+_REVISION = '0.5.13'
+_PYSTOL_LOG_FILE = '/var/log/pystol.log'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):
@@ -77,3 +80,8 @@ setup(
         ]
     }
 )
+
+for handler in logging.root.handlers[:]:
+    logging.root.removeHandler(handler)
+logging.basicConfig(filename=_PYSTOL_LOG_FILE, level=logging.DEBUG)
+os.chmod(_PYSTOL_LOG_FILE, stat.S_IROTH | stat.S_IWOTH)

@@ -26,7 +26,7 @@ from pystol import __version__
 from pystol.cleaner import purge_pystol
 from pystol.deployer import deploy_pystol
 from pystol.get_banner import get_banner
-from pystol.lister import get_action, list_actions
+from pystol.lister import get_action, list_actions, show_action, show_actions
 from pystol.operator import insert_pystol_object
 from pystol.operator import watch_for_pystol_objects, watch_for_pystol_timeouts
 
@@ -161,6 +161,16 @@ def main():
         type=str,
         help=("Specify the action to fetch details"))
 
+    parser_show = subparsers.add_parser('show',
+                                        help=("Get available Pystol actions."))
+
+    parser_show.add_argument(
+        "action",
+        nargs='?',
+        default='',
+        type=str,
+        help=("Specify the action to fetch details"))
+
     parser_get.add_argument(
         '-d',
         '--debug',
@@ -198,10 +208,11 @@ def main():
                 print("  " + u"\U0001F92B" + " Try using the CLI list and get"
                                              " options, 'pystol -h' helps")
             else:
-                # logging.exception(ins)
-                print(ins)
                 print("  " + u"\U0001F914" + " We can not add the resource,"
                                              " did you deploy Pystol?")
+                print("  " + u"\U0001F440" + " Logs are stored in"
+                                             " /var/log/pystol.org")
+
             exit()
         elif (args.command == 'listen'):
             print("We will watch for objects to process")
@@ -244,6 +255,12 @@ def main():
             list_actions()
             print(u"\U0001F4A1" + " For further information use:"
                                   " pystol get <action_name> [--debug]")
+            exit()
+        elif (args.command == 'show'):
+            if args.action:
+                show_action(args.action)
+            else:
+                show_actions()
             exit()
         elif (args.command == 'get'):
             print(u"\U0001F4E4" + " Getting the details from"

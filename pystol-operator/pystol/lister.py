@@ -16,7 +16,11 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import json
+import shutil
+import tempfile
 import textwrap
+import urllib.request
 
 import kubernetes
 from kubernetes.client.rest import ApiException
@@ -24,9 +28,93 @@ from kubernetes.client.rest import ApiException
 from prettytable import PrettyTable
 
 from pystol import __version__
+from pystol.const import PYSTOL_BRANCH
 from pystol.operator import load_kubernetes_config
 
+from rich.console import Console
+from rich.markdown import Markdown
+
 pystol_version = __version__
+
+
+def show_action(name):
+    """
+    Show the docs for specific Pystol action from Galaxy.
+
+    This is a main component of the input for the controller
+    """
+    url = ("https://raw.githubusercontent.com/pystol/"
+           "pystol-galaxy/" + PYSTOL_BRANCH + "/actions/roles/" +
+           name + "/README.md")
+
+    console = Console()
+    try:
+        with urllib.request.urlopen(url) as response:
+            with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+                shutil.copyfileobj(response, tmp_file)
+        with open(tmp_file.name) as html:
+            markdown = Markdown(html.read())
+        console.print(markdown)
+    except Exception:
+        print("Action not found")
+
+
+def show_actions():
+    """
+    Show the available Pystol actions from Galaxy.
+
+    This is a main component of the input for the controller
+    """
+    url = ("https://galaxy.ansible.com/api/internal/"
+           "ui/repo-or-collection-detail/"
+           "?namespace=pystol&name=actions")
+
+    try:
+        response = urllib.request.urlopen(url)
+        data = response.read()
+        values = json.loads(data)
+        actions = (values['data']['collection']['latest_version']
+                   ['contents'])
+        description = (values['data']['collection']['latest_version']
+                       ['metadata']['description'])
+        repository = (values['data']['collection']['latest_version']
+                      ['metadata']['repository'])
+        documentation = (values['data']['collection']['latest_version']
+                         ['metadata']['documentation'])
+        license = (values['data']['collection']['latest_version']
+                   ['metadata']['license'])
+        version = (values['data']['collection']['latest_version']
+                   ['metadata']['version'])
+    except Exception:
+        actions = {}
+        description = ""
+        repository = ""
+        documentation = ""
+        license = ""
+        version = ""
+        print("No objects found...")
+
+    x = PrettyTable()
+    x.title = description
+    x.field_names = ["Name",
+                     "Description",
+                     "Documentation"]
+
+    url = ("https://github.com/pystol/pystol-galaxy/tree/" +
+           PYSTOL_BRANCH + "/actions/roles/")
+
+    for action in actions:
+        if action['content_type'] == "role":
+            x.add_row([action['name'],
+                       action['description'],
+                       url + action['name']])
+    print(x)
+    print("Actions part of the Pystol core from: " + str(repository))
+    print("Documentation: " + str(documentation))
+    print("License: " + str(license))
+    print("Version: " + str(version))
+    print("Published at: https://galaxy.ansible.com/pystol")
+    print("For more information go to: https://docs.pystol.org")
 
 
 def list_actions():
