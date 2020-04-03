@@ -32,7 +32,7 @@ RUN yum install python3 python3-pip git -y
 # We install the operator and dependencies
 RUN echo "The pystol revision is ${revision}"
 RUN pip3 install -r /pystol-operator/requirements.txt
-RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
+RUN PYSTOL_REVISION=${revision} sudo pip3 install --upgrade /pystol-operator
 
 # Install NodeJS
 # RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
