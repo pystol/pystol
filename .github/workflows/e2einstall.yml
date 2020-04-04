@@ -217,6 +217,12 @@ jobs:
         kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol list; \
         echo;sleep 20; done
         echo
+        echo ">>> run debug of action"
+        kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol get `pystol list | grep pystol  | head -n1 | tr -s ' ' | cut -d'|' -f2` --debug
+        echo
+
+
+
         echo "Printing versions"
         echo "Version output from CLI: $VERSION_OUTPUT"
         echo "Version output from GitHub short SHA: $GITHUB_SHORT_SHA"
