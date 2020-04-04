@@ -209,6 +209,9 @@ jobs:
         echo ">>> run pystol CLI pystol -b"
         kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol -b
         echo
+        echo ">>> run pystol CLI pystol pingetst"
+        kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol run --namespace pystol --collection actions --role pingtest
+        echo
         echo "Printing versions"
         echo "Version output from CLI: $VERSION_OUTPUT"
         echo "Version output from GitHub short SHA: $GITHUB_SHORT_SHA"
