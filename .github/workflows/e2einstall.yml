@@ -199,8 +199,6 @@ jobs:
         echo ">>> run pystol CLI pystol -h"
         kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol -h
         echo
-        echo ">>> run pystol CLI pystol run --namespace pystol --collection actions --role pingtest"
-        kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol run --namespace pystol --collection actions --role pingtest
         echo
         echo ">>> run pystol CLI pystol -v"
         VERSION_OUTPUT=$(kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol -v)
@@ -218,7 +216,8 @@ jobs:
         echo;sleep 20; done
         echo
         echo ">>> run debug of action"
-        kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol get `pystol list | grep pystol  | head -n1 | tr -s ' ' | cut -d'|' -f2` --debug
+        ACTION=$(pystol list | grep pystol | head -n1 | tr -s ' ' | cut -d'|' -f2)
+        kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol get $ACTION --debug
         echo
 
 
