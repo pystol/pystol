@@ -213,7 +213,9 @@ jobs:
         kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol run --namespace pystol --collection actions --role pingtest
         echo
         echo ">>> list Pystol actions"
-        for i in {1..5}; do pystol list;echo;sleep 20; done
+        for i in {1..5}; do \
+        kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol list; \
+        echo;sleep 20; done
         echo
         echo "Printing versions"
         echo "Version output from CLI: $VERSION_OUTPUT"
