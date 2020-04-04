@@ -216,7 +216,7 @@ jobs:
         echo;sleep 20; done
         echo
         echo ">>> run debug of action"
-        ACTION=$(pystol list | grep pystol | head -n1 | tr -s ' ' | cut -d'|' -f2)
+        ACTION=$(kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol list | grep pystol | head -n1 | tr -s ' ' | cut -d'|' -f2)
         kubectl exec -n pystol `kubectl get pods -n pystol | grep pystol-controller | grep Running | head -n1 | tr -s ' ' | cut -d' ' -f1` -- pystol get $ACTION --debug
         echo
 
