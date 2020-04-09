@@ -12,12 +12,16 @@ from flask_login import (
     logout_user
 )
 
+
 from app import db, login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
 from app.base.models import User
 
 from app.base.util import verify_pass
+
+from app.base.k8s import list_actions, show_actions
+
 
 @blueprint.route('/')
 def route_default():
@@ -27,20 +31,32 @@ def route_default():
 def route_errors(error):
     return render_template('errors/{}.html'.format(error))
 
+
+## API endpoints
+
+@blueprint.route('/api/v1/ListActions', methods=['GET'])
+def api_list_actions():
+    return jsonify(list_actions())
+
+@blueprint.route('/api/v1/ShowActions', methods=['GET'])
+def api_show_actions():
+    return jsonify(show_actions())
+
+
 ## Login & Registration
 
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm(request.form)
     if 'login' in request.form:
-        
+
         # read form data
         username = request.form['username']
         password = request.form['password']
 
         # Locate user
         user = User.query.filter_by(username=username).first()
-        
+
         # Check the password
         if user and verify_pass( password, user.password):
 
