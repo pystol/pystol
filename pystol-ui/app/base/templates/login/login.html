@@ -1,0 +1,75 @@
+{% extends "base-site-fullscreen.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card-group">
+          <div class="card p-4">
+          
+            <form role="form" method="post" action="">
+
+              {{ form.hidden_tag() }} 
+
+              <div class="card-body">
+
+                <div class="text-center">
+                  <h2>
+                    <a href="https://appseed.us/admin-dashboards/flask-dashboard-coreui" >Flask Dashboard CoreUI</a>
+                  </h2>
+                  <h5>Login</h5>
+                  <p class="text-muted">
+
+                    {% if msg %}
+                      {{ msg | safe }}
+                    {% else %}
+                    <span>
+                      Use default credentials: <strong>test / pass</strong>
+                      <br />
+                      OR <a href={{ url_for('base_blueprint.create_user') }} >create your own user</a>
+                    </span>
+                    {% endif %}
+
+                  </p>
+                </div>
+
+                <br />
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend"><span class="input-group-text">
+                      <svg class="c-icon">
+                        <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                      </svg></span></div>
+                  {{ form.username(placeholder="Username", class="form-control") }}
+                </div>
+
+                <div class="input-group mb-4">
+                  <div class="input-group-prepend"><span class="input-group-text">
+                      <svg class="c-icon">
+                        <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                      </svg></span></div>
+                  {{ form.password(placeholder="Password", class="form-control", type="password") }}
+                </div>
+
+                <br />
+
+                <div class="text-center">
+                    <button type="submit" name="login" class="btn btn-primary px-4">Login</button>
+                </div>
+
+              </div>
+            
+            </form>  
+
+            <div class="card-footer p-4 text-center">
+                Don't have an account? <a href={{ url_for('base_blueprint.create_user') }} >Register</a>
+            </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

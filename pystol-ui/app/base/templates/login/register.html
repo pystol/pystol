@@ -1,0 +1,80 @@
+{% extends "base-site-fullscreen.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mx-4">
+
+          <form role="form" method="post" action="">
+
+            {{ form.hidden_tag() }} 
+
+            <div class="card-body p-4">
+              
+              <div class="text-center">
+
+                <h2>
+                  <a href="https://appseed.us/admin-dashboards/flask-dashboard-coreui" >Flask Dashboard CoreUI</a>
+                </h2>
+                <h5>Register</h5>
+                <p class="text-muted">
+                  
+                  {% if msg %}
+                    {{ msg | safe }}
+                  {% else %}
+                    Add your credentials 
+                    <br />
+                    OR <a href={{ url_for('base_blueprint.login') }}>authenticate</a> using an existing account.
+                  {% endif %}
+
+                </p>
+              </div>
+
+              <br />
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span class="input-group-text">
+                    <svg class="c-icon">
+                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                    </svg></span></div>
+                {{ form.username(placeholder="Username", class="form-control") }}
+              </div>
+              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span class="input-group-text">
+                    <svg class="c-icon">
+                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                    </svg></span></div>
+                {{ form.email(placeholder="Email", class="form-control") }}
+              </div>
+              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend"><span class="input-group-text">
+                    <svg class="c-icon">
+                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                    </svg></span></div>
+                {{ form.password(placeholder="Password", class="form-control", type="password") }}
+              </div>
+
+              <br />
+
+              <div class="text-center">
+                  <button type="submit" name="register" class="btn btn-primary px-4">Register</button>
+              </div>
+
+            </div>
+          
+          </form>  
+            
+          <div class="card-footer p-4 text-center">
+              Have an account? <a href={{ url_for('base_blueprint.login') }} >Login</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
