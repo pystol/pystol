@@ -184,4 +184,3 @@ def state_cluster():
     except ApiException:
         print("No objects found...")
     return ret
-
