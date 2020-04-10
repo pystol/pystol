@@ -9,6 +9,7 @@
 
 
 
+
         <!-- /.row-->
         <div class="row">
           <div class="col-md-12">
@@ -18,74 +19,32 @@
                 <div class="row">
 
                   <!-- /.col-->
+             {% for node in hexagons_data %}
                   <div class="col-sm-6 col-lg-4">
                     <div class="card">
-                      <div class="card-header">Master 1
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">3idi2.test.12-34-56-6</small></a></div>
+                      <div class="card-header">{{ node.name }}
+                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">xxxxxxx</small></a></div>
                       </div>
                       <div class="card-body">
                         <div class="c-chart-wrapper">
-                          <div id="vis"></div>
+                          <div class="honeycombs">
+                          {% for pod in node.pods %}
+                          <!--<p>{{ pod.phase }}</p>-->
+                            <div class="comb">
+                              <div class="front-content">
+                                <p></p>  
+                              </div>
+                              <div class="back-content">
+                                <p></p>
+                              </div>
+                            </div>
+                          {% endfor %}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- /.col-->
-                  <!-- /.col-->
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="card">
-                      <div class="card-header">Master 2
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">3idi2.test.12-34-56-6</small></a></div>
-                      </div>
-                      <div class="card-body">
-                        <div class="c-chart-wrapper">
-                          <div id="vis1"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.col-->
-                  <!-- /.col-->
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="card">
-                      <div class="card-header">Master 3
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">3idi2.test.12-34-56-6</small></a></div>
-                      </div>
-                      <div class="card-body">
-                        <div class="c-chart-wrapper">
-                          <div id="vis2"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.col-->
-                  <!-- /.col-->
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="card">
-                      <div class="card-header">Worker 1
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">3idi2.test.12-34-56-6</small></a></div>
-                      </div>
-                      <div class="card-body">
-                        <div class="c-chart-wrapper">
-                          <div id="vis3"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /.col-->
-                  <!-- /.col-->
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="card">
-                      <div class="card-header">Worker 2
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">3idi2.test.12-34-56-6</small></a></div>
-                      </div>
-                      <div class="card-body">
-                        <div class="c-chart-wrapper">
-                          <div id="vis4"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              {% endfor %}
                   <!-- /.col-->
                 </div>
               </div>
@@ -384,8 +343,19 @@
 {% endblock content %}
 
 {% block javascripts %}
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/static/assets/vendors/@coreui/coreui-chartjs/js/coreui-chartjs.bundle.js"></script>
 <script src="/static/assets/js/charts.js"></script>
+<script src="/static/assets/js/jquery.honeycombs.js"></script>
 
+
+<script>
+	$(document).ready(function() {
+	$('.honeycombs').honeycombs({
+		combWidth:30,
+		margin: 0,
+		threshold: 5
+	});
+});
+</script>
 {% endblock javascripts %}

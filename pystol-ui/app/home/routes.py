@@ -12,6 +12,7 @@ from jinja2 import TemplateNotFound
 from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import  state_namespaces, state_nodes
 from app.base.allocated import compute_allocated_resources
+from app.base.hexa import hexagons_data
 
 @blueprint.route('/index')
 @login_required
@@ -20,7 +21,8 @@ def index():
     #    return redirect(url_for('base_blueprint.login'))
 
     return render_template('index.html',
-                           compute_allocated_resources = compute_allocated_resources()
+                           compute_allocated_resources = compute_allocated_resources(),
+                           hexagons_data = hexagons_data(),
                           )
 
 @blueprint.route('/<template>')

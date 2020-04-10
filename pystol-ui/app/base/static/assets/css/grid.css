@@ -1,0 +1,332 @@
+/* Stuff to make codepen work */
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* XV SCSS Variables */
+$xv-secondary-light-gray: #c9c9c9;
+$xv-secondary-dark-gray: #9fa0a2;
+$xv-secondary-green: rgba(133, 177, 58, 1);
+$xv-secondary-ltgreen: #A9C875;
+$xv-secondary-dkgreen: rgba(106, 141, 46, 1);
+$xv-secondary-blue: rgba(47, 155, 167, 1);
+$xv-secondary-ltblue: #6DB9C1;
+$xv-secondary-dkblue: rgba(37, 124, 133, 1);
+$xv-secondary-yellow: rgba(227, 169, 40, 1);
+$xv-secondary-ltyellow: #EBC268;
+$xv-secondary-dkyellow: rgba(181, 135, 32, 1);
+$xv-secondary-red: rgba(204, 55, 77, 1);
+$xv-secondary-ltred: #DB7382;
+$xv-secondary-dkred: rgba(163, 44, 61, 1);
+
+/* Outer Hexagon */
+.hexagon-grid-container {
+	display: flex;
+	flex-wrap: wrap;
+	width: 60%;
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+}
+
+.hexagon {
+  position: relative;
+  width: 140px; 
+  height: 80.83px;
+  background-color: $xv-secondary-dark-gray;
+  margin: 44px 2px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:before, &:after {
+	  content: "";
+	  position: absolute;
+	  width: 0;
+	  border-left: 70px solid transparent;
+	  border-right: 70px solid transparent;
+	}
+  &:before {
+	  bottom: 100%;
+	  border-bottom: 40.41px solid $xv-secondary-dark-gray;
+	}
+  &:after {
+	  top: 100%;
+	  width: 0;
+	  border-top: 40.41px solid $xv-secondary-dark-gray;
+	}
+}
+
+/* Inner Hexagon */
+.hexagon-inner {
+  position: relative;
+  width: 136px; 
+  height: 78.52px;
+  background-color: $xv-secondary-light-gray;
+  margin: 39.26px 0;
+  display: flex;
+  justify-content: center;
+  &:before, &:after {
+	  content: "";
+	  position: absolute;
+	  width: 0;
+	  border-left: 68px solid transparent;
+	  border-right: 68px solid transparent;
+	  z-index: 1;
+   }
+	&:before {
+	  bottom: 100%;
+	  border-bottom: 39.26px solid $xv-secondary-light-gray;
+	}
+	&:after {
+	  top: 100%;
+	  width: 0;
+	  border-top: 39.26px solid $xv-secondary-light-gray;
+	}
+}
+
+/* Media queries */
+@media (min-width: 1920px) {
+	.hexagon-grid-container {
+		width: 1600px;
+	}
+	.hexagon:nth-child(21n+12) {
+		margin-left: 74px;
+	}
+}
+@media (max-width: 1919px) and (min-width: 1280px) {
+	.hexagon-grid-container {
+		width: 1100px;
+	}
+	.hexagon:nth-child(14n+8) {
+		margin-left: 74px;
+	}
+}
+@media (max-width: 1279px) and (min-width: 1024px) {
+	.hexagon-grid-container {
+		width: 960px;
+	}
+	.hexagon:nth-child(12n+7) {
+		margin-left: 74px;
+	}
+}
+@media (max-width: 1023px) and (min-width: 781px) {
+	.hexagon-grid-container {
+		width: 780px;
+	}
+	.hexagon:nth-child(9n+6) {
+		margin-left: 74px;
+	}
+}
+@media (max-width: 780px) and (min-width: 640px) {
+	.hexagon-grid-container {
+		width: 640px;
+	}
+	.hexagon:nth-child(7n+5) {
+		margin-left: 74px;
+	}
+}
+@media (max-width: 639px) {
+	.hexagon-grid-container {
+		width: 320px;
+	}
+	.hexagon:nth-child(3n+3) {
+		margin-left: 74px;
+	}
+}
+
+/* Avatar */
+.hexagon-avatar-img {
+	position: absolute;
+	width: 42px;
+	border-radius: 42px;
+	border: 2px solid #fff;
+	top: -24px;
+	z-index: 1;
+}
+
+/* Name */
+.hexagon-name {
+	position: absolute;
+	width: 130px;
+	text-align: center;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	top: 25px;
+	z-index: 1;
+}
+
+/* Metric */
+.hexagon-metric-label {
+	position: absolute;
+	width: 130px;
+	text-align: center;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 100;
+	font-size: 12px;
+	top: 48px;
+	z-index: 1;
+}
+
+/* Score */
+.hexagon-featured-score {
+	position: absolute;
+	z-index: 2;
+	bottom: -24px;
+	width: 32px;
+	height: 32px;
+	border-radius: 36px;
+	border: 1px solid;
+	text-align: center;
+	padding-top: 9px;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	color: #fff;
+	background: lighten($xv-secondary-dark-gray, 8%);
+	border-color: $xv-secondary-dark-gray;
+}
+
+/* Right / Left Icons */
+.hexagon-icon-left, .hexagon-icon-right {
+	position: absolute;
+	z-index: 2;
+	top: 58px;
+	width: 24px;
+	height: 24px;
+	border-radius: 24px;
+	border: 1px solid $xv-secondary-dark-gray;
+	background: lighten($xv-secondary-dark-gray, 8%);
+	color: $xv-secondary-dark-gray;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+}
+.hexagon-icon-left {
+	left: 3px;
+}
+.hexagon-icon-right {
+	right: 3px;
+}
+
+/* Hexagon Color Coding */
+.hexagon.hexagon-green {
+	background-color: $xv-secondary-green;
+	&:before {
+	  border-bottom: 40.41px solid $xv-secondary-green;
+	}
+	&:after {
+	  border-top: 40.41px solid $xv-secondary-green;
+	}
+	.hexagon-inner {
+	  background-color: $xv-secondary-ltgreen;
+		&:before {
+		  border-bottom: 39.26px solid $xv-secondary-ltgreen;
+		}
+		&:after {
+		  border-top: 39.26px solid $xv-secondary-ltgreen;
+		}
+	}
+	.hexagon-featured-score {
+		background: lighten($xv-secondary-green, 5%);
+		border-color: $xv-secondary-green;
+	}
+}
+
+.hexagon.hexagon-blue {
+	background-color: $xv-secondary-blue;
+	&:before {
+	  border-bottom: 40.41px solid $xv-secondary-blue;
+	}
+	&:after {
+	  border-top: 40.41px solid $xv-secondary-blue;
+	}
+	.hexagon-inner {
+	  background-color: $xv-secondary-ltblue;
+		&:before {
+		  border-bottom: 39.26px solid $xv-secondary-ltblue;
+		}
+		&:after {
+		  border-top: 39.26px solid $xv-secondary-ltblue;
+		}
+	}
+	.hexagon-featured-score {
+		background: lighten($xv-secondary-blue, 5%);
+		border-color: $xv-secondary-blue;
+	}
+}
+
+.hexagon.hexagon-yellow {
+	background-color: $xv-secondary-yellow;
+	&:before {
+	  border-bottom: 40.41px solid $xv-secondary-yellow;
+	}
+	&:after {
+	  border-top: 40.41px solid $xv-secondary-yellow;
+	}
+	.hexagon-inner {
+	  background-color: $xv-secondary-ltyellow;
+		&:before {
+		  border-bottom: 39.26px solid $xv-secondary-ltyellow;
+		}
+		&:after {
+		  border-top: 39.26px solid $xv-secondary-ltyellow;
+		}
+	}
+	.hexagon-featured-score {
+		background: lighten($xv-secondary-yellow, 5%);
+		border-color: $xv-secondary-yellow;
+	}
+}
+
+.hexagon.hexagon-red {
+	background-color: $xv-secondary-red;
+	&:before {
+	  border-bottom: 40.41px solid $xv-secondary-red;
+	}
+	&:after {
+	  border-top: 40.41px solid $xv-secondary-red;
+	}
+	.hexagon-inner {
+	  background-color: $xv-secondary-ltred;
+		&:before {
+		  border-bottom: 39.26px solid $xv-secondary-ltred;
+		}
+		&:after {
+		  border-top: 39.26px solid $xv-secondary-ltred;
+		}
+	}
+	.hexagon-featured-score {
+		background: lighten($xv-secondary-red, 5%);
+		border-color: $xv-secondary-red;
+	}
+}
+
+/* Icon Color Coding */
+.hexagon-icon-green {
+	background: lighten($xv-secondary-green, 5%);
+   border-color: $xv-secondary-green;
+	color: $xv-secondary-dkgreen;
+}
+
+.hexagon-icon-blue {
+	background: lighten($xv-secondary-blue, 5%);
+   border-color: $xv-secondary-blue;
+	color: $xv-secondary-dkblue;
+}
+
+.hexagon-icon-yellow {
+	background: lighten($xv-secondary-yellow, 5%);
+   border-color: $xv-secondary-yellow;
+	color: $xv-secondary-dkyellow;
+}
+
+.hexagon-icon-red {
+	background: lighten($xv-secondary-red, 5%);
+   border-color: $xv-secondary-red;
+	color: $xv-secondary-dkred;
+}
