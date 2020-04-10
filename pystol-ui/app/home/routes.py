@@ -11,14 +11,17 @@ from app import login_manager
 from jinja2 import TemplateNotFound
 from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import  state_cluster, state_nodes
+from app.base.allocated import compute_allocated_resources
+
 @blueprint.route('/index')
 @login_required
 def index():
-    
     #if not current_user.is_authenticated:
     #    return redirect(url_for('base_blueprint.login'))
 
-    return render_template('index.html')
+    return render_template('index.html',
+                           compute_allocated_resources = compute_allocated_resources()
+                          )
 
 @blueprint.route('/<template>')
 def route_template(template):
@@ -28,10 +31,10 @@ def route_template(template):
         return render_template(template + '.html',
                                list_actions = list_actions(),
                                show_actions = show_actions(),
-                              state_cluster = state_cluster(),
-                              state_nodes = state_nodes(),
+                               state_cluster = state_cluster(),
+                               state_nodes = state_nodes(),
+                               compute_allocated_resources = compute_allocated_resources(),
                                )
-
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except:
