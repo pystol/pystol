@@ -38,7 +38,24 @@ __all__ = ["compute_allocated_resources"]
 
 def compute_allocated_resources():
     ureg = UnitRegistry()
-    ureg.load_definitions(os.path.join(os.getcwd(), 'app/base/kubernetes_units.txt'))
+    # Mem
+    ureg.define("kmemunits = 1 = [kmemunits]")
+    ureg.define("Ki = 1024 * kmemunits")
+    ureg.define("Mi = Ki^2")
+    ureg.define("Gi = Ki^3")
+    ureg.define("Ti = Ki^4")
+    ureg.define("Pi = Ki^5")
+    ureg.define("Ei = Ki^6")
+    # CPU
+    ureg.define("kcpuunits = 1 = [kcpuunits]")
+    ureg.define("m = 1/1000 * kcpuunits")
+    ureg.define("k = 1000 * kcpuunits")
+    ureg.define("M = k^2")
+    ureg.define("G = k^3")
+    ureg.define("T = k^4")
+    ureg.define("P = k^5")
+    ureg.define("E = k^6")
+
     Q_ = ureg.Quantity
     data = {}
 
