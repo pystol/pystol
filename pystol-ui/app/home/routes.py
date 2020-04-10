@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 from app.base.k8s import list_actions, show_actions
-from app.base.k8sclient import  state_cluster, state_nodes
+from app.base.k8sclient import  state_namespaces, state_nodes
 from app.base.allocated import compute_allocated_resources
 
 @blueprint.route('/index')
@@ -31,7 +31,7 @@ def route_template(template):
         return render_template(template + '.html',
                                list_actions = list_actions(),
                                show_actions = show_actions(),
-                               state_cluster = state_cluster(),
+                               state_namespaces = state_namespaces(),
                                state_nodes = state_nodes(),
                                compute_allocated_resources = compute_allocated_resources(),
                                )
