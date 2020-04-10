@@ -154,3 +154,34 @@ def list_actions():
     return ret
 
 
+def state_cluster():
+    """
+    List component of cluster.
+    This is a main component of the input for the controller
+    """
+    load_kubernetes_config()
+    api = kubernetes.client.CustomObjectsApi()
+
+    group = "pystol.org"
+    version = "v1alpha1"
+    namespace = "pystol"
+    plural = "pystolactions"
+    pretty = 'true'
+
+    ret = []
+    try:
+        resp = api.list_namespaced_custom_object(group=group,
+                                                 version=version,
+                                                 namespace=namespace,
+                                                 plural=plural,
+                                                 pretty=pretty)
+        for action in resp['items']:
+            ret.append({'name':action['metadata']['name'],
+                        'creationTimestamp':action['metadata']['creationTimestamp'],
+                        'action_state':action['spec']['action_state'],
+                        'workflow_state':action['spec']['workflow_state'],
+                       })
+    except ApiException:
+        print("No objects found...")
+    return ret
+
