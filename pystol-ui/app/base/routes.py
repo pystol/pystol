@@ -21,7 +21,7 @@ from app.base.models import User
 from app.base.util import verify_pass
 
 from app.base.k8s import list_actions, show_actions
-
+from app.base.k8sclient import  state_cluster, state_nodes
 
 @blueprint.route('/')
 def route_default():
@@ -42,7 +42,9 @@ def api_list_actions():
 def api_show_actions():
     return jsonify(show_actions())
 
-
+@blueprint.route('/api/v1/StateCluster', methods=['GET'])
+def api_state_cluster():
+    return jsonify(state_cluster())
 
 
 ## Login & Registration

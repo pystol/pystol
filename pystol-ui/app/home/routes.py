@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 from app.base.k8s import list_actions, show_actions
-
+from app.base.k8sclient import  state_cluster, state_nodes
 @blueprint.route('/index')
 @login_required
 def index():
@@ -27,7 +27,9 @@ def route_template(template):
     try:
         return render_template(template + '.html',
                                list_actions = list_actions(),
-                               show_actions = show_actions()
+                               show_actions = show_actions(),
+                              state_cluster = state_cluster(),
+                              state_nodes = state_nodes(),
                                )
 
     except TemplateNotFound:
