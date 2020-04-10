@@ -14,43 +14,50 @@
                   <table class="table table-responsive-sm table-bordered table-striped table-sm">
                     <thead>
                       <tr>
-                        <th>Username</th>
-                        <th>Date registered</th>
-                        <th>Role</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Action State</th>
+                        <th>Workflow State</th>
                       </tr>
                     </thead>
                     <tbody>
+              {% for action in list_actions %}
                       <tr>
-                        <td>Vishnu Serghei</td>
-                        <td>2012/01/01</td>
-                        <td>Member</td>
-                        <td><span class="badge badge-success">Active</span></td>
+                        <td>{{ action.name }}</td>
+                        <td>{{ action.creationTimestamp }}</td>
+<td>
+{% if action.action_state == 'PystolActionCreating' %}
+<span class="badge badge-info">{{ action.action_state }} </span> 
+{% elif action.action_state == 'PystolActionRunning' %}
+<span class="badge badge-warning">{{ action.action_state }} </span> 
+{% elif action.action_state == 'PystolActionEndedSuccessfully' %}
+<span class="badge badge-success">{{ action.action_state }} </span> 
+{% elif action.action_state == 'PystolActionEndedFail' %}
+<span class="badge badge-danger">{{ action.action_state }} </span> 
+{% elif action.action_state == 'PystolActionEndedFailTimeout' %}
+<span class="badge badge-danger">{{ action.action_state }} </span> 
+{% else %}
+<span class="badge badge-secondary">State not found, report! {{ action.action_state }}</span>
+{% endif %}
+</td>
+
+<td>
+{% if action.workflow_state == 'PystolOperatorWaitingAction' %}
+<span class="badge badge-info">{{ action.workflow_state }} </span> 
+{% elif action.workflow_state == 'PystolOperatorStartProcessingAction' %}
+<span class="badge badge-warning">{{ action.workflow_state }} </span>
+{% elif action.workflow_state == 'PystolOperatorCreatingJob' %}
+<span class="badge badge-warning">{{ action.workflow_state }} </span>
+{% elif action.workflow_state == 'PystolOperatorExecutingAction' %}
+<span class="badge badge-warning">{{ action.workflow_state }} </span>
+{% elif action.workflow_state == 'PystolOperatorEnded' %}
+<span class="badge badge-success">{{ action.workflow_state }} </span>
+{% else %}
+<span class="badge badge-secondary">State not found, report! {{ action.workflow_state }}</span>
+{% endif %}
+</td>
                       </tr>
-                      <tr>
-                        <td>Zbyněk Phoibos</td>
-                        <td>2012/02/01</td>
-                        <td>Staff</td>
-                        <td><span class="badge badge-danger">Banned</span></td>
-                      </tr>
-                      <tr>
-                        <td>Einar Randall</td>
-                        <td>2012/02/01</td>
-                        <td>Admin</td>
-                        <td><span class="badge badge-secondary">Inactive</span></td>
-                      </tr>
-                      <tr>
-                        <td>Félix Troels</td>
-                        <td>2012/03/01</td>
-                        <td>Member</td>
-                        <td><span class="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td>Aulus Agmundr</td>
-                        <td>2012/01/21</td>
-                        <td>Staff</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                      </tr>
+              {% endfor %}
                     </tbody>
                   </table>
                   <nav>
@@ -66,6 +73,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-header"><i class="fa fa-align-justify"></i> Available native Pystol actions</div>
@@ -73,43 +81,19 @@
                   <table class="table table-responsive-sm table-bordered table-striped table-sm">
                     <thead>
                       <tr>
-                        <th>Username</th>
-                        <th>Date registered</th>
-                        <th>Role</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Documentation</th>
                       </tr>
                     </thead>
                     <tbody>
+              {% for action in show_actions %}
                       <tr>
-                        <td>Vishnu Serghei</td>
-                        <td>2012/01/01</td>
-                        <td>Member</td>
-                        <td><span class="badge badge-success">Active</span></td>
+                        <td>{{ action.name }}</td>
+                        <td>{{ action.description }}</td>
+                        <td>{{ action.documentation }}</td>
                       </tr>
-                      <tr>
-                        <td>Zbyněk Phoibos</td>
-                        <td>2012/02/01</td>
-                        <td>Staff</td>
-                        <td><span class="badge badge-danger">Banned</span></td>
-                      </tr>
-                      <tr>
-                        <td>Einar Randall</td>
-                        <td>2012/02/01</td>
-                        <td>Admin</td>
-                        <td><span class="badge badge-secondary">Inactive</span></td>
-                      </tr>
-                      <tr>
-                        <td>Félix Troels</td>
-                        <td>2012/03/01</td>
-                        <td>Member</td>
-                        <td><span class="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td>Aulus Agmundr</td>
-                        <td>2012/01/21</td>
-                        <td>Staff</td>
-                        <td><span class="badge badge-success">Active</span></td>
-                      </tr>
+              {% endfor %}
                     </tbody>
                   </table>
                   <nav>
@@ -122,6 +106,16 @@
                       <li class="page-item"><a class="page-link" href="#">Next</a></li>
                     </ul>
                   </nav>
+<div class="bd-example">
+                <dl class="row">
+                  <dt class="col-sm-3">License</dt>
+                  <dd class="col-sm-9">{{ show_actions[0].license }}</dd>
+                  <dt class="col-sm-3">Version</dt>
+                  <dd class="col-sm-9">{{ show_actions[0].version }}</dd>
+                  <dt class="col-sm-3">Repository</dt>
+                  <dd class="col-sm-9">{{ show_actions[0].repository }}</dd>
+                </dl>
+</div>
                 </div>
               </div>
             </div>
