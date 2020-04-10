@@ -42,6 +42,11 @@ def api_list_actions():
 def api_show_actions():
     return jsonify(show_actions())
 
+#pystol-actions-before.html
+@blueprint.route('/pystol-actions-before', methods=['GET'])
+def pystol_actions_before():
+    return jsonify(show_actions())
+
 
 ## Login & Registration
 
