@@ -10,6 +10,7 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 from app.base.k8s import list_actions, show_actions
+
 @blueprint.route('/index')
 @login_required
 def index():
@@ -24,15 +25,22 @@ def route_template(template):
     #if not current_user.is_authenticated:
     #    return redirect(url_for('base_blueprint.login'))
     try:
-        return render_template(template + '.html')
+        return render_template(template + '.html',
+                               list_actions = list_actions(),
+                               show_actions = show_actions()
+                               )
+
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except:
         return render_template('page-500.html'), 500
 
+# pystol-actions-before will be displayed anyway as all the
+# templates are rendered, see 10 lines before.
+# Remove from here, you are skiping the auth
 #pystol-actions-before.html
-@blueprint.route('/pystol-actions-before', methods=['GET'])
-def pystol_actions_before():
-    return render_template( 'pystol-actions-before.html',
-    actions=jsonify(show_actions()))
-    #return jsonify(show_actions())
+#@blueprint.route('/pystol-actions-before', methods=['GET'])
+#def pystol_actions_before():
+#    return render_template( 'pystol-actions-before.html',
+#    actions=jsonify(show_actions()))
+#    #return jsonify(show_actions())

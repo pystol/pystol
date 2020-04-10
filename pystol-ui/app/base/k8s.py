@@ -147,7 +147,7 @@ def list_actions():
             ret.append({'name':action['metadata']['name'],
                         'creationTimestamp':action['metadata']['creationTimestamp'],
                         'action_state':action['spec']['action_state'],
-                        'wokflow_state':action['spec']['workflow_state'],
+                        'workflow_state':action['spec']['workflow_state'],
                        })
     except ApiException:
         print("No objects found...")
