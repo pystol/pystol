@@ -22,8 +22,8 @@
              {% for node in hexagons_data %}
                   <div class="col-sm-6 col-lg-4">
                     <div class="card">
-                      <div class="card-header">{{ node.name }}
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">xxxxxxx</small></a></div>
+                      <div class="card-header">Node: {{ node.name }}
+                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted"></small></a></div>
                       </div>
                       <div class="card-body">
                         <div class="c-chart-wrapper">
@@ -35,7 +35,7 @@
                                 <p></p>  
                               </div>
                               <div class="back-content">
-                                <p></p>
+                                <p>{{ pod.name }}</p>
                               </div>
                             </div>
                           {% endfor %}
