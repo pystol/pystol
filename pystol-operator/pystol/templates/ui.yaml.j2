@@ -20,7 +20,7 @@ spec:
         - name: pystol-ui
           image: {{ appSettings.pystol.ui.image }}
           ports:
-            - containerPort: {{ appSettings.pystol.ui.api_port }}
+            - containerPort: {{ appSettings.pystol.ui.port }}
           command: ["flask"]
           args: ["run"]
           imagePullPolicy: Always
