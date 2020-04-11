@@ -47,21 +47,18 @@ def state_cluster():
             w.stop() """
 
 def state_nodes():
-    # Configs can be set in Configuration class directly or using helper
-    # utility. If no argument provided, the config will be loaded from
-    # default location.
     config.load_kube_config()
     v1 = client.CoreV1Api()
     count = 100
     w = watch.Watch()
     ret = []
-   # print(w.stream(v1.list_pod_for_all_namespaces, timeout_seconds=10))
-    for event in w.stream(v1.list_pod_for_all_namespaces, timeout_seconds=10):
+    print(w.stream(v1.list_node, timeout_seconds=10))
+    for event in w.stream(v1.list_node, timeout_seconds=10):
         print("Event: %s %s %s" % (
             event['type'],
             event['object'].kind,
             event['object'].metadata.name),
-            event['object'].status.pod_ip, 
+           # event['object'].status.node_ip, 
             event['object'].metadata.namespace, 
         )
         count -= 1
@@ -69,7 +66,7 @@ def state_nodes():
         ret.append({'type': event['type'],
                     'kind': event['object'].kind,
                     'name': event['object'].metadata.name,
-                    'ip': event['object'].status.pod_ip, 
+                  #  'ip': event['object'].status.pod_ip, 
                     'namespace': event['object'].metadata.namespace, 
                        })
         if not count:
