@@ -23,19 +23,19 @@
                   <div class="col-sm-6 col-lg-4">
                     <div class="card">
                       <div class="card-header">Node: {{ node.name }}
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted"></small></a></div>
+                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">{{ node.role }}</small></a></div>
                       </div>
                       <div class="card-body">
                         <div class="c-chart-wrapper">
                           <div class="honeycombs">
                           {% for pod in node.pods %}
                           <!--<p>{{ pod.phase }}</p>-->
-                            <div class="comb">
+                            <div class="comb" data-toggle="modal" data-target="#{{ pod.name }}">
                               <div class="front-content">
                                 <p></p>  
                               </div>
                               <div class="back-content">
-                                <p>{{ pod.name }}</p>
+                                <p></p>
                               </div>
                             </div>
                           {% endfor %}
@@ -340,22 +340,68 @@
       </div>
     </div>
 
+
+{% for node in hexagons_data %}
+{% for pod in node.pods %}
+        <!-- /.modal-->
+    <div class="modal fade" id="{{ pod.name }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">{{ pod.name }}</h4>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+            <p>Namespace: {{ pod.namespace }}</p>
+            <p>Host IP: {{ pod.host_ip }}</p>
+            <p>Pod IP: {{ pod.pod_ip }}</p>
+            <p>Phase: {{ pod.phase }}</p>
+            </div>
+        </div>
+        <!-- /.modal-content-->
+        </div>
+        <!-- /.modal-dialog-->
+    </div>
+        <!-- /.modal-->
+{% endfor %}
+{% endfor %}
+
+
+
+
+
+
+
+
 {% endblock content %}
 
+{% block stylesheets %}
+<!-- Honey -->
+<link rel="stylesheet" type="text/css" href="/static/assets/css/honeycombs.css"/>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<!-- Honey -->
+
+{% endblock stylesheets %}
+
 {% block javascripts %}
+<!-- Honey -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/static/assets/js/jquery.honeycombs.js"></script>
+<!-- Honey -->
+
 <script src="/static/assets/vendors/@coreui/coreui-chartjs/js/coreui-chartjs.bundle.js"></script>
 <script src="/static/assets/js/charts.js"></script>
-<script src="/static/assets/js/jquery.honeycombs.js"></script>
 
 
 <script>
 	$(document).ready(function() {
 	$('.honeycombs').honeycombs({
-		combWidth:30,
+		combWidth:40,
 		margin: 0,
-		threshold: 5
+		threshold: 3
 	});
 });
 </script>
+
+
 {% endblock javascripts %}
