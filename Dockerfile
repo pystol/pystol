@@ -59,7 +59,8 @@ RUN ansible-galaxy collection install pystol.actions
 # Change the current working directory
 WORKDIR "/pystol-ui"
 ## Installing the UI dependencies (Web UI + endpoints) and Build the application
-RUN npm install -g react-scripts && npm install && npm install pystol-wui && npm run-script build
+# RUN npm install -g react-scripts && npm install && npm install pystol-wui && npm run-script build
+RUN pip3 install -r requirements.txt
 
 ## Configure ports
 # bind to port 3000

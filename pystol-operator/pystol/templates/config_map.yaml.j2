@@ -5,5 +5,6 @@ metadata:
   name: pystol-config
   namespace: pystol
 data:
-  PYSTOL_UI_API_PORT: "{{ appSettings.pystol.ui.api_port }}"
-  PYSTOL_UI_API_HOST: "{{ appSettings.pystol.ui.api_host }}"
+  PYSTOL_UI_FLASK_APP: "{{ appSettings.pystol.ui.app }}"
+  PYSTOL_UI_API_PORT: "{{ appSettings.pystol.ui.port }}"
+  PYSTOL_UI_API_HOST: "{{ appSettings.pystol.ui.host }}"
