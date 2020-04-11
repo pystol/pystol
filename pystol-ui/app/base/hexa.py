@@ -44,9 +44,11 @@ def hexagons_data():
 
     for node in nodes_list:
         node_name      = node.metadata.name
+        node_kind      = node.kind
         allocatable    = node.status.allocatable
         hdata = {}
         hdata['name'] = node_name
+        hdata['kind'] = node_kind
         max_pods       = int(int(allocatable["pods"]) * 1.5)
         field_selector = ("status.phase!=Succeeded," +
                           "spec.nodeName=" + node_name)
