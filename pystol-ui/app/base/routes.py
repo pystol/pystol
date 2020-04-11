@@ -11,8 +11,6 @@ from flask_login import (
     login_user,
     logout_user
 )
-
-
 from app import db, login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
@@ -21,7 +19,7 @@ from app.base.models import User
 from app.base.util import verify_pass
 
 from app.base.k8s import list_actions, show_actions
-from app.base.k8sclient import  state_namespaces, state_nodes
+from app.base.k8sclient import  state_namespaces, state_nodes, state_pods
 
 @blueprint.route('/')
 def route_default():
@@ -45,9 +43,15 @@ def api_show_actions():
 @blueprint.route('/api/v1/StateNamespaces', methods=['GET'])
 def api_state_namespaces():
     return jsonify(state_namespaces())
+
 @blueprint.route('/api/v1/StateNodes', methods=['GET'])
 def api_state_nodes():
     return jsonify(state_nodes())
+
+@blueprint.route('/api/v1/StatePods', methods=['GET'])
+def api_state_pods():
+    return jsonify(state_pods())
+
 
 ## Login & Registration
 

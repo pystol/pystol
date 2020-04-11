@@ -1,0 +1,62 @@
+{% extends "base-site.html" %}
+
+{% block title %} Pystol actions {% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="fade-in">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header"><i class="fa fa-align-justify"></i>Pods</div>
+                <div class="card-body">
+                  <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>status</th>
+                        <th>Ip</th>
+                        <th>Namespaces</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for data in state_pods %}
+                      <tr>
+                        <td>{{data.name}}</td>
+                        <td>{{data.type}}</td>
+                        <td>{{data.kind}}</td>
+                        <td>{{data.ip}}</td>
+                        <td>{{data.namespace}}</td>
+                        <td><span class="badge badge-success">Active</span>
+                      </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <nav>
+<!--                     <ul class="pagination">
+                      <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul> -->
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-->
+          </div>
+          <!-- /.row-->
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<!-- Specific Page JS goes HERE  -->
+{% endblock javascripts %}
