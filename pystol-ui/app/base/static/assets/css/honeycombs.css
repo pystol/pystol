@@ -25,7 +25,7 @@
 }
 
 .comb .icon-hex-lg {
-	color: #26A196;
+	color: #FF9000;
 }
 
 .comb.placeholder{
@@ -82,7 +82,7 @@
 	-moz-opacity: 0;
 	-khtml-opacity: 0;
 	opacity: 0;
-	
+
 }
 
 
@@ -103,7 +103,7 @@
 }
 
 .comb:hover > span {
-	color: #FF6493 !important;
+	color: #00AFAE !important;
 
 }
 
@@ -130,11 +130,11 @@
 
 @font-face {
 	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot?3d1mhj');
-	src:url('../fonts/icomoon.eot?#iefix3d1mhj') format('embedded-opentype'),
-		url('../fonts/icomoon.woff?3d1mhj') format('woff'),
-		url('../fonts/icomoon.ttf?3d1mhj') format('truetype'),
-		url('../fonts/icomoon.svg?3d1mhj#icomoon') format('svg');
+	src:url('https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/fonts/icomoon/icomoon.eot?3d1mhj');
+	src:url('https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/fonts/icomoon/icomoon.eot?#iefix3d1mhj') format('embedded-opentype'),
+		url('https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/fonts/icomoon/icomoon.woff?3d1mhj') format('woff'),
+		url('https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/fonts/icomoon/icomoon.ttf?3d1mhj') format('truetype'),
+		url('https://raw.githubusercontent.com/pystol/pystol-docs/master/assets/fonts/icomoon/icomoon.svg?3d1mhj#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -156,4 +156,3 @@
 .icon-hex-lg:before {
 	content: "\e604";
 }
-
