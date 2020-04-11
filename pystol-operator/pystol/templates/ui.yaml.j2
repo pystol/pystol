@@ -40,16 +40,6 @@ spec:
                 configMapKeyRef:
                   key: PYSTOL_UI_HOST
                   name: pystol-config
-            - name: PYSTOL_UI_API_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: PYSTOL_UI_API_HOST
-                  name: pystol-config
-            - name: PYSTOL_UI_API_PORT
-              valueFrom:
-                configMapKeyRef:
-                  key: PYSTOL_UI_API_PORT
-                  name: pystol-config
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
