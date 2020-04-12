@@ -23,6 +23,7 @@ def index():
     return render_template('index.html',
                            compute_allocated_resources = compute_allocated_resources(),
                            hexagons_data = hexagons_data(),
+                           cluster_name_configured  = cluster_name_configured(),
                           )
 
 @blueprint.route('/<template>')
