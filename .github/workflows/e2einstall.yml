@@ -139,6 +139,8 @@ jobs:
            ~/ci_values.yaml \
            | kubectl apply -f -
 
+        kubectl apply -f ./pystol-operator/pystol/templates/service.yaml
+
         echo
         echo ">>> Get pods 12 times"
         for i in {1..12}; do kubectl get pods -n pystol;echo;sleep 10; done

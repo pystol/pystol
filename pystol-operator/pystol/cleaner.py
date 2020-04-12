@@ -51,6 +51,24 @@ def purge_pystol():
         print("    " + u"\u2757" + " Namespace removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
+    name = 'pystol-service'
+    namespace = 'pystol'
+    pretty = 'true'
+    orphan_dependents = True
+    propagation_policy = 'Background'
+    body = kubernetes.client.V1DeleteOptions()
+    try:
+        v1.delete_namespaced_service(name,
+                                     namespace=namespace,
+                                     pretty=pretty,
+                                     orphan_dependents=orphan_dependents,
+                                     propagation_policy=propagation_policy,
+                                     body=body)
+        print("    " + u"\U0001F9F9" + " Service removed.")
+    except ApiException:
+        print("    " + u"\u2757" + " Service removing warning.")
+        print("       Can't remove it, maybe it's gone...")
+
     name = 'pystol-config'
     namespace = 'pystol'
     pretty = 'true'

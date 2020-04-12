@@ -159,3 +159,15 @@ def deploy_pystol():
         except ApiException:
             print("  " + u"\u2757" + " UI deployment creation warning.")
             print("     Maybe it is already created.")
+
+    with open(os.path.join(os.path.dirname(__file__),
+                           "templates/service.yaml")) as f:
+        try:
+            resp = v1.create_namespaced_service(
+                namespace="pystol",
+                body=yaml.safe_load(f))
+            print("  " + u"\U0001F4E6" + " Service created.")
+            print("     '%s'" % resp.metadata.name)
+        except ApiException:
+            print("  " + u"\u2757" + " Service creation warning.")
+            print("     Maybe it is already created.")
