@@ -177,3 +177,146 @@ def compute_allocated_resources():
 
 
 
+def compute_node_resources(node_name):
+    ureg = UnitRegistry()
+    # Mem
+    ureg.define("kmemunits = 1 = [kmemunits]")
+    ureg.define("Ki = 1024 * kmemunits")
+    ureg.define("Mi = Ki^2")
+    ureg.define("Gi = Ki^3")
+    ureg.define("Ti = Ki^4")
+    ureg.define("Pi = Ki^5")
+    ureg.define("Ei = Ki^6")
+    # CPU
+    ureg.define("kcpuunits = 1 = [kcpuunits]")
+    ureg.define("m = 1/1000 * kcpuunits")
+    ureg.define("k = 1000 * kcpuunits")
+    ureg.define("M = k^2")
+    ureg.define("G = k^3")
+    ureg.define("T = k^4")
+    ureg.define("P = k^5")
+    ureg.define("E = k^6")
+
+    Q_ = ureg.Quantity
+    data = {}
+
+    state_info = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
+                  'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
+                  'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
+                  'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}
+                  }
+
+
+    # doing this computation within a kubernetes cluster
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
+
+    global_pods_allocatable = 0
+    global_pods_allocated = 0
+
+    global_cpu_allocatable = 0
+    global_cpu_allocated = 0
+
+    global_mem_allocatable = 0
+    global_mem_allocated = 0
+
+    global_storage_allocatable = 10000
+    global_storage_allocated = 1750
+
+    field_selector = ("metadata.name=" + node_name)
+
+    try:
+        nodes_list = core_v1.list_node(field_selector=field_selector).items
+    except Exception as e:
+        print("Something bad happened: " + e)
+
+    for node in nodes_list:
+        stats          = {}
+        node_name      = node.metadata.name
+        allocatable    = node.status.allocatable
+        max_pods       = int(int(allocatable["pods"]) * 1.5)
+
+        global_pods_allocatable = global_pods_allocatable + max_pods
+
+        field_selector = ("status.phase!=Succeeded,status.phase!=Failed," +
+                          "spec.nodeName=" + node_name)
+
+        stats["cpu_alloc"] = Q_(allocatable["cpu"])
+        stats["mem_alloc"] = Q_(allocatable["memory"])
+        stats["storage_alloc"] = Q_(allocatable["ephemeral-storage"])
+
+        global_cpu_allocatable = global_cpu_allocatable + Q_(allocatable["cpu"])
+        global_mem_allocatable = global_mem_allocatable + Q_(allocatable["memory"])
+        # global_storage_allocatable = global_storage_allocatable + Q_(allocatable["ephemeral-storage"])
+
+
+        pods = core_v1.list_pod_for_all_namespaces(limit=max_pods,
+                                                   field_selector=field_selector).items
+
+        # compute the allocated resources
+        cpureqs,cpulmts,memreqs,memlmts,storagereqs = [], [], [], [], []
+
+        global_pods_allocated = global_pods_allocated + len(pods)
+
+        for pod in pods:
+            #print("****")
+            #print(pod.stats)
+            #print("****")
+            for container in pod.spec.containers:
+
+                res  = container.resources
+                reqs = defaultdict(lambda: 0, res.requests or {})
+                lmts = defaultdict(lambda: 0, res.limits or {})
+                cpureqs.append(Q_(reqs["cpu"]))
+                memreqs.append(Q_(reqs["memory"]))
+                storagereqs.append(Q_(reqs["ephemeral-storage"]))
+
+                cpulmts.append(Q_(lmts["cpu"]))
+                memlmts.append(Q_(lmts["memory"]))
+                #print("----")
+                #print(res)
+                #print(Q_(reqs["ephemeral-storage"]))
+                #print(Q_(lmts["ephemeral-storage"]))
+                #print("----")
+                # storagelmts.append(Q_(lmts["ephemeral-storage"]))
+
+        stats["cpu_req"]     = sum(cpureqs)
+        stats["cpu_lmt"]     = sum(cpulmts)
+        stats["cpu_req_per"] = (stats["cpu_req"] / stats["cpu_alloc"] * 100)
+        stats["cpu_lmt_per"] = (stats["cpu_lmt"] / stats["cpu_alloc"] * 100)
+
+        stats["mem_req"]     = sum(memreqs)
+        stats["mem_lmt"]     = sum(memlmts)
+        stats["mem_req_per"] = (stats["mem_req"] / stats["mem_alloc"] * 100)
+        stats["mem_lmt_per"] = (stats["mem_lmt"] / stats["mem_alloc"] * 100)
+
+        #stats["storage_req"]     = sum(storagereqs)
+        #stats["storage_lmt"]     = sum(storagelmts)
+        #stats["storage_req_per"] = (stats["storage_req"] / stats["storage_alloc"] * 100)
+        #stats["storage_lmt_per"] = (stats["storage_lmt"] / stats["storage_alloc"] * 100)
+
+        global_cpu_allocated = global_cpu_allocated + sum(cpureqs)
+        global_mem_allocated = global_mem_allocated + sum(memreqs)
+
+        data[node_name] = stats
+
+    state_info['pods']['allocatable'] = global_pods_allocatable
+    state_info['pods']['allocated'] = global_pods_allocated
+    state_info['pods']['percentage'] = (global_pods_allocated * 100) // global_pods_allocatable
+
+    state_info['cpu']['allocatable'] = (global_cpu_allocatable.magnitude * 1000)
+    state_info['cpu']['allocated'] = global_cpu_allocated
+    state_info['cpu']['percentage'] = ((global_cpu_allocated * 100) // global_cpu_allocatable).magnitude
+
+    state_info['mem']['allocatable'] = global_mem_allocatable.to(ureg.Mi)
+    state_info['mem']['allocated'] = global_mem_allocated.to(ureg.Mi)
+    state_info['mem']['percentage'] = ((int(global_mem_allocated.to(ureg.Mi).magnitude) * 100) // int(global_mem_allocatable.to(ureg.Mi).magnitude))
+
+    state_info['storage']['allocatable'] = global_storage_allocatable
+    state_info['storage']['allocated'] = global_storage_allocated
+    state_info['storage']['percentage'] = (global_storage_allocated * 100) // global_storage_allocatable
+
+    return state_info
+
+
+

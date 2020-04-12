@@ -24,6 +24,7 @@ import sys
 import urllib
 
 from app.base.k8s import load_kubernetes_config
+from app.base.allocated import compute_node_resources
 
 import kubernetes
 
@@ -80,6 +81,18 @@ def hexagons_data():
         hdata['kubeproxyver'] = node_info.kube_proxy_version
         hdata['kubeletver'] = node_info.kubelet_version
         hdata['os'] = node_info.operating_system
+
+        state_info = compute_node_resources(node_name)
+        """
+        state_info = {'pods': {'allocatable': 200, 'allocated': 100, 'percentage': 50},
+                      'cpu': {'allocatable': 4000, 'allocated': 1250, 'percentage': 25},
+                      'mem': {'allocatable': 65000, 'allocated': 5000, 'percentage': 75},
+                      'storage': {'allocatable': 1250000, 'allocated': 2653, 'percentage': 10}
+                      }
+        """
+        hdata['state_info'] = state_info
+
+
 
         max_pods       = int(int(allocatable["pods"]) * 1.5)
         field_selector = ("spec.nodeName=" + node_name)
