@@ -52,11 +52,12 @@ for ver in $all_published_versions; do
     fi
 done
 
+cd ./pystol-operator
+python3 setup.py sdist
+twine check dist/*
+
 if [ "$publish" == "1" ]; then
     echo 'This version is not published, publishing!...'
-    cd ./pystol-operator
-    python3 setup.py sdist
-    twine check dist/*
 
 cat <<EOF > ~/.pypirc
 [distutils]
