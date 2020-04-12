@@ -118,6 +118,8 @@ jobs:
               # This is the host where the Pystol API
               # is supossed to be listening the UI
               api_host: labserver
+              # The Flask app we will run
+              app: run.py
         EOF
 
         j2 ./pystol-operator/pystol/templates/config_map.yaml.j2 \
