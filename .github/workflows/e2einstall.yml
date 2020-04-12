@@ -114,10 +114,10 @@ jobs:
             ui:
               image: $IMAGE_NAME@$IMAGE_DIGEST
               # The pystol UI API is exposed in 3000 port by default
-              api_port: 3000
+              port: 3000
               # This is the host where the Pystol API
               # is supossed to be listening the UI
-              api_host: labserver
+              host: 0.0.0.0
               # The Flask app we will run
               app: run.py
         EOF
