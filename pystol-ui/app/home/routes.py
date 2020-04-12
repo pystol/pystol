@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
 from app.base.k8s import list_actions, show_actions
-from app.base.k8sclient import  state_namespaces, state_nodes, state_pods
+from app.base.k8sclient import  state_namespaces, state_nodes, state_pods, cluster_name_configured
 from app.base.allocated import compute_allocated_resources
 from app.base.hexa import hexagons_data
 
@@ -37,6 +37,7 @@ def route_template(template):
                                state_nodes = state_nodes(),
                                state_pods = state_pods(),
                                compute_allocated_resources = compute_allocated_resources(),
+                               cluster_name_configured  = cluster_name_configured(),
                                )
     except TemplateNotFound:
         return render_template('page-404.html'), 404

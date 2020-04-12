@@ -19,7 +19,7 @@ from app.base.models import User
 from app.base.util import verify_pass
 
 from app.base.k8s import list_actions, show_actions
-from app.base.k8sclient import  state_namespaces, state_nodes, state_pods, web_terminal
+from app.base.k8sclient import  state_namespaces, state_nodes, state_pods, web_terminal, cluster_name_configured
 
 @blueprint.route('/')
 def route_default():
@@ -55,6 +55,10 @@ def api_state_pods():
 @blueprint.route('/api/v1/Terminal', methods=['GET'])
 def api_web_terminal():
     return jsonify(web_terminal())
+
+@blueprint.route('/api/v1/ClusterName', methods=['GET'])
+def api_cluster_name_configured():
+    return jsonify(cluster_name_configured())
 
 ## Login & Registration
 

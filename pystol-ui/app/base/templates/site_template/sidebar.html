@@ -3,11 +3,18 @@
             <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/static/assets/brand/pystol_full.svg" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/static/assets/brand/pystol_compact.svg" width="118" height="46" alt="CoreUI Logo"></div>
             <ul class="c-sidebar-nav">
               <li class="c-sidebar-nav-title">Cluster status</li>
-
-                  <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/index">
-                    <svg class="c-sidebar-nav-icon">
-                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                    </svg> System information</a></li>
+              <li>
+                {% if cluster_name_configured |length %}   
+                      <span class="badge badge-success">Cluster Name connected: {{cluster_name_configured  | replace('[', '')| replace(']', '')}}</span>
+                      
+                {% else %}
+                      <span class="badge badge-danger">Cluster No connected</span>
+                {% endif %}
+              </li>
+              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/index">
+                  <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
+                  </svg> System information</a>
 
                   <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-namespaces">
                     <svg class="c-sidebar-nav-icon">

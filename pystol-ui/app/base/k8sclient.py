@@ -70,7 +70,16 @@ def state_pods():
 def web_terminal():
     config.load_kube_config()
     ret = []
-    command = 'kubectl get po --all-namespaces'
+    command = 'kubectl get po --all-namespaces' # 'kubectl config view -o jsonpath='{.clusters[].name}'
+    output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+    ret.append(output.decode('utf-8'))
+    return ret
+
+
+def cluster_name_configured():
+    config.load_kube_config()
+    ret = []
+    command = 'kubectl config view -o jsonpath="{.clusters[].name}"'
     output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     ret.append(output.decode('utf-8'))
     return ret
