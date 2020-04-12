@@ -43,19 +43,43 @@ def hexagons_data():
         print("Something bad happened: " + e)
 
     for node in nodes_list:
-        # print(node)
+        #print(node)
         node_name      = node.metadata.name
         node_labels = node.metadata.labels
         # print(node_labels)
-        if node_labels['node-role.kubernetes.io/master'] == 'true':
-            node_role = "Master"
+        if "node-role.kubernetes.io/master" in node_labels:
+            if node_labels['node-role.kubernetes.io/master'] == 'true':
+                node_role = "Master"
+            else:
+                node_role = "Non master"
         else:
             node_role = "Non master"
 
-        allocatable    = node.status.allocatable
+        allocatable = node.status.allocatable
+        node_info = node.status.node_info
+
+
+        print("------")
+        print("------")
+        print("------")
+        print(node_info.architecture)
+        print("------")
+        print("------")
+        print("------")
         hdata = {}
         hdata['name'] = node_name
         hdata['role'] = node_role
+        hdata['cpu'] = allocatable["cpu"]
+        hdata['ephstorage'] = allocatable["ephemeral-storage"]
+        hdata['mem'] = allocatable["memory"]
+        hdata['maxpods'] = allocatable["pods"]
+
+        hdata['arch'] = node_info.architecture
+        hdata['crver'] = node_info.container_runtime_version
+        hdata['kernelver'] = node_info.kernel_version
+        hdata['kubeproxyver'] = node_info.kube_proxy_version
+        hdata['kubeletver'] = node_info.kubelet_version
+        hdata['os'] = node_info.operating_system
 
         max_pods       = int(int(allocatable["pods"]) * 1.5)
         field_selector = ("status.phase!=Succeeded," +
@@ -73,154 +97,5 @@ def hexagons_data():
                                   'phase':pod.status.phase})
         hexa_data.append(hdata)
 
-    print(hexa_data)
-
-    aux = [
-{
-      "name":"node-00",
-      "role":"Master",
-      "pods":[
-         {
-            "name":"coredns-66bf467f8-lzn8z",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.2",
-            "phase":"Running"
-         },
-         {
-            "name":"coredns-66bff67f8-vhxp4",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.3",
-            "phase":"Running"
-         },
-         {
-            "name":"etcd-minikube",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"kube-apiserver-minikube",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"kube-controller-manager-minikube",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"kube-proxy-5r5txd",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"kube-scheduler-minikube",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"storage-provisioner",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"dashboard-metrics-scraper-84b5fdf55ff-qq6j2",
-            "namespace":"kubernetes-dashboard",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.4",
-            "phase":"Running"
-         },
-         {
-            "name":"kubernetes-dashboard-bc4456cc64-nm69d",
-            "namespace":"kubernetes-dashboard",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.5",
-            "phase":"Running"
-         },
-         {
-            "name":"pystol-controller-667df549448-t8brm",
-            "namespace":"pystol",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.6",
-            "phase":"Running"
-         },
-         {
-            "name":"pystol-ui-8554cbb6558-hg8kh",
-            "namespace":"pystol",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.7",
-            "phase":"Running"
-         }
-      ]
-   },
-   {
-      "name":"node-01",
-      "role":"Non master",
-      "pods":[
-         {
-            "name":"coredns-66bff467f8-lzn8z",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.2",
-            "phase":"Running"
-         },
-         {
-            "name":"coredns-66bff467f8-vhxp4",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.3",
-            "phase":"Running"
-         },
-         {
-            "name":"kube-proxy-5rtxd",
-            "namespace":"kube-system",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"192.168.39.125",
-            "phase":"Running"
-         },
-         {
-            "name":"dashboard-metrics-scraper-84bfdf55ff-qq6j2",
-            "namespace":"kubernetes-dashboard",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.4",
-            "phase":"Running"
-         },
-         {
-            "name":"kubernetes-dashboard-bc446cc64-nm69d",
-            "namespace":"kubernetes-dashboard",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.5",
-            "phase":"Running"
-         },
-         {
-            "name":"pystol-controller-667df49448-t8brm",
-            "namespace":"pystol",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.6",
-            "phase":"Running"
-         },
-         {
-            "name":"pystol-ui-8554cbb658-hg8kh",
-            "namespace":"pystol",
-            "host_ip":"192.168.39.125",
-            "pod_ip":"172.17.0.7",
-            "phase":"Running"
-         }
-      ]
-   }
-]
+    # print(hexa_data)
     return hexa_data
-    # return aux

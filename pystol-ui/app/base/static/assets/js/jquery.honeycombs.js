@@ -48,9 +48,12 @@
                 });
 
                 // Fix Firefox padding error
+                /*ccamacho: FIXME: adding the firefox class breaks the hexagon render*/
+                /*
                 if (navigator.userAgent.search("Firefox") > -1) { 
                     $('.comb span').addClass('firefox');
                 }
+                */
             }
             
             /**

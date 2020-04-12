@@ -22,14 +22,13 @@
              {% for node in hexagons_data %}
                   <div class="col-sm-6 col-lg-4">
                     <div class="card">
-                      <div class="card-header">Node: {{ node.name }}
-                        <div class="card-header-actions"><a class="card-header-action" href="http://www.chartjs.org" target="_blank"><small class="text-muted">{{ node.role }}</small></a></div>
+                      <div class="card-header">
+                        <span class="badge badge-light" data-toggle="modal" data-target="#{{ node.name }}">Node: {{ node.name }}</span>
                       </div>
                       <div class="card-body">
                         <div class="c-chart-wrapper">
                           <div class="honeycombs">
                           {% for pod in node.pods %}
-                          <!--<p>{{ pod.phase }}</p>-->
                             <div class="comb" data-toggle="modal" data-target="#{{ pod.name }}">
                               <div class="front-content">
                                 <p></p>  
@@ -342,6 +341,33 @@
 
 
 {% for node in hexagons_data %}
+        <!-- /.modal-->
+    <div class="modal fade" id="{{ node.name }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Node: {{ node.name }}</h4>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+            <p>Role: {{ node.role }}</p>
+            <p>CPU: {{ node.cpu }}</p>
+            <p>Memory: {{ node.mem }}</p>
+            <p>Storage: {{ node.ephstorage }}</p>
+            <p>Max pods: {{ node.maxpods }}</p>
+            <p>Architecture: {{ node.arch }}</p>
+            <p>Container runtime version: {{ node.crver }}</p>
+            <p>Kernel version: {{ node.kernelver }}</p>
+            <p>Kubeproxy version: {{ node.kubeproxyver }}</p>
+            <p>Kubelet version: {{ node.kubeletver }}</p>
+            <p>OS: {{ node.os }}</p>
+            </div>
+        </div>
+        <!-- /.modal-content-->
+        </div>
+        <!-- /.modal-dialog-->
+    </div>
+        <!-- /.modal-->
 {% for pod in node.pods %}
         <!-- /.modal-->
     <div class="modal fade" id="{{ pod.name }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -396,7 +422,7 @@
 <script>
 	$(document).ready(function() {
 	$('.honeycombs').honeycombs({
-		combWidth:40,
+		combWidth:30,
 		margin: 0,
 		threshold: 3
 	});
