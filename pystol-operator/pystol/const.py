@@ -17,7 +17,7 @@ under the License.
 """
 
 # Main logging file
-PYSTOL_LOG_FILE = '/var/log/pystol.log'
+PYSTOL_LOG_FILE = '/tmp/pystol.log'
 
 # Current branch
 PYSTOL_BRANCH = 'master'

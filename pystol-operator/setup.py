@@ -31,7 +31,7 @@ if version_info < (3, 5):
 _NAME = 'pystol'
 _DESCRIPTION = 'The Pystol CLI'
 _REVISION = '0.5.18'
-_PYSTOL_LOG_FILE = '/var/log/pystol.log'
+_PYSTOL_LOG_FILE = '/tmp/pystol.log'
 
 pystol_revision = os.environ.get('PYSTOL_REVISION', "")
 if (pystol_revision != ""):

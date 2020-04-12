@@ -7,9 +7,6 @@
     <div class="container-fluid">
       <div class="fade-in">
 
-
-
-
         <!-- /.row-->
         <div class="row">
           <div class="col-md-12">
@@ -17,7 +14,6 @@
               <div class="card-header">Pods distribution</div>
               <div class="card-body">
                 <div class="row">
-
                   <!-- /.col-->
              {% for node in hexagons_data %}
                   <div class="col-sm-6 col-lg-4">
@@ -52,10 +48,6 @@
         </div>
         <!-- /.row-->
 
-
-
-
-
         <!-- /.row-->
         <div class="row">
           <div class="col-md-12">
@@ -64,10 +56,15 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-12">
-
              {% for node in hexagons_data %}
+                    <div class="card">
+                      <div class="card-header">
+                        <span class="badge badge-light" data-toggle="modal" data-target="#{{ node.name }}">Node: {{ node.name }}</span>
+                      </div>
+                      <div class="card-body">
+                        <div class="c-chart-wrapper">
+
                     <div class="progress-group mb-4">
-                      <div class="progress-group-prepend"><span class="progress-group-text">{{ node.name }}</span></div>
                       <div class="progress-group-bars">
                         <div class="progress progress-xs">
                           <div class="progress-bar bg-info" role="progressbar" style="width: {{ node.state_info.pods.percentage }}%" aria-valuenow="{{ node.state_info.pods.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -110,14 +107,16 @@
                       <!-- /.col-->
                     </div>
                     <!-- /.row-->
-                    {% if not loop.last %}
-                    <hr class="mt-0">
-                    {% endif %}
+
+
+                        </div>
+                      </div>
+                    </div>
+
                   {% endfor%}
 
                   </div>
                   <!-- /.col-->
-
                 </div>
               </div>
             </div>

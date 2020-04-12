@@ -36,7 +36,7 @@ t1_stop = threading.Event()
 t2_stop = threading.Event()
 
 handler = logging.handlers.WatchedFileHandler(
-    os.environ.get("LOGFILE", "/var/log/pystol.log"))
+    os.environ.get("LOGFILE", "/tmp/pystol.log"))
 formatter = logging.Formatter(logging.BASIC_FORMAT)
 handler.setFormatter(formatter)
 root = logging.getLogger()
@@ -211,7 +211,7 @@ def main():
                 print("  " + u"\U0001F914" + " We can not add the resource,"
                                              " did you deploy Pystol?")
                 print("  " + u"\U0001F440" + " Logs are stored in"
-                                             " /var/log/pystol.org")
+                                             " /tmp/pystol.org")
 
             exit()
         elif (args.command == 'listen'):
