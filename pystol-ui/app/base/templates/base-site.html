@@ -16,9 +16,14 @@
     <meta name="author" content="pystol.org (@pystol)">
     <meta name="keyword" content="Pystol,Fault injection,Chaos engineering">
 
+{% set titl %}
+{% block title %}{% endblock %}
+{% endset %}
+
     <title>
-        Pystol.org - {% block title %}{% endblock %}
+        Pystol.org - {{ titl }}
     </title>
+
 
     <!-- Begin icons-->
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/static/assets/favicon/apple-touch-icon-57x57.png" />
@@ -63,7 +68,9 @@
 
     <div class="c-wrapper">
 
+{% with title=titl %}
       {% include 'site_template/navigation.html' %}
+{% endwith %}
 
       <div class="c-body">
         <main class="c-main">
