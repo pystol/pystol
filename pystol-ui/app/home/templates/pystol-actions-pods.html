@@ -15,23 +15,26 @@
                     <thead>
                       <tr>
                         <th>Name</th>
-                        <th>Type</th>
                         <th>status</th>
                         <th>Ip</th>
                         <th>Namespaces</th>
-                        <th>Action</th>
+                        <th>Host</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for data in state_pods %}
                       <tr>
                         <td>{{data.name}}</td>
-                        <td>{{data.type}}</td>
-                        <td>{{data.kind}}</td>
-                        <td>{{data.ip}}</td>
+                        <td>
+                          {% if 'Running' in data.phase %}   
+                            <span class="badge badge-success">Running</span>
+                          {% else %}
+                            <span class="badge badge-danger">Danger</span>
+                          {% endif %}
+                        </td>
+                        <td>{{data.pod_ip}}</td>
                         <td>{{data.namespace}}</td>
-                        <td><span class="badge badge-success">Active</span>
-                      </td>
+                        <td>{{data.host_ip}}</td>
                       </tr>
                       {% endfor %}
                     </tbody>

@@ -14,111 +14,63 @@ import urllib
 import kubernetes
 from kubernetes import client, config, watch
 from app.base.k8s import load_kubernetes_config
-
+import subprocess
 
 def state_cluster():
     # Configs can be set in Configuration class directly or using helper
-    # utility. If no argument provided, the config will be loaded from
-    # default location.
     config.load_kube_config()
-    v1 = client.CoreV1Api()
-    count = 10
-    w = watch.Watch()
     ret = []
-    for event in w.stream(v1.list_namespace, timeout_seconds=10):
-        print("Event: %s %s" % (event['type'], event['object'].metadata.name))
-        count -= 1
-       # ret.append(event) 
-        ret.append({'type': event['type'],
-                    'name': event['object'].metadata.name,
-                       })
-        if not count:
-            w.stop()
+     
     return ret
 
-"""     for event in w.stream(v1.list_pod_for_all_namespaces, timeout_seconds=10):
-        print("Event: %s %s %s" % (
-            event['type'],
-            event['object'].kind,
-            event['object'].metadata.name)
-        )
-        count -= 1
-        if not count:
-            w.stop() """
 
 def state_nodes():
-    config.load_kube_config()
-    v1 = client.CoreV1Api()
-    count = 100
-    w = watch.Watch()
-    ret = []
-    print(w.stream(v1.list_node, timeout_seconds=10))
-    for event in w.stream(v1.list_node, timeout_seconds=10):
-        print("Event: %s %s %s" % (
-            event['type'],
-            event['object'].kind,
-            event['object'].metadata.name),
-           # event['object'].status.node_ip, 
-            event['object'].metadata.namespace, 
-        )
-        count -= 1
-       # ret.append(event) 
-        ret.append({'type': event['type'],
-                    'kind': event['object'].kind,
-                    'name': event['object'].metadata.name,
-                  #  'ip': event['object'].status.pod_ip, 
-                    'namespace': event['object'].metadata.namespace, 
-                       })
-        if not count:
-            w.stop()
-    return ret
+    datanodes = []
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
+    nodes = core_v1.list_node().items
+    for node in nodes:
+        #print(node) 
+        datanodes.append({'name': node.metadata.name,
+                            'status': node.status.phase,       
+        })
+    return datanodes
+    #print(data_nodes)
 
 def state_namespaces():
-    # Configs can be set in Configuration class directly or using helper
-    # utility. If no argument provided, the config will be loaded from
-    # default location.
-    config.load_kube_config()
-    v1 = client.CoreV1Api()
-    count = 10
-    w = watch.Watch()
-    ret = []
-    for event in w.stream(v1.list_namespace, timeout_seconds=10):
-        print("Event: %s %s" % (event['type'], event['object'].metadata.name))
-        count -= 1
-       # ret.append(event) 
-        ret.append({'type': event['type'],
-                    'name': event['object'].metadata.name,
-                       })
-        if not count:
-            w.stop()
-    return ret
+    datanamespaces = []
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
+    namespaces = core_v1.list_namespace().items
+   # print(datanamespaces)
+    for namespace in namespaces:
+       # print(namespace) 
+        datanamespaces.append({'name':namespace.metadata.name,
+                                'status':namespace.status.phase,       
+        })
+    return datanamespaces
 
 def state_pods():
-    # Configs can be set in Configuration class directly or using helper
-    # utility. If no argument provided, the config will be loaded from
-    # default location.
+    data_pods = []
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
+    pods = core_v1.list_pod_for_all_namespaces().items
+    
+    for pod in pods:
+        print(pod) 
+        data_pods.append({'name': pod.metadata.name,
+                                  'namespace':pod.metadata.namespace,
+                                  'host_ip':pod.status.host_ip,
+                                  'pod_ip':pod.status.pod_ip,
+                                  'phase':pod.status.phase})
+   
+    return data_pods
+    print(data_pods)
+
+def web_terminal():
     config.load_kube_config()
-    v1 = client.CoreV1Api()
-    count = 100
-    w = watch.Watch()
     ret = []
-    #print(w.stream(v1.list_pod_for_all_namespaces, timeout_seconds=10))
-    for event in w.stream(v1.list_pod_for_all_namespaces, timeout_seconds=10):
-        print("Event: %s %s %s" % (
-            event['type'],
-            event['object'].kind,
-            event['object'].metadata.name),
-            event['object'].status.pod_ip, 
-            event['object'].metadata.namespace, 
-        )
-        count -= 1
-       # ret.append(event) 
-        ret.append({'type': event['type'],
-                    'kind': event['object'].kind,
-                    'name': event['object'].metadata.name,
-                    'ip': event['object'].status.pod_ip, 
-                    'namespace': event['object'].metadata.namespace, 
-                       })
-        if not count:
-            w.stop()
+    command = 'kubectl get po --all-namespaces'
+    output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+    ret.append(output.decode('utf-8'))
     return ret
