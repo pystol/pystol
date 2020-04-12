@@ -29,7 +29,7 @@
                         <div class="c-chart-wrapper">
                           <div class="honeycombs">
                           {% for pod in node.pods %}
-                            <div class="comb" data-toggle="modal" data-target="#{{ pod.name }}">
+                            <div class="comb {{ pod.phase |lower }}" data-toggle="modal" data-target="#{{ pod.name }}">
                               <div class="front-content">
                                 <p></p>  
                               </div>

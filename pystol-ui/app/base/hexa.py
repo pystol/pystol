@@ -82,8 +82,7 @@ def hexagons_data():
         hdata['os'] = node_info.operating_system
 
         max_pods       = int(int(allocatable["pods"]) * 1.5)
-        field_selector = ("status.phase!=Succeeded," +
-                          "spec.nodeName=" + node_name)
+        field_selector = ("spec.nodeName=" + node_name)
         pods = core_v1.list_pod_for_all_namespaces(limit=max_pods,
                                                    field_selector=field_selector).items
         hdata['pods'] = []

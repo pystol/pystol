@@ -25,7 +25,27 @@
 }
 
 .comb .icon-hex-lg {
-	color: #FF9000;
+  color: #FF9000;
+}
+
+.comb.pending .icon-hex-lg {
+  color: #0066FF;
+}
+
+.comb.running .icon-hex-lg {
+  color: #009966;
+}
+
+.comb.succeeded .icon-hex-lg {
+  color: #FF9000;
+}
+
+.comb.failed .icon-hex-lg {
+  color: #FF3333;
+}
+
+.comb.unknown .icon-hex-lg {
+  color: #C0C0C0;
 }
 
 .comb.placeholder{
