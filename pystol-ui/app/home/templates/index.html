@@ -16,18 +16,25 @@
                 <div class="row">
                   <!-- /.col-->
              {% for node in hexagons_data %}
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="card">
-                      <div class="card-header">
-                        <span class="badge badge-light" data-toggle="modal" data-target="#{{ node.name }}">Node: {{ node.name }}</span>
+               <!-- /.col-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                  <div class="card overflow-hidden">
+                    <div class="card-body p-0 d-flex align-items-center">
+                      <div class="bg-info p-2 mfe-3">
+                        <svg class="c-icon c-icon-xl" data-toggle="modal" data-target="#{{ node.name }}">
+                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
+                        </svg>
                       </div>
-                      <div class="card-body">
-                        <div class="c-chart-wrapper">
+                      <div>
+                        <div class="text-muted text-uppercase font-weight-bold small" data-toggle="modal" data-target="#{{ node.name }}">{{ node.name }}</div>
+                      </div>
+                    </div>
+                    <div class="card-footer px-3 py-2">
                           <div class="honeycombs">
                           {% for pod in node.pods %}
                             <div class="comb {{ pod.phase |lower }}" data-toggle="modal" data-target="#{{ pod.name }}">
                               <div class="front-content">
-                                <p></p>  
+                                <p></p>
                               </div>
                               <div class="back-content">
                                 <p></p>
@@ -35,11 +42,12 @@
                             </div>
                           {% endfor %}
                           </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
-              {% endfor %}
+                  </div>
+                </div>
+                <!-- /.col-->
+             {% endfor %}
                   <!-- /.col-->
                 </div>
               </div>
@@ -52,16 +60,25 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">Nodes &amp; Usage</div>
+              <div class="card-header">Usage</div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-12">
              {% for node in hexagons_data %}
                     <div class="card">
-                      <div class="card-header">
-                        <span class="badge badge-light" data-toggle="modal" data-target="#{{ node.name }}">Node: {{ node.name }}</span>
+
+                    <div class="card-body p-0 d-flex align-items-center">
+                      <div class="bg-info p-2 mfe-3">
+                        <svg class="c-icon c-icon-xl">
+                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
+                        </svg>
                       </div>
-                      <div class="card-body">
+                      <div>
+                        <div class="text-muted text-uppercase font-weight-bold small">{{ node.name }}</div>
+                      </div>
+                    </div>
+
+                      <div class="card-footer">
                         <div class="c-chart-wrapper">
 
                     <div class="progress-group mb-4">
@@ -80,31 +97,43 @@
                         </div>
                       </div>
                     </div>
+                    <!-- /.row-->
                     <div class="row">
-                      <div class="col-3">
+                      <div class="col-sm-6 col-md-3">
                         <div class="c-callout c-callout-info"><small class="text-muted">Pods usage</small>
-                          <div class="text-value-lg">{{ node.state_info.pods.allocated }}/{{ node.state_info.pods.allocatable }}</div>
+                          {% set pods_allocated = node.state_info.pods.allocated.magnitude | int %}
+                          {% set pods_allocatable = node.state_info.pods.allocatable.magnitude | int %}
+                          {% set pods_unit = node.state_info.pods.allocatable.units %}
+                          <div class="text-value-lg">{{ pods_allocated }}/{{ pods_allocatable }} {{ pods_unit }}</div>
                         </div>
                       </div>
                       <!-- /.col-->
-                      <div class="col-3">
+                      <div class="col-sm-6 col-md-3">
                         <div class="c-callout c-callout-success"><small class="text-muted">CPU usage</small>
-                          <div class="text-value-lg">{{ node.state_info.cpu.allocated }}/{{ node.state_info.cpu.allocatable }}</div>
+                          {% set cpu_allocated = node.state_info.cpu.allocated.magnitude | int %}
+                          {% set cpu_allocatable = node.state_info.cpu.allocatable.magnitude | int %}
+                          {% set cpu_unit = node.state_info.cpu.allocatable.units %}
+                          <div class="text-value-lg">{{ cpu_allocated }}/{{ cpu_allocatable }} {{ cpu_unit }}</div>
                         </div>
                       </div>
                       <!-- /.col-->
-                      <div class="col-3">
+                      <div class="col-sm-6 col-md-3">
                         <div class="c-callout c-callout-warning"><small class="text-muted">Memory usage</small>
-                          <div class="text-value-lg">{{ node.state_info.mem.allocated }}/{{ node.state_info.mem.allocatable }}</div>
+                          {% set mem_allocated = node.state_info.mem.allocated.magnitude | int %}
+                          {% set mem_allocatable = node.state_info.mem.allocatable.magnitude | int %}
+                          {% set mem_unit = node.state_info.mem.allocatable.units %}
+                          <div class="text-value-lg">{{ mem_allocated }}/{{ mem_allocatable }} {{ mem_unit}}</div>
                         </div>
                       </div>
                       <!-- /.col-->
-                      <div class="col-3">
+                      <div class="col-sm-6 col-md-3">
                         <div class="c-callout c-callout-danger"><small class="text-muted">Filesystem usage</small>
-                          <div class="text-value-lg">{{ node.state_info.storage.allocated }}/{{ node.state_info.storage.allocatable }}</div>
+                          {% set storage_allocated = node.state_info.storage.allocated.magnitude | int %}
+                          {% set storage_allocatable = node.state_info.storage.allocatable.magnitude | int %}
+                          {% set storage_unit = node.state_info.storage.allocatable.units %}
+                          <div class="text-value-lg">{{ storage_allocated }}/{{ storage_allocatable }} {{ storage_unit}}</div>
                         </div>
                       </div>
-                      <!-- /.col-->
                     </div>
                     <!-- /.row-->
 

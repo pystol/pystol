@@ -1,10 +1,3 @@
-
-"""
-Uses watch to print the stream of events from list namespaces and list pods.
-The script will wait for 10 events related to namespaces to occur within
-the `timeout_seconds` threshold and then move on to wait for another 10 events
-related to pods to occur within the `timeout_seconds` threshold.
-"""
 import json
 import os
 import random
@@ -57,7 +50,7 @@ def state_pods():
     pods = core_v1.list_pod_for_all_namespaces().items
     
     for pod in pods:
-        print(pod) 
+        #print(pod) 
         data_pods.append({'name': pod.metadata.name,
                                   'namespace':pod.metadata.namespace,
                                   'host_ip':pod.status.host_ip,
@@ -65,7 +58,7 @@ def state_pods():
                                   'phase':pod.status.phase})
    
     return data_pods
-    print(data_pods)
+    #print(data_pods)
 
 def web_terminal():
     config.load_kube_config()

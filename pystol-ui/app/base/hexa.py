@@ -60,13 +60,13 @@ def hexagons_data():
         node_info = node.status.node_info
 
 
-        print("------")
-        print("------")
-        print("------")
-        print(node_info.architecture)
-        print("------")
-        print("------")
-        print("------")
+        #print("------")
+        #print("------")
+        #print("------")
+        #print(node_info.architecture)
+        #print("------")
+        #print("------")
+        #print("------")
         hdata = {}
         hdata['name'] = node_name
         hdata['role'] = node_role
