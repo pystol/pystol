@@ -28,8 +28,6 @@ from app.base.allocated import compute_node_resources
 
 import kubernetes
 
-from kubernetes.client.rest import ApiException
-
 
 def hexagons_data():
     hexa_data = []

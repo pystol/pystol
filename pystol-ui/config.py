@@ -49,7 +49,7 @@ class ProductionConfig(Config):
 
 
 class DebugConfig(Config):
-    DEBUG = True
+    DEBUG = False
 
 
 config_dict = {

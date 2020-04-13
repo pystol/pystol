@@ -27,7 +27,6 @@ from app.base.k8s import load_kubernetes_config
 
 import kubernetes
 
-from kubernetes.client.rest import ApiException
 from pint import UnitRegistry
 from collections import defaultdict
 

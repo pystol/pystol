@@ -149,7 +149,7 @@ def list_actions():
                         'action_state':action['spec']['action_state'],
                         'workflow_state':action['spec']['workflow_state'],
                        })
-    except ApiException:
+    except Exception: # ApiException:
         print("No objects found...")
     return ret
 
@@ -181,6 +181,6 @@ def state_cluster():
                         'action_state':action['spec']['action_state'],
                         'workflow_state':action['spec']['workflow_state'],
                        })
-    except ApiException:
+    except Exception: #ApiException:
         print("No objects found...")
     return ret

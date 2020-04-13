@@ -38,7 +38,10 @@ def configure_logs(app):
     try:
         basicConfig(filename='error.log', level=DEBUG)
         logger = getLogger()
-        logger.addHandler(StreamHandler())
+        logger.disabled = True
+        # TODO:FIXME:CCAMACHO
+        # Having the logger in the console will make it explode
+        # logger.addHandler(StreamHandler())
     except:
         pass
 
