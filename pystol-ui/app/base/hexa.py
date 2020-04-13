@@ -41,7 +41,8 @@ def hexagons_data():
     try:
         nodes_list = core_v1.list_node().items
     except Exception as e:
-        print("Something bad happened: " + e)
+        print("Error listing nodes")
+        #print("Something bad happened: " + e)
 
     for node in nodes_list:
         #print(node)

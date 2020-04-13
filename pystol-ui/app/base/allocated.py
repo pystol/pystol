@@ -69,7 +69,8 @@ def compute_allocated_resources():
     try:
         nodes_list = core_v1.list_node().items
     except Exception as e:
-        print("Something bad happened: " + e)
+        print("Problem listing nodes")
+        # print("Something bad happened: " + e)
 
     for node in nodes_list:
         node_name      = node.metadata.name
@@ -110,7 +111,8 @@ def compute_node_resources(node_name):
     try:
         node = core_v1.list_node(field_selector=field_selector).items[0]
     except Exception as e:
-        print("Something bad happened: " + e)
+        print("Problem listing nodes")
+        # print("Something bad happened: " + e)
 
     stats          = {}
     node_name      = node.metadata.name

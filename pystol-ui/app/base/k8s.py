@@ -102,7 +102,7 @@ def show_actions():
         documentation = ""
         license = ""
         version = ""
-        print(e)
+        # print(e)
         print("No objects found...")
 
     url = ("https://github.com/pystol/pystol-galaxy/tree/" +
