@@ -35,12 +35,12 @@ def configure_database(app):
 
 def configure_logs(app):
     # soft logging
-    try:
-        basicConfig(filename='error.log', level=DEBUG)
-        logger = getLogger()
-        logger.disabled = True
+    try:        
         # TODO:FIXME:CCAMACHO
         # Having the logger in the console will make it explode
+        basicConfig(filename='error.log', level=ERROR)
+        logger = getLogger()
+        logger.disabled = True
         # logger.addHandler(StreamHandler())
     except:
         pass
