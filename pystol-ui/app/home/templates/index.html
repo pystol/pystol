@@ -83,7 +83,6 @@
                       <div class="card-footer">
                         <div class="c-chart-wrapper">
 
-                    <div class="progress-group mb-4">
                       <div class="progress-group-bars">
                         <div class="progress progress-xs">
                           <div class="progress-bar bg-info" role="progressbar" style="width: {{ node.state_info.pods.percentage }}%" aria-valuenow="{{ node.state_info.pods.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -98,7 +97,6 @@
                           <div class="progress-bar bg-danger" role="progressbar" style="width: {{ node.state_info.storage.percentage }}%" aria-valuenow="{{ node.state_info.storage.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                       </div>
-                    </div>
                     <!-- /.row-->
                     <div class="row">
                       <div class="col-sm-6 col-md-3">
@@ -237,7 +235,7 @@
 <script>
 	$(document).ready(function() {
 	$('.honeycombs').honeycombs({
-		combWidth:30,
+		combWidth: 25,
 		margin: 0,
 		threshold: 3
 	});
