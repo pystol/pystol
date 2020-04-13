@@ -7,38 +7,40 @@
     <div class="container-fluid">
         <div class="fade-in">
           <div class="row">
+
             <div class="col-lg-12">
               <div class="card">
-                <div class="card-header"><i class="fa fa-align-justify"></i>Pods</div>
+                <div class="card-header"><i class="fa fa-align-justify"></i> Available native Pystol actions</div>
                 <div class="card-body">
                   <table class="table table-responsive-sm table-bordered table-striped table-sm dataTable" id="pystol-table">
                     <thead>
                       <tr>
                         <th>Name</th>
-                        <th>status</th>
-                        <th>Ip</th>
-                        <th>Namespaces</th>
-                        <th>Host</th>
+                        <th>Description</th>
+                        <th>Documentation</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {% for data in state_pods %}
+              {% for action in show_actions %}
                       <tr>
-                        <td>{{data.name}}</td>
-                        <td>
-                          {% if 'Running' in data.phase %}   
-                            <span class="badge badge-success">Running</span>
-                          {% else %}
-                            <span class="badge badge-danger">Danger</span>
-                          {% endif %}
-                        </td>
-                        <td>{{data.pod_ip}}</td>
-                        <td>{{data.namespace}}</td>
-                        <td>{{data.host_ip}}</td>
+                        <td>{{ action.name }}</td>
+                        <td>{{ action.description }}</td>
+                        <td>{{ action.documentation }}</td>
                       </tr>
-                      {% endfor %}
+              {% endfor %}
                     </tbody>
                   </table>
+
+<div class="bd-example">
+                <dl class="row">
+                  <dt class="col-sm-3">License</dt>
+                  <dd class="col-sm-9">{{ show_actions[0].license }}</dd>
+                  <dt class="col-sm-3">Version</dt>
+                  <dd class="col-sm-9">{{ show_actions[0].version }}</dd>
+                  <dt class="col-sm-3">Repository</dt>
+                  <dd class="col-sm-9">{{ show_actions[0].repository }}</dd>
+                </dl>
+</div>
                 </div>
               </div>
             </div>
@@ -49,7 +51,6 @@
     </div>
 
 {% endblock content %}
-
 
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

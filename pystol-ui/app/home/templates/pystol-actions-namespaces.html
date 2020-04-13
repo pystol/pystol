@@ -11,7 +11,7 @@
               <div class="card">
                 <div class="card-header"><i class="fa fa-align-justify"></i>Namespaces</div>
                 <div class="card-body">
-                  <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                  <table class="table table-responsive-sm table-bordered table-striped table-sm dataTable" id="pystol-table">
                     <thead>
                       <tr>
                         <th>Name</th>
@@ -27,16 +27,6 @@
                       {% endfor %}
                     </tbody>
                   </table>
-                  <nav>
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                  </nav>
                 </div>
               </div>
             </div>
@@ -49,6 +39,18 @@
 
 {% endblock content %}
 
+
 {% block javascripts %}
-<!-- Specific Page JS goes HERE  -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script type="text/JavaScript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/JavaScript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $("#pystol-table").dataTable();
+      });
+    </script>
 {% endblock javascripts %}
