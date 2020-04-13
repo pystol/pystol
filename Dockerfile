@@ -34,12 +34,6 @@ RUN echo "The pystol revision is ${revision}"
 RUN pip3 install -r /pystol-operator/requirements.txt
 RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 
-# Install NodeJS
-# RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-# RUN yum install nodejs -y
-# We dont want Python2
-RUN yum module install nodejs/development -y
-
 # Configure Ansible inventory
 RUN mkdir /etc/ansible/ /ansible
 RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
