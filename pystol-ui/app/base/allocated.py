@@ -28,12 +28,8 @@ from app.base.k8s import load_kubernetes_config
 import kubernetes
 
 from kubernetes.client.rest import ApiException
-from pint        import UnitRegistry
+from pint import UnitRegistry
 from collections import defaultdict
-
-
-PYSTOL_BRANCH = "master"
-__all__ = ["compute_allocated_resources"]
 
 
 ureg = UnitRegistry()
@@ -61,13 +57,14 @@ ureg.define("E = k^6")
 Q_ = ureg.Quantity
 
 def compute_allocated_resources():
-    load_kubernetes_config()
-    core_v1 = kubernetes.client.CoreV1Api()
     state_info = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
                   'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
                   'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
                   'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}
                   }
+
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
 
     try:
         nodes_list = core_v1.list_node().items
@@ -99,14 +96,14 @@ def compute_allocated_resources():
 
 
 def compute_node_resources(node_name):
-    load_kubernetes_config()
-    core_v1 = kubernetes.client.CoreV1Api()
-
     state_info = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
                   'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
                   'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
                   'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}
                   }
+
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
 
     field_selector = ("metadata.name=" + node_name)
 
@@ -123,7 +120,7 @@ def compute_node_resources(node_name):
     field_selector = ("status.phase!=Succeeded,status.phase!=Failed," +
                           "spec.nodeName=" + node_name)
 
-    cpu_allocatable = int(allocatable["cpu"]) * ureg.kcpuunits
+    cpu_allocatable = Q_(allocatable["cpu"])
     cpu_allocatable.ito(ureg.m)
     state_info["cpu"]["allocatable"] = cpu_allocatable
 
@@ -175,13 +172,8 @@ def compute_node_resources(node_name):
 
     state_info['pods']['percentage'] = (int(state_info['pods']['allocated'].magnitude) * 100) // int(state_info['pods']['allocatable'].magnitude)
     state_info['cpu']['percentage'] = (int(state_info['cpu']['allocated'].magnitude) * 100) // int(state_info['cpu']['allocatable'].magnitude)
-    state_info['mem']['percentage'] = (int(state_info['mem']['allocated'].magnitude) * 100) // int(state_info['cpu']['allocatable'].magnitude)
+    state_info['mem']['percentage'] = (int(state_info['mem']['allocated'].magnitude) * 100) // int(state_info['mem']['allocatable'].magnitude)
     state_info['storage']['percentage'] = (int(state_info['storage']['allocated'].magnitude) * 100) // int(state_info['storage']['allocatable'].magnitude)
-
-
-    print("-------")
-    print(state_info)
-    print("-------")
 
     return state_info
 

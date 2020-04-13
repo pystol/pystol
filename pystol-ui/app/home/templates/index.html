@@ -18,21 +18,22 @@
              {% for node in hexagons_data %}
                <!-- /.col-->
                 <div class="col-6 col-sm-6 col-lg-4">
+              <!-- card body -->
                   <div class="card overflow-hidden">
                     <div class="card-body p-0 d-flex align-items-center">
                       <div class="bg-info p-2 mfe-3">
-                        <svg class="c-icon c-icon-xl" data-toggle="modal" data-target="#{{ node.name }}">
+                        <svg class="c-icon c-icon-xl" data-toggle="modal" data-target="#{{ node.name | replace(".","-") }}">
                           <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
                         </svg>
                       </div>
                       <div>
-                        <div class="text-muted text-uppercase font-weight-bold small" data-toggle="modal" data-target="#{{ node.name }}">{{ node.name }}</div>
+                        <div class="text-muted text-uppercase font-weight-bold small" data-toggle="modal" data-target="#{{ node.name | replace(".","-") }}">{{ node.name }}</div>
                       </div>
                     </div>
                     <div class="card-footer px-3 py-2">
                           <div class="honeycombs">
                           {% for pod in node.pods %}
-                            <div class="comb {{ pod.phase |lower }}" data-toggle="modal" data-target="#{{ pod.name }}">
+                            <div class="comb {{ pod.phase |lower }}" data-toggle="modal" data-target="#{{ pod.name | replace(".","-") }}">
                               <div class="front-content">
                                 <p></p>
                               </div>
@@ -44,7 +45,8 @@
                           </div>
                     </div>
                   </div>
-                  </div>
+              <!-- card body -->
+
                 </div>
                 <!-- /.col-->
              {% endfor %}
@@ -104,7 +106,7 @@
                           {% set pods_allocated = node.state_info.pods.allocated.magnitude | int %}
                           {% set pods_allocatable = node.state_info.pods.allocatable.magnitude | int %}
                           {% set pods_unit = node.state_info.pods.allocatable.units %}
-                          <div class="text-value-lg">{{ pods_allocated }}/{{ pods_allocatable }} {{ pods_unit }}</div>
+                          <div class="text-value-sm">{{ pods_allocated }}/{{ pods_allocatable }} {{ pods_unit }}</div>
                         </div>
                       </div>
                       <!-- /.col-->
@@ -113,7 +115,7 @@
                           {% set cpu_allocated = node.state_info.cpu.allocated.magnitude | int %}
                           {% set cpu_allocatable = node.state_info.cpu.allocatable.magnitude | int %}
                           {% set cpu_unit = node.state_info.cpu.allocatable.units %}
-                          <div class="text-value-lg">{{ cpu_allocated }}/{{ cpu_allocatable }} {{ cpu_unit }}</div>
+                          <div class="text-value-sm">{{ cpu_allocated }}/{{ cpu_allocatable }} {{ cpu_unit }}</div>
                         </div>
                       </div>
                       <!-- /.col-->
@@ -122,7 +124,7 @@
                           {% set mem_allocated = node.state_info.mem.allocated.magnitude | int %}
                           {% set mem_allocatable = node.state_info.mem.allocatable.magnitude | int %}
                           {% set mem_unit = node.state_info.mem.allocatable.units %}
-                          <div class="text-value-lg">{{ mem_allocated }}/{{ mem_allocatable }} {{ mem_unit}}</div>
+                          <div class="text-value-sm">{{ mem_allocated }}/{{ mem_allocatable }} {{ mem_unit}}</div>
                         </div>
                       </div>
                       <!-- /.col-->
@@ -131,7 +133,7 @@
                           {% set storage_allocated = node.state_info.storage.allocated.magnitude | int %}
                           {% set storage_allocatable = node.state_info.storage.allocatable.magnitude | int %}
                           {% set storage_unit = node.state_info.storage.allocatable.units %}
-                          <div class="text-value-lg">{{ storage_allocated }}/{{ storage_allocatable }} {{ storage_unit}}</div>
+                          <div class="text-value-sm">{{ storage_allocated }}/{{ storage_allocatable }} {{ storage_unit}}</div>
                         </div>
                       </div>
                     </div>
@@ -159,7 +161,7 @@
 
 {% for node in hexagons_data %}
         <!-- /.modal-->
-    <div class="modal fade" id="{{ node.name }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="{{ node.name | replace(".","-") }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -187,7 +189,7 @@
         <!-- /.modal-->
 {% for pod in node.pods %}
         <!-- /.modal-->
-    <div class="modal fade" id="{{ pod.name }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="{{ pod.name | replace(".","-") }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

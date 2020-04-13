@@ -11,7 +11,7 @@ import subprocess
 
 def state_cluster():
     # Configs can be set in Configuration class directly or using helper
-    config.load_kube_config()
+    #config.load_kube_config()
     ret = []
      
     return ret
@@ -72,6 +72,9 @@ def web_terminal():
 def cluster_name_configured():
     config.load_kube_config()
     ret = []
+    # TODO: Get cluster name from 
+    # kubectl -n kube-system get configmap kubeadm-config -o yaml
+
     command = 'kubectl config view -o jsonpath="{.clusters[].name}"'
     output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     ret.append(output.decode('utf-8'))

@@ -14,6 +14,16 @@ from app.base.k8sclient import  state_namespaces, state_nodes, state_pods, clust
 from app.base.allocated import compute_allocated_resources
 from app.base.hexa import hexagons_data
 
+
+@blueprint.route('/page-colors')
+@login_required
+def colors():
+    #if not current_user.is_authenticated:
+    #    return redirect(url_for('base_blueprint.login'))
+    return render_template('page-colors.html',
+                           compute_allocated_resources = compute_allocated_resources(),
+                          )
+
 @blueprint.route('/index')
 @login_required
 def index():
@@ -25,6 +35,7 @@ def index():
                            hexagons_data = hexagons_data(),
                            cluster_name_configured  = cluster_name_configured(),
                           )
+
 
 @blueprint.route('/<template>')
 def route_template(template):
