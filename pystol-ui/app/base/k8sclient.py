@@ -1,4 +1,5 @@
 import json
+import yaml
 import os
 import random
 import string
@@ -61,7 +62,6 @@ def state_pods():
     #print(data_pods)
 
 def web_terminal():
-    config.load_kube_config()
     ret = []
     command = 'kubectl get po --all-namespaces' # 'kubectl config view -o jsonpath='{.clusters[].name}'
     output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
@@ -70,12 +70,34 @@ def web_terminal():
 
 
 def cluster_name_configured():
-    config.load_kube_config()
-    ret = []
-    # TODO: Get cluster name from 
-    # kubectl -n kube-system get configmap kubeadm-config -o yaml
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api()
 
-    command = 'kubectl config view -o jsonpath="{.clusters[].name}"'
-    output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
-    ret.append(output.decode('utf-8'))
-    return ret
+    cluster_name = "Not found"
+
+    # OpenShift case
+    cluster_details = core_v1.read_namespaced_config_map(name='cluster-config-v1',
+                                                         namespace='kube-system',
+                                                         pretty='true')
+    if cluster_details:
+        try:
+            # This will have a big yaml file
+            # we need to convert to a dict
+            raw = cluster_details.data["install-config"]
+            # We get the YAML from the data field of the configmap
+            # And fetch the value we need
+            cluster_name = yaml.safe_load(raw)["metadata"]["name"]
+            print("Cluster name computed from OpenSHift case")
+            return cluster_name
+        except:
+            print("Cant find clustername for OpenShift case")
+
+    # If we dont manage to find it we fall back to the CLI as a last resource
+    try:
+        command = 'kubectl config view -o jsonpath="{.clusters[].name}"'
+        output  = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+        return output.decode('utf-8')
+    except:
+        print("Cant find the clustername at all")
+
+    return cluster_name
