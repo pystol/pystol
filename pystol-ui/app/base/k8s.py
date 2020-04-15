@@ -148,6 +148,8 @@ def list_actions():
                         'creationTimestamp':action['metadata']['creationTimestamp'],
                         'action_state':action['spec']['action_state'],
                         'workflow_state':action['spec']['workflow_state'],
+                        'stdout':action['spec']['action_stdout'],
+                        'stderr':action['spec']['action_stderr'],
                        })
     except Exception: # ApiException:
         print("No objects found...")

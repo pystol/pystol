@@ -75,22 +75,22 @@ def cluster_name_configured():
 
     cluster_name = "Not found"
 
-    # OpenShift case
-    cluster_details = core_v1.read_namespaced_config_map(name='cluster-config-v1',
-                                                         namespace='kube-system',
-                                                         pretty='true')
-    if cluster_details:
-        try:
+    try:
+        # OpenShift case
+        cluster_details = core_v1.read_namespaced_config_map(name='cluster-config-v1',
+                                                             namespace='kube-system',
+                                                             pretty='true')
+        if cluster_details:
             # This will have a big yaml file
             # we need to convert to a dict
             raw = cluster_details.data["install-config"]
             # We get the YAML from the data field of the configmap
             # And fetch the value we need
             cluster_name = yaml.safe_load(raw)["metadata"]["name"]
-            print("Cluster name computed from OpenSHift case")
+            print("Cluster name computed from OpenShift case")
             return cluster_name
-        except:
-            print("Cant find clustername for OpenShift case")
+    except:
+        print("Cant find clustername for OpenShift case")
 
     # If we dont manage to find it we fall back to the CLI as a last resource
     try:

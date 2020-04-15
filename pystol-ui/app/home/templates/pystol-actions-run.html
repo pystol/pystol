@@ -1,0 +1,105 @@
+{% extends "base-site.html" %}
+
+{% block title %} Forms {% endblock %} 
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="fade-in">
+          <!-- /.row-->
+          <div class="row">
+            <div class="col-md-12">
+
+            <div class="card">
+              <div class="card-header">Card title</div>
+              <div class="card-body">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+                nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+              </div>
+            </div>
+
+              <div class="card">
+                <div class="card-header">Run an action</div>
+                <div class="card-body">
+                    <form class="form-horizontal" action="/api/v1/actionRun"  method="POST" enctype="multipart/form-data">
+<div class="form-group row">
+  <label class="col-md-2 col-form-label" for="text-input">Namespace</label>
+  <div class="col-md-10">
+    <input class="form-control" id="namespace" type="text" name="namespace" placeholder="Namespace">
+        <span class="help-block">(Mandatory) The collection namespace. For example: 'pystol'</span>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-md-2 col-form-label" for="text-input">Collection</label>
+  <div class="col-md-10">
+    <input class="form-control" id="collection" type="text" name="collection" placeholder="Collection">
+        <span class="help-block">(Mandatory) The collection name. For example: 'actions'</span>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-md-2 col-form-label" for="text-input">Role</label>
+  <div class="col-md-10">
+    <input class="form-control" id="role" type="text" name="role" placeholder="Role">
+        <span class="help-block">(Mandatory) The role name for the action. For example: 'pingtest'</span>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-md-2 col-form-label" for="text-input">Source</label>
+  <div class="col-md-10">
+    <input class="form-control" id="source" type="text" name="source" placeholder="Source">
+        <span class="help-block">(Optional) The source of the collection. For example: 'https://github.com/pystol/pystol-galaxy.git'</span>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-md-2 col-form-label" for="textarea-input">Extra variables</label>
+  <div class="col-md-10">
+    <textarea class="form-control" id="extra_vars" name="extra_vars" rows="9" placeholder="Extra variables..."></textarea>
+        <span class="help-block">(Optional) Extra variables for the action. For example: '{"pystol_variable_1":"true","pystol_variable_2":"false"}'</span>
+  </div>
+</div>
+
+
+
+<div class="form-actions">
+                    <button class="btn btn-sm btn-primary" type="submit"> Submit</button>
+                    <button class="btn btn-sm btn-danger" type="reset"> Reset</button>
+</div>
+
+
+
+
+                   </form>
+                </div>
+
+<!--
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-primary" type="submit"> Submit</button>
+                    <button class="btn btn-sm btn-danger" type="reset"> Reset</button>
+                 </div>
+-->
+
+              </div>
+            </div>
+
+
+
+
+
+            <!-- /.col-->
+          </div>
+         
+        </div>
+          <!-- /.row-->
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<!-- Specific Page JS goes HERE  -->
+{% endblock javascripts %}

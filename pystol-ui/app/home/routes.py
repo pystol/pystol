@@ -13,7 +13,7 @@ from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import os, state_namespaces, state_nodes, state_pods, cluster_name_configured
 from app.base.allocated import compute_allocated_resources
 from app.base.hexa import hexagons_data
-
+from app.base.run import insert_pystol_object
 
 @blueprint.route('/index')
 @login_required
@@ -57,6 +57,55 @@ def upload_image():
             file.save(os.path.join("/tmp/", filename))
             os.rename("/tmp/" + filename,'.kube/config') 
             return redirect( '/pystol-update-kubeconfig')
+    except TemplateNotFound:
+        return render_template('page-404.html'), 404
+    except:
+        return render_template('page-500.html'), 500
+
+
+@blueprint.route('/api/v1/actionRun', methods = ['POST'])
+def action_run():
+    try:
+        if request.method == "POST":
+            print("Run action by post")
+            dict = request.form
+            namespace = ""
+            collection = ""
+            role = ""
+            source = ""
+            extra_vars = {}
+
+            if 'namespace' in dict:
+                namespace = dict['namespace']
+            else:
+                namespace = ""
+
+            if 'collection' in dict:
+                collection = dict['collection']
+            else:
+                collection = ""
+
+            if 'role' in dict:
+                role = dict['role']
+            else:
+                role = ""
+
+            if 'source' in dict:
+                source = dict['source']
+            else:
+                source = ""
+
+            if 'extra_vars' in dict:
+                extra_vars = dict['extra_vars']
+            else:
+                extra_vars = {}
+
+            insert_pystol_object(namespace=namespace,
+                                 collection=collection,
+                                 role=role,
+                                 source=source,
+                                 extra_vars=extra_vars)
+            return redirect( '/pystol-actions-executed')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except:
