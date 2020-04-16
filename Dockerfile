@@ -1,6 +1,4 @@
-# We should use CentOS 8 as soon as possible but
-# the container fails when building.
-FROM registry.centos.org/centos/centos:centos8
+FROM alpine
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
 
@@ -11,24 +9,18 @@ ARG revision
 # Bundle app source
 COPY . .
 
+## Installing dependencies
+# Installing Python3
+RUN apk add --update build-base bash curl python3 git python3-dev libffi-dev openssl-dev
+RUN pip3 install --upgrade pip virtualenv setuptools
+
 ## Installing pystol launcher requirements
 # Install kubectl
-RUN echo -e "\
-[kubernetes] \n\
-name=Kubernetes \n\
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64 \n\
-enabled=1 \n\
-gpgcheck=1 \n\
-repo_gpgcheck=1 \n\
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg \
-" > /etc/yum.repos.d/kubernetes.repo
-
-RUN /bin/bash -c "yum install -y kubectl"
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+RUN chmod +x ./kubectl
+RUN mv ./kubectl /usr/local/bin/kubectl
 
 ## Installing the operator code
-# Installing Python3
-RUN yum install python3 python3-pip git -y
-
 # We install the operator and dependencies
 RUN echo "The pystol revision is ${revision}"
 RUN pip3 install -r /pystol-operator/requirements.txt
@@ -37,9 +29,6 @@ RUN PYSTOL_REVISION=${revision} pip3 install --upgrade /pystol-operator
 # Configure Ansible inventory
 RUN mkdir /etc/ansible/ /ansible
 RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
-
-# Upgrade all packages
-RUN yum upgrade -y
 
 # Install the collection codebase
 # Maybe if in the future we want to
