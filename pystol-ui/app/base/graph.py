@@ -40,7 +40,7 @@ def get_cluster_services():
     api_response = api.list_service_for_all_namespaces(pretty='true')
     services_list = []
     for service in api_response.items:
-        services_list.append({"data": {"id": service.metadata.name,"label": service.metadata.name,"parent": "services"},"group": "nodes","classes": "input"})
+        services_list.append({"data": {"id": service.metadata.name,"label": '', "parent": "services"},"group": "nodes","classes": "state"})
     return services_list
 
 
@@ -50,8 +50,7 @@ def get_cluster_deployments():
     api_response = api.list_deployment_for_all_namespaces(pretty='true')
     deployments_list = []
     for deployment in api_response.items:
-        deployments_list.append({"data": {"id": deployment.metadata.name,"label": deployment.metadata.name,"parent": "deployments"},"group": "nodes","classes": "input"})
-
+        deployments_list.append({"data": {"id": deployment.metadata.name,"label": '', "parent": "deployments"},"group": "nodes","classes": "state"})
     return deployments_list
 
 
@@ -71,7 +70,7 @@ def get_cluster_pods():
     api_response = api.list_pod_for_all_namespaces(pretty='true')
     pods_list = []
     for pod in api_response.items:
-        pods_list.append({"data": {"id": pod.metadata.name,"label": pod.metadata.name,"parent": pod.spec.node_name},"group": "nodes","classes": "input"})
+        pods_list.append({"data": {"id": pod.metadata.name,"label": '', "parent": pod.spec.node_name},"group": "nodes","classes": "state"})
     return pods_list
 
 def get_cluster_graph():
