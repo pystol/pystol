@@ -13,6 +13,7 @@ from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import os, state_namespaces, state_nodes, state_pods, cluster_name_configured
 from app.base.allocated import compute_allocated_resources
 from app.base.hexa import hexagons_data
+from app.base.graph import get_cluster_graph
 from app.base.run import insert_pystol_object
 
 @blueprint.route('/index')
@@ -41,6 +42,7 @@ def route_template(template):
                                state_pods = state_pods(),
                                compute_allocated_resources = compute_allocated_resources(),
                                cluster_name_configured  = cluster_name_configured(),
+                               cluster_graph = get_cluster_graph(),
                                )
     except TemplateNotFound:
         return render_template('page-404.html'), 404
