@@ -1,0 +1,220 @@
+{% extends "base-site.html" %}
+
+{% block title %} About Pystol {% endblock %} 
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="fade-in">
+          <div class="row">
+            <div class="col-sm-12 col-xl-12">
+              <div class="card">
+                <div class="card-header"> Pystol F.A.Q</div>
+                <div class="card-body vh-100">
+
+
+		<b id="expandAllAndRemove" style="cursor: pointer;color: #2ecc71">Expand all and remove</b> / <b id="loadInCollapsedState" style="cursor: pointer; color: #e74c3c">Load compouds collapsed</b> <br/>
+		<b id="collapseAll" style="cursor: pointer;color: darkred">Collapse all</b> / <b id="expandAll" style="cursor: pointer; color: darkslateblue">Expand all</b> <br/>
+		<b id="collapseRecursively" style="cursor: pointer; color: darksalmon">Collapse selected recursively</b> / <b id="expandRecursively" style="cursor: pointer; color: darkmagenta">Expand selected recursively</b>
+
+		<div id="cy"></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function(){
+
+				var cy = window.cy = cytoscape({
+					container: document.getElementById('cy'),
+
+					ready: function(){
+						var api = this.expandCollapse({
+							layoutBy: {
+								name: "cose-bilkent",
+								animate: "end",
+								randomize: false,
+								fit: true
+							},
+							fisheye: true,
+							animate: false,
+							undoable: false
+						});
+						api.collapseAll();
+					},
+
+					style: [
+
+          {
+              selector: '.pod',
+              style:{
+        	'background-color': 'white',
+                'background-image': "url(/static/assets/graph/pod.svg)",
+                'background-opacity': '0.7',
+                'shape': 'ellipse',
+                'border-width': '0',
+                'border-color': 'white',
+                'border-opacity': '0',
+                'width': '80px',
+                'height': '80px',
+                'text-valign': 'top',
+                'text-halign': 'center'
+              }
+            },
+            {
+              selector: '.svc',
+              style:{
+        	'background-color': 'white',
+                'background-image': "url(/static/assets/graph/svc.svg)",
+                'background-opacity': '0.7',
+                'shape': 'ellipse',
+                'border-width': '0',
+                'border-color': 'white',
+                'border-opacity': '0',
+                'width': '80px',
+                'height': '80px',
+                'text-valign': 'top',
+                'text-halign': 'center'
+              }
+            },
+            {
+              selector: '.deploy',
+              style:{
+        	'background-color': 'white',
+                'background-image': "url(/static/assets/graph/deploy.svg)",
+                'background-opacity': '0.7',
+                'shape': 'ellipse',
+                'border-width': '0',
+                'border-color': 'white',
+                'border-opacity': '0',
+                'width': '80px',
+                'height': '80px',
+                'text-valign': 'top',
+                'text-halign': 'center'
+              }
+            },
+						{
+							selector: 'node',
+							style: {
+								'background-color': '#ad1a66'
+							}
+						},
+
+						{
+							selector: ':parent',
+							style: {
+								'background-opacity': 0.333
+							}
+						},
+
+						{
+							selector: "node.cy-expand-collapse-collapsed-node",
+							style: {
+								"background-color": "darkblue",
+								"shape": "rectangle"
+							}
+						},
+
+						{
+							selector: 'edge',
+							style: {
+								'width': 3,
+								'line-color': '#ad1a66',
+								'curve-style': 'straight'
+							}
+						},
+
+						{
+							selector: 'edge.meta',
+							style: {
+								'width': 2,
+								'line-color': 'red'
+							}
+						},
+
+						{
+							selector: ':selected',
+							style: {
+							  "border-width": 3,
+								"border-color": '#DAA520'
+							}
+						}
+					],
+
+          elements: {{ cluster_graph | tojson }}
+
+
+				});
+
+				var api = cy.expandCollapse('get');
+				var elements = null;
+
+				document.getElementById("collapseRecursively").addEventListener("click", function () {
+					api.collapseRecursively(cy.$(":selected"));
+				});
+
+				document.getElementById("expandRecursively").addEventListener("click", function () {
+					api.expandRecursively(cy.$(":selected"));
+				});
+
+				document.getElementById("expandAllAndRemove").addEventListener("click", function () {
+					api.expandAll();
+					elements = cy.elements().remove();
+				});
+
+				document.getElementById("loadInCollapsedState").addEventListener("click", function () {
+					if (elements){
+						cy.add(elements);
+						api.collapseAll();
+						elements = null;
+					}
+					else{
+						console.warn("Remove elements first by clicking on 'Expand all and remove' button.");
+					}
+				});
+
+				document.getElementById("collapseAll").addEventListener("click", function () {
+					api.collapseAll();
+				});
+
+				document.getElementById("expandAll").addEventListener("click", function () {
+					api.expandAll();
+				});
+
+			});
+		</script>
+
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+		<!-- for testing with local version of cytoscape.js -->
+		<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+    <script src="https://unpkg.com/layout-base/layout-base.js"></script>
+    <script src="https://unpkg.com/cose-base/cose-base.js"></script>
+    <script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script>
+		<script src="/static/assets/js/cytoscape-expand-collapse.js"></script>
+
+
+<!-- Specific Page JS goes HERE  -->
+{% endblock javascripts %}
+
+{% block stylesheets %}
+  <style type="text/css">
+#cy {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+  </style>
+{% endblock stylesheets%}

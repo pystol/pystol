@@ -34,6 +34,14 @@
     <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
     <script src="https://cytoscape.org/cytoscape.js-cola/cytoscape-cola.js"></script>
 
+<!--
+
+    <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-cose-bilkent/1.6.5/cytoscape-cose-bilkent.js"></script>
+    <script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
+    <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.5.0/cytoscape-dagre.js"></script>
+-->
+
+
     <!--
     <script>
     $( document ).ready( draw );
@@ -50,9 +58,20 @@ var cy = window.cy = cytoscape({
   container: document.getElementById('cy'),
   layout: {
     animate: true,
+ //   name: 'cose-bilkent',
+//    name: 'dagre',
     name: 'cola',
     flow: { axis: 'y', minSeparation: 50 },
     avoidOverlap: true,
+
+//Custom
+ refresh: 1, // number of ticks per frame; higher is faster but more jerky
+  maxSimulationTime: 4000, // max length in ms to run the layout
+  ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
+  fit: true, // on every layout reposition of nodes, fit the viewport
+  nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
+
+
   },
   style: [
     {
@@ -125,8 +144,6 @@ var cy = window.cy = cytoscape({
       selector: '.state',
       style:{
         'background-color': 'yellow',
-        'background-image': "url(https://raw.githubusercontent.com/pystol/pystol/master/pystol-ui/app/base/static/assets/graph/cloud.svg)",
-        //'background-opacity': '0.7',
         'shape': 'ellipse',
         'border-width': '0',
         'border-color': 'white',
@@ -135,6 +152,64 @@ var cy = window.cy = cytoscape({
         'height': '80px'
       }
     },
+
+
+
+
+
+
+
+    {
+      selector: '.pod',
+      style:{
+        'background-color': 'white',
+        'background-image': "url(/static/assets/graph/pod.svg)",
+        'background-opacity': '0.7',
+        'shape': 'ellipse',
+        'border-width': '0',
+        'border-color': 'white',
+        'border-opacity': '0',
+        'width': '80px',
+        'height': '80px',
+        'text-valign': 'top',
+        'text-halign': 'center'
+      }
+    },
+    {
+      selector: '.svc',
+      style:{
+        'background-color': 'white',
+        'background-image': "url(/static/assets/graph/svc.svg)",
+        'background-opacity': '0.7',
+        'shape': 'ellipse',
+        'border-width': '0',
+        'border-color': 'white',
+        'border-opacity': '0',
+        'width': '80px',
+        'height': '80px',
+        'text-valign': 'top',
+        'text-halign': 'center'
+      }
+    },
+    {
+      selector: '.deploy',
+      style:{
+        'background-color': 'white',
+        'background-image': "url(/static/assets/graph/deploy.svg)",
+        'background-opacity': '0.7',
+        'shape': 'ellipse',
+        'border-width': '0',
+        'border-color': 'white',
+        'border-opacity': '0',
+        'width': '80px',
+        'height': '80px',
+        'text-valign': 'top',
+        'text-halign': 'center'
+      }
+    },
+
+
+
     {
       selector: '.transition',
       style:{
