@@ -1,7 +1,7 @@
 {
-  "name": "flask-dashboard-paper-pro",
-  "version": "1.0.0",
-  "description": "Flask boilerplate suitable for admin panels - commercial product.",
+  "name": "pystol-ui",
+  "version": "0.5.19",
+  "description": "Pystol UI",
   "scripts": {
     "lint": "eslint ."
   },
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/app-generator/priv-flask-dashboard-paper-pro"
+    "url": "https://github.com/pystol/pystol.git"
   },
   "keywords": [
     "flask",
-    "admin-dashboard"
+    "pystol-ui"
   ],
-  "author": "AppSeed.us",
+  "author": "pystol.org",
   "contributors": [
-    "AppSeed Support <support@appseed.us>"
+    "Carlos Camacho <carloscamachoucv@gmail.com>"
   ],
   "license": "Commercial"
 }
