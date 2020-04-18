@@ -12,3 +12,4 @@ bashate
 yamllint
 matplotlib
 scipy
+flask
