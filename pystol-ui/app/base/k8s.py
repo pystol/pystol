@@ -18,13 +18,10 @@ under the License.
 
 import json
 import os
-import random
-import string
 import sys
 import urllib
 
 import kubernetes
-from kubernetes.client.rest import ApiException
 
 PYSTOL_BRANCH = "master"
 
@@ -62,9 +59,6 @@ def load_kubernetes_config():
                    "load_incluster_config.\n"
                    "Error: " % (e))
         print(message)
-        print("---")
-        print("The current Pystol version is: %s" % (pystol_version))
-        print(" ")
         print("Bye...")
         sys.exit(0)
 
@@ -85,24 +79,21 @@ def show_actions():
         values = json.loads(data)
         actions = (values['data']['collection']['latest_version']
                    ['contents'])
-        description = (values['data']['collection']['latest_version']
-                       ['metadata']['description'])
+        # description = (values['data']['collection']['latest_version']
+        #                ['metadata']['description'])
         repository = (values['data']['collection']['latest_version']
                       ['metadata']['repository'])
-        documentation = (values['data']['collection']['latest_version']
-                         ['metadata']['documentation'])
+        # documentation = (values['data']['collection']['latest_version']
+        #                  ['metadata']['documentation'])
         license = (values['data']['collection']['latest_version']
                    ['metadata']['license'])
         version = (values['data']['collection']['latest_version']
                    ['metadata']['version'])
-    except Exception as e:
+    except Exception:
         actions = {}
-        description = ""
         repository = ""
-        documentation = ""
         license = ""
         version = ""
-        # print(e)
         print("No objects found...")
 
     url = ("https://github.com/pystol/pystol-galaxy/tree/" +
@@ -116,8 +107,7 @@ def show_actions():
                         'documentation': url + action['name'],
                         'license': str(license),
                         'version': str(version),
-                        'repository': str(repository),
-                       })
+                        'repository': str(repository)})
     return ret
 
 
@@ -144,14 +134,19 @@ def list_actions():
                                                  plural=plural,
                                                  pretty=pretty)
         for action in resp['items']:
-            ret.append({'name':action['metadata']['name'],
-                        'creationTimestamp':action['metadata']['creationTimestamp'],
-                        'action_state':action['spec']['action_state'],
-                        'workflow_state':action['spec']['workflow_state'],
-                        'stdout':action['spec']['action_stdout'],
-                        'stderr':action['spec']['action_stderr'],
-                       })
-    except Exception: # ApiException:
+            ret.append({'name':
+                        action['metadata']['name'],
+                        'creationTimestamp':
+                        action['metadata']['creationTimestamp'],
+                        'action_state':
+                        action['spec']['action_state'],
+                        'workflow_state':
+                        action['spec']['workflow_state'],
+                        'stdout':
+                        action['spec']['action_stdout'],
+                        'stderr':
+                        action['spec']['action_stderr']})
+    except Exception:
         print("No objects found...")
     return ret
 
@@ -159,6 +154,7 @@ def list_actions():
 def state_cluster():
     """
     List component of cluster.
+
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
@@ -178,11 +174,14 @@ def state_cluster():
                                                  plural=plural,
                                                  pretty=pretty)
         for action in resp['items']:
-            ret.append({'name':action['metadata']['name'],
-                        'creationTimestamp':action['metadata']['creationTimestamp'],
-                        'action_state':action['spec']['action_state'],
-                        'workflow_state':action['spec']['workflow_state'],
-                       })
-    except Exception: #ApiException:
+            ret.append({'name':
+                        action['metadata']['name'],
+                        'creationTimestamp':
+                        action['metadata']['creationTimestamp'],
+                        'action_state':
+                        action['spec']['action_state'],
+                        'workflow_state':
+                        action['spec']['workflow_state']})
+    except Exception:
         print("No objects found...")
     return ret

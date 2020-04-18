@@ -17,16 +17,40 @@ under the License.
 """
 
 from flask_wtf import FlaskForm
-from wtforms import TextField, PasswordField
-from wtforms.validators import InputRequired, Email, DataRequired
 
-## login and registration
+from wtforms import PasswordField, TextField
+from wtforms.validators import DataRequired, Email
 
+
+# login and registration
 class LoginForm(FlaskForm):
-    username = TextField    ('Username', id='username_login'   , validators=[DataRequired()])
-    password = PasswordField('Password', id='pwd_login'        , validators=[DataRequired()])
+    """
+    Get the login form.
+
+    This class renders the login form
+    """
+
+    username = TextField('Username',
+                         id='username_login',
+                         validators=[DataRequired()])
+    password = PasswordField('Password',
+                             id='pwd_login',
+                             validators=[DataRequired()])
+
 
 class CreateAccountForm(FlaskForm):
-    username = TextField('Username'     , id='username_create' , validators=[DataRequired()])
-    email    = TextField('Email'        , id='email_create'    , validators=[DataRequired(), Email()])
-    password = PasswordField('Password' , id='pwd_create'      , validators=[DataRequired()])
+    """
+    Get the account creation form.
+
+    This class renders the account creation form
+    """
+
+    username = TextField('Username',
+                         id='username_create',
+                         validators=[DataRequired()])
+    email = TextField('Email',
+                      id='email_create',
+                      validators=[DataRequired(), Email()])
+    password = PasswordField('Password',
+                             id='pwd_create',
+                             validators=[DataRequired()])
