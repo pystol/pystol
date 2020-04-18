@@ -25,6 +25,7 @@ from pystol.const import PYSTOL_LOG_FILE
 FORMATTER = logging.Formatter("%(asctime)s - %(name)s - "
                               "%(levelname)s - %(message)s")
 
+
 def get_console_handler():
     """
     Get logger console handler.
