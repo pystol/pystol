@@ -13,3 +13,8 @@ yamllint
 matplotlib
 scipy
 flask
+flask_login
+flask_sqlalchemy
+flask_wtf
+selenium
+pint
