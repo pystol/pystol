@@ -88,6 +88,7 @@ def check_pages(*pages):
             function(user_client)
             for page in pages:
                 r = user_client.get(page, follow_redirects=True)
+                print(r)
                 # assert r.status_code == 200
                 assert True
         return wrapper
@@ -107,6 +108,7 @@ def check_blueprints(*blueprints):
                 for page in urls[blueprint]:
                     r = user_client.get(blueprint + page,
                                         follow_redirects=True)
+                    print(r)
                     # assert r.status_code == 200
                     assert True
         return wrapper
@@ -128,8 +130,11 @@ def test_authentication(base_client):
             page_url = blueprint + page
             expected_code = 200 if page_url in free_access else 403
             r = base_client.get(page_url, follow_redirects=True)
+            print(expected_code)
+            print(r)
             # assert r.status_code == expected_code
             assert True
+
 
 def test_urls(user_client):
     """
@@ -141,6 +146,7 @@ def test_urls(user_client):
         for page in pages:
             page_url = blueprint + page
             r = user_client.get(page_url, follow_redirects=True)
+            print(r)
             # assert r.status_code == 200
             assert True
     # logout and test that we cannot access anything anymore
