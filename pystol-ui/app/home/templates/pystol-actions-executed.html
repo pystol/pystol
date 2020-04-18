@@ -28,15 +28,15 @@
                         <td>{{ action.creationTimestamp }}</td>
 <td>
 {% if action.action_state == 'PystolActionCreating' %}
-<span class="badge badge-info">{{ action.action_state }} </span> 
+<span class="badge badge-info">{{ action.action_state }} </span>
 {% elif action.action_state == 'PystolActionRunning' %}
-<span class="badge badge-warning">{{ action.action_state }} </span> 
+<span class="badge badge-warning">{{ action.action_state }} </span>
 {% elif action.action_state == 'PystolActionEndedSuccessfully' %}
-<span class="badge badge-success">{{ action.action_state }} </span> 
+<span class="badge badge-success">{{ action.action_state }} </span>
 {% elif action.action_state == 'PystolActionEndedFail' %}
-<span class="badge badge-danger">{{ action.action_state }} </span> 
+<span class="badge badge-danger">{{ action.action_state }} </span>
 {% elif action.action_state == 'PystolActionEndedFailTimeout' %}
-<span class="badge badge-danger">{{ action.action_state }} </span> 
+<span class="badge badge-danger">{{ action.action_state }} </span>
 {% else %}
 <span class="badge badge-secondary">State not found, report! {{ action.action_state }}</span>
 {% endif %}
@@ -44,7 +44,7 @@
 
 <td>
 {% if action.workflow_state == 'PystolOperatorWaitingAction' %}
-<span class="badge badge-info">{{ action.workflow_state }} </span> 
+<span class="badge badge-info">{{ action.workflow_state }} </span>
 {% elif action.workflow_state == 'PystolOperatorStartProcessingAction' %}
 <span class="badge badge-warning">{{ action.workflow_state }} </span>
 {% elif action.workflow_state == 'PystolOperatorCreatingJob' %}

@@ -10,15 +10,15 @@
         }, options);
 
         function initialise(element) {
-            
+
             $(element).addClass('honeycombs-wrapper');
-            
+
             var width = 0;
             var combWidth = 0;
             var combHeight = 0;
             var num = 0;
             var $wrapper = null;
-            
+
             /**
              * Build the dom
              */
@@ -33,7 +33,7 @@
                 $(element).find('.comb').append('<span class="icon-hex-lg"></span>');
 
                 num = 0;
-                
+
                 $(element).find('.comb').each(function(){
                     num = num + 1;
 
@@ -50,12 +50,12 @@
                 // Fix Firefox padding error
                 /*ccamacho: FIXME: adding the firefox class breaks the hexagon render*/
                 /*
-                if (navigator.userAgent.search("Firefox") > -1) { 
+                if (navigator.userAgent.search("Firefox") > -1) {
                     $('.comb span').addClass('firefox');
                 }
                 */
             }
-            
+
             /**
              * Update all scale values
              */
@@ -65,22 +65,22 @@
                 $(element).find('.comb').width(combWidth).height(combHeight);
                 $(element).find('.icon-hex-lg').css('font-size', combWidth)
             }
-            
+
             /**
              * update css classes
              */
             function reorder(animate){
-                
+
                 updateScales();
                 width = $(element).width();
-                
+
                 newWidth = $('.honeycombs').parent().width();
-                
-                
+
+
                 if(newWidth < width){
                     width = newWidth;
                 }
-                
+
                 $wrapper.width(newWidth);
 
                 var maxLeft = 0;
@@ -109,7 +109,7 @@
                 function orderCombs(leftHandler, topHandler){
 
                     $(element).find('.comb').filter(':not(.placeholder.hide)').each(function(index){
-                        
+
                         top = topHandler(top);
 
                         if(animate == true){
@@ -118,18 +118,18 @@
                         }else{
                             $(this).css('left', left).css('top', top);
                         }
-                        
+
                         left = left + ( combWidth + settings.margin );
-                        
+
                         if(left > maxLeft) {
                             maxLeft = left;
                         }
-                       
-                        
+
+
                         if(row == 0){
                             cols = cols + 1;
                         }
-                            
+
                         if(left + combWidth > width){
                             row = row + 1;
                             offset = leftHandler(offset);
@@ -151,17 +151,17 @@
                     $('.comb.placeholder').removeClass('hide');
                     orderCombs(withOffset, halfTop);
                 }
-                
-                
+
+
                 $wrapper
                     .height(top + combHeight)
                     .width(maxLeft - settings.margin)
             }
-            
+
             $(window).resize(function(){
                 reorder(true);
             });
-            
+
             buildHtml();
             reorder(false);
         }

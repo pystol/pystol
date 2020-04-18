@@ -17,69 +17,100 @@ under the License.
 """
 
 
-from app.home import blueprint
-from flask import render_template, redirect, url_for, jsonify, request
-from flask_login import login_required, current_user
-from app import login_manager
-from jinja2 import TemplateNotFound
-from app.base.k8s import list_actions, show_actions
-from app.base.k8sclient import os, state_namespaces, state_nodes, state_pods, cluster_name_configured
+import os
+
 from app.base.allocated import compute_allocated_resources
-from app.base.hexa import hexagons_data
 from app.base.graph import get_cluster_graph
+from app.base.hexa import hexagons_data
+from app.base.k8s import list_actions, show_actions
+from app.base.k8sclient import (cluster_name_configured,
+                                state_namespaces,
+                                state_nodes,
+                                state_pods)
 from app.base.run import insert_pystol_object
+from app.home import blueprint
+
+from flask import redirect, render_template, request
+
+# from flask_login import current_user
+from flask_login import login_required
+
+from jinja2 import TemplateNotFound
+
 
 @blueprint.route('/index')
 @login_required
 def index():
-    #if not current_user.is_authenticated:
+    """
+    Render the index of Pystol.
+
+    This is a main method
+    """
+    # if not current_user.is_authenticated:
     #    return redirect(url_for('base_blueprint.login'))
 
     return render_template('index.html',
-                           compute_allocated_resources = compute_allocated_resources(),
-                           hexagons_data = hexagons_data(),
-                           cluster_name_configured  = cluster_name_configured(),
-                          )
+                           compute_allocated_resources=
+                           compute_allocated_resources(),
+                           hexagons_data=hexagons_data(),
+                           cluster_name_configured=
+                           cluster_name_configured(),)
 
 
 @blueprint.route('/<template>')
 def route_template(template):
-    #if not current_user.is_authenticated:
+    """
+    Render all the templates not from base.
+
+    This is a main method
+    """
+    # if not current_user.is_authenticated:
     #    return redirect(url_for('base_blueprint.login'))
     try:
         return render_template(template + '.html',
-                               list_actions = list_actions(),
-                               show_actions = show_actions(),
-                               state_namespaces = state_namespaces(),
-                               state_nodes = state_nodes(),
-                               state_pods = state_pods(),
-                               compute_allocated_resources = compute_allocated_resources(),
-                               cluster_name_configured  = cluster_name_configured(),
-                               cluster_graph = get_cluster_graph(),
-                               )
+                               list_actions=list_actions(),
+                               show_actions=show_actions(),
+                               state_namespaces=state_namespaces(),
+                               state_nodes=state_nodes(),
+                               state_pods=state_pods(),
+                               compute_allocated_resources=
+                               compute_allocated_resources(),
+                               cluster_name_configured=
+                               cluster_name_configured(),
+                               cluster_graph=get_cluster_graph(),)
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    except:
+    except Exception:
         return render_template('page-500.html'), 500
 
 
 @blueprint.route('/uploadkubeconfig', methods = ['POST'])
 def upload_image():
+    """
+    Upload a kubeconfig file.
+
+    This is a main method
+    """
     try:
         if request.method == "POST":
             file = request.files['kubeconfig']
             filename = file.filename
             file.save(os.path.join("/tmp/", filename))
-            os.rename("/tmp/" + filename,'.kube/config') 
-            return redirect( '/pystol-update-kubeconfig')
+            os.rename("/tmp/" + filename, '.kube/config')
+            return redirect('/pystol-update-kubeconfig')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    except:
+    except Exception:
         return render_template('page-500.html'), 500
 
 
 @blueprint.route('/api/v1/actionRun', methods = ['POST'])
 def action_run():
+    """
+    Show the executed Pystol actions.
+
+    This is a main method
+    """
     try:
         if request.method == "POST":
             print("Run action by post")
@@ -120,8 +151,8 @@ def action_run():
                                  role=role,
                                  source=source,
                                  extra_vars=extra_vars)
-            return redirect( '/pystol-actions-executed')
+            return redirect('/pystol-actions-executed')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    except:
+    except Exception:
         return render_template('page-500.html'), 500

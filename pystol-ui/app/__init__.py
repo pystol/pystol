@@ -48,7 +48,7 @@ def configure_database(app):
 
 def configure_logs(app):
     # soft logging
-    try:        
+    try:
         # TODO:FIXME:CCAMACHO
         # Having the logger in the console will make it explode
         basicConfig(filename='error.log', level=ERROR)

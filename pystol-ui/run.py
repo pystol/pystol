@@ -31,7 +31,7 @@ try:
 except KeyError:
     exit('Error: Invalid APPSEED_CONFIG_MODE environment variable entry.')
 
-app = create_app(config_mode) 
+app = create_app(config_mode)
 Migrate(app, db)
 
 if __name__ == "__main__":

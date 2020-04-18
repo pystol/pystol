@@ -33,7 +33,7 @@ $xv-secondary-dkred: rgba(163, 44, 61, 1);
 
 .hexagon {
   position: relative;
-  width: 140px; 
+  width: 140px;
   height: 80.83px;
   background-color: $xv-secondary-dark-gray;
   margin: 44px 2px 0;
@@ -61,7 +61,7 @@ $xv-secondary-dkred: rgba(163, 44, 61, 1);
 /* Inner Hexagon */
 .hexagon-inner {
   position: relative;
-  width: 136px; 
+  width: 136px;
   height: 78.52px;
   background-color: $xv-secondary-light-gray;
   margin: 39.26px 0;

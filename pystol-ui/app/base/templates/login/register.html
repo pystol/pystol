@@ -10,21 +10,21 @@
 
           <form role="form" method="post" action="">
 
-            {{ form.hidden_tag() }} 
+            {{ form.hidden_tag() }}
 
             <div class="card-body p-4">
-              
+
               <div class="text-center">
 <h1>
                   <a href="https://www.pystol.org" target="_blank"><img class="c-header-brand" src="/static/assets/brand/pystol-base.svg" width="97" height="46" alt="Pystol"></a>
 </h1>
                 <h5>Register</h5>
                 <p class="text-muted">
-                  
+
                   {% if msg %}
                     {{ msg | safe }}
                   {% else %}
-                    Add your credentials 
+                    Add your credentials
                     <br />
                     OR <a href={{ url_for('base_blueprint.login') }}>authenticate</a> using an existing account.
                   {% endif %}
@@ -41,7 +41,7 @@
                     </svg></span></div>
                 {{ form.username(placeholder="Username", class="form-control") }}
               </div>
-              
+
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span class="input-group-text">
                     <svg class="c-icon">
@@ -49,7 +49,7 @@
                     </svg></span></div>
                 {{ form.email(placeholder="Email", class="form-control") }}
               </div>
-              
+
               <div class="input-group mb-3">
                 <div class="input-group-prepend"><span class="input-group-text">
                     <svg class="c-icon">
@@ -65,9 +65,9 @@
               </div>
 
             </div>
-          
-          </form>  
-            
+
+          </form>
+
           <div class="card-footer p-4 text-center">
               Have an account? <a href={{ url_for('base_blueprint.login') }} >Login</a>
           </div>
