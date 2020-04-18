@@ -17,27 +17,48 @@ under the License.
 """
 
 
-from flask import Flask, url_for
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
-from logging import basicConfig, DEBUG, getLogger, StreamHandler
+from logging import ERROR, basicConfig, getLogger
 from os import path
+
+from flask import Flask, url_for
+
+from flask_login import LoginManager
+
+from flask_sqlalchemy import SQLAlchemy
+
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
+
 def register_extensions(app):
+    """
+    Register the extension.
+
+    This method will register the extension
+    """
     db.init_app(app)
     login_manager.init_app(app)
 
+
 def register_blueprints(app):
+    """
+    Register the blueprints.
+
+    This method will register the blueprints
+    """
     for module_name in ('base', 'home'):
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
 
-def configure_database(app):
 
+def configure_database(app):
+    """
+    Configure the database.
+
+    This method will configure the DB
+    """
     @app.before_first_request
     def initialize_database():
         db.create_all()
@@ -46,7 +67,13 @@ def configure_database(app):
     def shutdown_session(exception=None):
         db.session.remove()
 
+
 def configure_logs(app):
+    """
+    Configure logs.
+
+    This method will return the logger
+    """
     # soft logging
     try:
         # TODO:FIXME:CCAMACHO
@@ -55,8 +82,9 @@ def configure_logs(app):
         logger = getLogger()
         logger.disabled = True
         # logger.addHandler(StreamHandler())
-    except:
+    except Exception:
         pass
+
 
 def apply_themes(app):
     """
@@ -75,19 +103,36 @@ def apply_themes(app):
     """
     @app.context_processor
     def override_url_for():
+        """
+        Override the URL.
+
+        This method will override the URLs
+        """
         return dict(url_for=_generate_url_for_theme)
 
     def _generate_url_for_theme(endpoint, **values):
+        """
+        Generate the URLs.
+
+        This method will generate the URLs
+        """
         if endpoint.endswith('static'):
             themename = values.get('theme', None) or \
                 app.config.get('DEFAULT_THEME', None)
             if themename:
-                theme_file = "{}/{}".format(themename, values.get('filename', ''))
+                theme_file = "{}/{}".format(themename,
+                                            values.get('filename', ''))
                 if path.isfile(path.join(app.static_folder, theme_file)):
                     values['filename'] = theme_file
         return url_for(endpoint, **values)
 
+
 def create_app(config, selenium=False):
+    """
+    Create the app.
+
+    This method will create the app
+    """
     app = Flask(__name__, static_folder='base/static')
     app.config.from_object(config)
     if selenium:

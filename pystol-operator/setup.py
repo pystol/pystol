@@ -16,9 +16,7 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
-import logging
 import os
-import stat
 from sys import version_info
 
 from setuptools import find_packages, setup

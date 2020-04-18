@@ -16,19 +16,13 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
-import json
-import os
-import random
-import string
-import sys
-import urllib
+from collections import defaultdict
 
 from app.base.k8s import load_kubernetes_config
 
 import kubernetes
 
 from pint import UnitRegistry
-from collections import defaultdict
 
 
 ureg = UnitRegistry()
@@ -55,12 +49,25 @@ ureg.define("E = k^6")
 
 Q_ = ureg.Quantity
 
+
 def compute_allocated_resources():
-    state_info = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-                  'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-                  'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-                  'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}
-                  }
+    """
+    Get the allocated resources.
+
+    This will get the cluster resources usage
+    """
+    s_i = {'pods': {'allocatable': 0,
+                    'allocated': 0,
+                    'percentage': 0},
+           'cpu': {'allocatable': 0,
+                   'allocated': 0,
+                   'percentage': 0},
+           'mem': {'allocatable': 0,
+                   'allocated': 0,
+                   'percentage': 0},
+           'storage': {'allocatable': 0,
+                       'allocated': 0,
+                       'percentage': 0}}
 
     load_kubernetes_config()
     core_v1 = kubernetes.client.CoreV1Api()
@@ -68,39 +75,62 @@ def compute_allocated_resources():
     try:
         nodes_list = core_v1.list_node().items
     except Exception as e:
-        print("Problem listing nodes")
-        # print("Something bad happened: " + e)
+        print("Something bad happened: " + e)
 
     for node in nodes_list:
-        node_name      = node.metadata.name
+        node_name = node.metadata.name
         node_stats = compute_node_resources(node_name)
 
-        state_info['pods']['allocatable'] = state_info['pods']['allocatable'] + node_stats['pods']['allocatable']
-        state_info['pods']['allocated'] = state_info['pods']['allocated'] + node_stats['pods']['allocated']
+        s_i['pods']['allocatable'] = (s_i['pods']['allocatable'] +
+                                      node_stats['pods']['allocatable'])
 
-        state_info['cpu']['allocatable'] = state_info['cpu']['allocatable'] + node_stats['cpu']['allocatable']
-        state_info['cpu']['allocated'] = state_info['cpu']['allocated'] + node_stats['cpu']['allocated']
+        s_i['pods']['allocated'] = (s_i['pods']['allocated'] +
+                                    node_stats['pods']['allocated'])
 
-        state_info['mem']['allocatable'] = state_info['mem']['allocatable'] + node_stats['mem']['allocatable']
-        state_info['mem']['allocated'] = state_info['mem']['allocated'] + node_stats['mem']['allocated']
+        s_i['cpu']['allocatable'] = (s_i['cpu']['allocatable'] +
+                                     node_stats['cpu']['allocatable'])
 
-        state_info['storage']['allocatable'] = state_info['storage']['allocatable'] + node_stats['storage']['allocatable']
-        state_info['storage']['allocated'] = state_info['storage']['allocated'] + node_stats['storage']['allocated']
+        s_i['cpu']['allocated'] = (s_i['cpu']['allocated'] +
+                                   node_stats['cpu']['allocated'])
 
-    state_info['pods']['percentage'] = (int(state_info['pods']['allocated'].magnitude) * 100) // int(state_info['pods']['allocatable'].magnitude)
-    state_info['cpu']['percentage'] = (int(state_info['cpu']['allocated'].magnitude) * 100) // int(state_info['cpu']['allocatable'].magnitude)
-    state_info['mem']['percentage'] = (int(state_info['mem']['allocated'].magnitude) * 100) // int(state_info['cpu']['allocatable'].magnitude)
-    state_info['storage']['percentage'] = (int(state_info['storage']['allocated'].magnitude) * 100) // int(state_info['storage']['allocatable'].magnitude)
+        s_i['mem']['allocatable'] = (s_i['mem']['allocatable'] +
+                                     node_stats['mem']['allocatable'])
 
-    return state_info
+        s_i['mem']['allocated'] = (s_i['mem']['allocated'] +
+                                   node_stats['mem']['allocated'])
+
+        s_i['storage']['allocatable'] = (s_i['storage']['allocatable'] +
+                                         node_stats['storage']['allocatable'])
+
+        s_i['storage']['allocated'] = (s_i['storage']['allocated'] +
+                                       node_stats['storage']['allocated'])
+
+    s_i['pods']['percentage'] = (
+        (int(s_i['pods']['allocated'].magnitude) * 100) //
+        (int(s_i['pods']['allocatable'].magnitude)))
+    s_i['cpu']['percentage'] = (
+        (int(s_i['cpu']['allocated'].magnitude) * 100) //
+        (int(s_i['cpu']['allocatable'].magnitude)))
+    s_i['mem']['percentage'] = (
+        (int(s_i['mem']['allocated'].magnitude) * 100) //
+        (int(s_i['cpu']['allocatable'].magnitude)))
+    s_i['storage']['percentage'] = (
+        (int(s_i['storage']['allocated'].magnitude) * 100) //
+        (int(s_i['storage']['allocatable'].magnitude)))
+
+    return s_i
 
 
 def compute_node_resources(node_name):
-    state_info = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-                  'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-                  'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-                  'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}
-                  }
+    """
+    Get the node allocated resources.
+
+    This will get the node resources usage
+    """
+    s_i = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
+           'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
+           'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
+           'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}}
 
     load_kubernetes_config()
     core_v1 = kubernetes.client.CoreV1Api()
@@ -110,73 +140,77 @@ def compute_node_resources(node_name):
     try:
         node = core_v1.list_node(field_selector=field_selector).items[0]
     except Exception as e:
-        print("Problem listing nodes")
-        # print("Something bad happened: " + e)
+        print("Something bad happened: " + e)
 
-    stats          = {}
-    node_name      = node.metadata.name
-    allocatable    = node.status.allocatable
-    max_pods       = int(int(allocatable["pods"]) * 1.5)
+    node_name = node.metadata.name
+    allocatable = node.status.allocatable
+    max_pods = int(int(allocatable["pods"]) * 1.5)
 
     field_selector = ("status.phase!=Succeeded,status.phase!=Failed," +
-                          "spec.nodeName=" + node_name)
+                      "spec.nodeName=" + node_name)
 
     cpu_allocatable = Q_(allocatable["cpu"])
     cpu_allocatable.ito(ureg.m)
-    state_info["cpu"]["allocatable"] = cpu_allocatable
+    s_i["cpu"]["allocatable"] = cpu_allocatable
 
     mem_allocatable = Q_(allocatable["memory"])
     mem_allocatable.ito(ureg.Mi)
-    state_info["mem"]["allocatable"] = mem_allocatable
+    s_i["mem"]["allocatable"] = mem_allocatable
 
-    # https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
     storage_allocatable = Q_(allocatable["ephemeral-storage"])
     storage_allocatable.ito(ureg.Mi)
-    state_info["storage"]["allocatable"] = storage_allocatable
+    s_i["storage"]["allocatable"] = storage_allocatable
 
-    state_info["pods"]["allocatable"] = max_pods * ureg.pods
+    s_i["pods"]["allocatable"] = max_pods * ureg.pods
 
-    pods = core_v1.list_pod_for_all_namespaces(limit=max_pods,
-                                               field_selector=field_selector).items
+    pods = core_v1.list_pod_for_all_namespaces(limit=
+                                               max_pods,
+                                               field_selector=
+                                               field_selector).items
 
-    state_info["pods"]["allocated"] = len(pods) * ureg.pods
+    s_i["pods"]["allocated"] = len(pods) * ureg.pods
 
     # compute the allocated resources
-    cpureqs,memreqs,storagereqs = [], [], []
-    #cpulmts,memlmts,storagelmts = [], [], []
+    cpureqs, memreqs, storagereqs = [], [], []
+    # cpulmts, memlmts, storagelmts = [], [], []
 
     for pod in pods:
         for container in pod.spec.containers:
-            res  = container.resources
+            res = container.resources
             reqs = defaultdict(lambda: 0, res.requests or {})
-            lmts = defaultdict(lambda: 0, res.limits or {})
+            # lmts = defaultdict(lambda: 0, res.limits or {})
 
             cpureqs.append(Q_(reqs["cpu"]))
             memreqs.append(Q_(reqs["memory"]))
             storagereqs.append(Q_(reqs["ephemeral-storage"]))
 
-            #cpulmts.append(Q_(lmts["cpu"]))
-            #memlmts.append(Q_(lmts["memory"]))
-            #storagelmts.append(Q_(lmts["ephemeral-storage"]))
+            # cpulmts.append(Q_(lmts["cpu"]))
+            # memlmts.append(Q_(lmts["memory"]))
+            # storagelmts.append(Q_(lmts["ephemeral-storage"]))
 
     cpu_allocated = sum(cpureqs)
     cpu_allocated.ito(ureg.m)
-    state_info["cpu"]["allocated"] = cpu_allocated
+    s_i["cpu"]["allocated"] = cpu_allocated
 
     mem_allocated = sum(memreqs)
     mem_allocated.ito(ureg.Mi)
-    state_info["mem"]["allocated"] = mem_allocated
+    s_i["mem"]["allocated"] = mem_allocated
 
     storage_allocated = sum(storagereqs)
     storage_allocated.ito(ureg.Mi)
-    state_info["storage"]["allocated"] = storage_allocated
+    s_i["storage"]["allocated"] = storage_allocated
 
-    state_info['pods']['percentage'] = (int(state_info['pods']['allocated'].magnitude) * 100) // int(state_info['pods']['allocatable'].magnitude)
-    state_info['cpu']['percentage'] = (int(state_info['cpu']['allocated'].magnitude) * 100) // int(state_info['cpu']['allocatable'].magnitude)
-    state_info['mem']['percentage'] = (int(state_info['mem']['allocated'].magnitude) * 100) // int(state_info['mem']['allocatable'].magnitude)
-    state_info['storage']['percentage'] = (int(state_info['storage']['allocated'].magnitude) * 100) // int(state_info['storage']['allocatable'].magnitude)
+    s_i['pods']['percentage'] = (
+        (int(s_i['pods']['allocated'].magnitude) * 100) //
+        (int(s_i['pods']['allocatable'].magnitude)))
+    s_i['cpu']['percentage'] = (
+        (int(s_i['cpu']['allocated'].magnitude) * 100) //
+        (int(s_i['cpu']['allocatable'].magnitude)))
+    s_i['mem']['percentage'] = (
+        (int(s_i['mem']['allocated'].magnitude) * 100) //
+        (int(s_i['mem']['allocatable'].magnitude)))
+    s_i['storage']['percentage'] = (
+        (int(s_i['storage']['allocated'].magnitude) * 100) //
+        (int(s_i['storage']['allocatable'].magnitude)))
 
-    return state_info
-
-
-
+    return s_i

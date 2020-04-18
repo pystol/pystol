@@ -17,12 +17,14 @@ under the License.
 """
 
 
-from flask_migrate import Migrate
 from os import environ
 from sys import exit
 
-from config import config_dict
 from app import create_app, db
+
+from config import config_dict
+
+from flask_migrate import Migrate
 
 get_config_mode = environ.get('APPSEED_CONFIG_MODE', 'Debug')
 

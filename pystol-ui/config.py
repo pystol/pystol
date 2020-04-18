@@ -18,16 +18,23 @@ under the License.
 
 
 import os
-from   os import environ
+from os import environ
+
 
 class Config(object):
+    """
+    Get the global config.
 
-    basedir    = os.path.abspath(os.path.dirname(__file__))
+    This method gets the global configuration
+    """
+
+    basedir = os.path.abspath(os.path.dirname(__file__))
 
     SECRET_KEY = 'key'
 
     # This will create a file in <app> FOLDER
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir,
+                                                          'database.db')
 
     # For 'in memory' database, please use:
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
@@ -43,7 +50,14 @@ class Config(object):
 
     TEMPLATES_AUTO_RELOAD = True
 
+
 class ProductionConfig(Config):
+    """
+    Get the production config.
+
+    This method gets the prod configuration
+    """
+
     DEBUG = False
 
     # Security
@@ -62,6 +76,12 @@ class ProductionConfig(Config):
 
 
 class DebugConfig(Config):
+    """
+    Enable the debug config.
+
+    This is a main class
+    """
+
     DEBUG = False
 
 
