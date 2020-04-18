@@ -1,20 +1,41 @@
-# -*- encoding: utf-8 -*-
+#!/usr/bin/env python
+
 """
-License: MIT
-Copyright (c) 2019 - present AppSeed.us
+Copyright 2019 Pystol (pystol.org).
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may
+not use this file except in compliance with the License. You may obtain
+a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
 """
 
-from config import config_dict
-from pytest import fixture
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from threading import Thread
 from time import sleep
+
 from app import create_app, db
+
+from config import config_dict
+
+from pytest import fixture
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 @fixture
 def base_client():
+    """
+    Test the base app.
+
+    This is method function
+    """
     app = create_app(config_dict['Debug'])
     app_ctx = app.app_context()
     app_ctx.push()
@@ -25,6 +46,11 @@ def base_client():
 
 @fixture
 def user_client():
+    """
+    Test the base app.
+
+    This is method function
+    """
     app = create_app(config_dict['Debug'])
     app_ctx = app.app_context()
     app_ctx.push()
@@ -41,6 +67,11 @@ def user_client():
 
 @fixture
 def selenium_client():
+    """
+    Test the base app.
+
+    This is method function
+    """
     app = create_app(config_dict['Debug'], True)
     app_context = app.app_context()
     app_context.push()
@@ -53,7 +84,8 @@ def selenium_client():
     # the main thread: it must be disabled
     client = None
     try:
-        client = webdriver.Chrome('./tests/chromedriver', chrome_options=options)
+        client = webdriver.Chrome('./tests/chromedriver',
+                                  chrome_options=options)
     except Exception:
         pass
     # if the client cannot start, we don't want to start a Thread as the
