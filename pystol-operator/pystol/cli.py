@@ -24,6 +24,7 @@ from argparse import ArgumentParser
 
 from pystol import __version__
 from pystol.cleaner import purge_pystol
+from pystol.const import PYSTOL_LOG_FILE
 from pystol.deployer import deploy_pystol
 from pystol.get_banner import get_banner
 from pystol.lister import get_action, list_actions, show_action, show_actions
@@ -36,7 +37,7 @@ t1_stop = threading.Event()
 t2_stop = threading.Event()
 
 handler = logging.handlers.WatchedFileHandler(
-    os.environ.get("LOGFILE", "/tmp/pystol.log"))
+    PYSTOL_LOG_FILE)
 formatter = logging.Formatter(logging.BASIC_FORMAT)
 handler.setFormatter(formatter)
 root = logging.getLogger()

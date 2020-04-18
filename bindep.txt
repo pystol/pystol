@@ -1,0 +1,10 @@
+gcc                [platform:rpm]
+python3-devel      [platform:rpm]
+PyYAML             [platform:rpm]
+libyaml-devel      [platform:rpm]
+
+
+build-essential    [platform:dpkg]
+python3-dev        [platform:dpkg]
+python-yaml        [platform:dpkg]
+libyaml-dev        [platform:dpkg]

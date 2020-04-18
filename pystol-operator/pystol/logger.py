@@ -19,10 +19,11 @@ under the License.
 import logging
 import sys
 from logging.handlers import TimedRotatingFileHandler
+
+from pystol.const import PYSTOL_LOG_FILE
+
 FORMATTER = logging.Formatter("%(asctime)s - %(name)s - "
                               "%(levelname)s - %(message)s")
-LOG_FILE = "/tmp/pystol.log"
-
 
 def get_console_handler():
     """
@@ -41,7 +42,7 @@ def get_file_handler():
 
     This is a main component of the input for the controller
     """
-    file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+    file_handler = TimedRotatingFileHandler(PYSTOL_LOG_FILE, when='midnight')
     file_handler.setFormatter(FORMATTER)
     return file_handler
 

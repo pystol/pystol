@@ -16,8 +16,12 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import os
+import tempfile
+
 # Main logging file
-PYSTOL_LOG_FILE = '/tmp/pystol.log'
+PYSTOL_LOG_FOLDER = tempfile.gettempdir()
+PYSTOL_LOG_FILE = os.path.join(PYSTOL_LOG_FOLDER, '/tmp/pystol.log')
 
 # Current branch
 PYSTOL_BRANCH = 'master'
