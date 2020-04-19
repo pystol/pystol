@@ -37,6 +37,11 @@ from flask_login import login_required
 
 from jinja2 import TemplateNotFound
 
+try:
+    from pystol import __version__
+    PYSTOL_VERSION = __version__
+except ImportError:
+    PYSTOL_VERSION = "Not installed"
 
 @blueprint.route('/index')
 @login_required
@@ -54,7 +59,8 @@ def index():
                            compute_allocated_resources(),
                            hexagons_data=hexagons_data(),
                            cluster_name_configured=
-                           cluster_name_configured(),)
+                           cluster_name_configured(),
+                           pystol_version = PYSTOL_VERSION,)
 
 
 @blueprint.route('/<template>')
@@ -77,7 +83,9 @@ def route_template(template):
                                compute_allocated_resources(),
                                cluster_name_configured=
                                cluster_name_configured(),
-                               cluster_graph=get_cluster_graph(),)
+                               cluster_graph=get_cluster_graph(),
+                               pystol_version = PYSTOL_VERSION,)
+
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except Exception:
