@@ -43,6 +43,7 @@ try:
 except ImportError:
     PYSTOL_VERSION = "Not installed"
 
+
 @blueprint.route('/index')
 @login_required
 def index():
