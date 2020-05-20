@@ -19,3 +19,5 @@ flask_wtf
 selenium
 pint
 bindep
+email_validator
+
