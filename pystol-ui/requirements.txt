@@ -7,3 +7,4 @@ flask_sqlalchemy
 gunicorn
 kubernetes
 pint
+requests_oauthlib
