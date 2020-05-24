@@ -50,7 +50,6 @@ except ImportError:
 
 
 @blueprint.route('/')
-@login_required
 def home_root():
     """
     Render the index of Pystol.
