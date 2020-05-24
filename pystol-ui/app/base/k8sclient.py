@@ -43,9 +43,15 @@ def state_nodes():
     This returns the nodes names
     """
     datanodes = []
-    load_kubernetes_config()
-    core_v1 = kubernetes.client.CoreV1Api()
-    nodes = core_v1.list_node().items
+
+    try:
+        load_kubernetes_config()
+        core_v1 = kubernetes.client.CoreV1Api()
+        nodes = core_v1.list_node().items
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
+
     for node in nodes:
         datanodes.append({'name': node.metadata.name,
                           'status': node.status.phase})
@@ -59,9 +65,15 @@ def state_namespaces():
     This returns some namespace data
     """
     datanamespaces = []
-    load_kubernetes_config()
-    core_v1 = kubernetes.client.CoreV1Api()
-    namespaces = core_v1.list_namespace().items
+
+    try:
+        load_kubernetes_config()
+        core_v1 = kubernetes.client.CoreV1Api()
+        namespaces = core_v1.list_namespace().items
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
+
     for namespace in namespaces:
         datanamespaces.append({'name': namespace.metadata.name,
                                'status': namespace.status.phase})
@@ -75,9 +87,14 @@ def state_pods():
     This returns some pod data
     """
     data_pods = []
-    load_kubernetes_config()
-    core_v1 = kubernetes.client.CoreV1Api()
-    pods = core_v1.list_pod_for_all_namespaces().items
+
+    try:
+        load_kubernetes_config()
+        core_v1 = kubernetes.client.CoreV1Api()
+        pods = core_v1.list_pod_for_all_namespaces().items
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
 
     for pod in pods:
         data_pods.append({'name': pod.metadata.name,
@@ -110,10 +127,9 @@ def cluster_name_configured():
 
     This method should return the cluster name
     """
+    cluster_name = "Not found"
     load_kubernetes_config()
     core_v1 = kubernetes.client.CoreV1Api()
-
-    cluster_name = "Not found"
 
     try:
         # OpenShift case

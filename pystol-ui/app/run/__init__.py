@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'run_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/run',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 2
+
+def get_category():
+    return 1
+
+def get_name():
+    return "Run"
+
+def get_icon():
+    return "fa-running"
+
+def get_endpoint():
+    return "run_blueprint.run"

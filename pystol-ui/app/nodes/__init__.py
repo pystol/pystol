@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'nodes_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/nodes',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 3
+
+def get_category():
+    return 0
+
+def get_name():
+    return "Nodes"
+
+def get_icon():
+    return "fa-server"
+
+def get_endpoint():
+    return "nodes_blueprint.nodes"

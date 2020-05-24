@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'executed_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/executed',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 0
+
+def get_category():
+    return 1
+
+def get_name():
+    return "Executed"
+
+def get_icon():
+    return "fa-running"
+
+def get_endpoint():
+    return "executed_blueprint.executed"

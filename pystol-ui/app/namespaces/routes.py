@@ -31,7 +31,7 @@ from app.base.k8sclient import (cluster_name_configured,
                                 state_pods)
 from app.base.run import insert_pystol_object
 
-from app.home import blueprint
+from app.namespaces import blueprint
 
 from flask import redirect, render_template, request, url_for
 
@@ -50,22 +50,7 @@ except ImportError:
 
 
 @blueprint.route('/')
-@login_required
-def home_root():
-    """
-    Render the index of Pystol.
-
-    This is a main method
-    """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
-        return redirect(url_for('auth_blueprint.login'))
-
-    return redirect(url_for('usage_blueprint.usage'))
-
-
-@blueprint.route('/<template>')
-def route_template(template):
+def namespaces():
     """
     Render all the templates not from base.
 
@@ -74,9 +59,8 @@ def route_template(template):
     # The auth module is installed and the user is authenticated
     if hasattr(app, 'auth') and not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
-
     try:
-        return render_template(template + '.html',
+        return render_template('namespaces.html',
                                list_actions=list_actions(),
                                show_actions=show_actions(),
                                state_namespaces=state_namespaces(),
@@ -89,64 +73,6 @@ def route_template(template):
                                cluster_graph=get_cluster_graph(),
                                pystol_version = PYSTOL_VERSION,)
 
-    except TemplateNotFound:
-        return render_template('page-404.html'), 404
-    # except Exception:
-    #     return render_template('page-500.html'), 500
-
-
-@blueprint.route('/api/v1/actionRun', methods = ['POST'])
-def action_run():
-    """
-    Show the executed Pystol actions.
-
-    This is a main method
-    """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
-        return redirect(url_for('auth_blueprint.login'))
-
-    try:
-        if request.method == "POST":
-            print("Run action by post")
-            dict = request.form
-            namespace = ""
-            collection = ""
-            role = ""
-            source = ""
-            extra_vars = {}
-
-            if 'namespace' in dict:
-                namespace = dict['namespace']
-            else:
-                namespace = ""
-
-            if 'collection' in dict:
-                collection = dict['collection']
-            else:
-                collection = ""
-
-            if 'role' in dict:
-                role = dict['role']
-            else:
-                role = ""
-
-            if 'source' in dict:
-                source = dict['source']
-            else:
-                source = ""
-
-            if 'extra_vars' in dict:
-                extra_vars = dict['extra_vars']
-            else:
-                extra_vars = {}
-
-            insert_pystol_object(namespace=namespace,
-                                 collection=collection,
-                                 role=role,
-                                 source=source,
-                                 extra_vars=extra_vars)
-            return redirect('/pystol-actions-executed')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     # except Exception:

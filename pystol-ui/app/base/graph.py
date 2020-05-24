@@ -38,9 +38,14 @@ def get_cluster_services():
 
     This method returns the cluster services for the Cytoscape graph
     """
-    load_kubernetes_config()
-    api = kubernetes.client.CoreV1Api()
-    api_response = api.list_service_for_all_namespaces(pretty='true')
+    try:
+        load_kubernetes_config()
+        api = kubernetes.client.CoreV1Api()
+        api_response = api.list_service_for_all_namespaces(pretty='true')
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
+
     s_list = []
     for service in api_response.items:
         s_list.append({"data": {"id": "service-" + service.metadata.name,
@@ -70,9 +75,14 @@ def get_cluster_deployments():
 
     This method returns the cluster deployments for the Cytoscape graph
     """
-    load_kubernetes_config()
-    api = kubernetes.client.AppsV1Api()
-    api_response = api.list_deployment_for_all_namespaces(pretty='true')
+    try:
+        load_kubernetes_config()
+        api = kubernetes.client.AppsV1Api()
+        api_response = api.list_deployment_for_all_namespaces(pretty='true')
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
+
     dep_list = []
     for deployment in api_response.items:
         dep_list.append({"data": {"id": "deployment-" +
@@ -103,9 +113,14 @@ def get_cluster_nodes():
 
     This method returns the cluster nodes for the Cytoscape graph
     """
-    load_kubernetes_config()
-    api = kubernetes.client.CoreV1Api()
-    api_response = api.list_node(pretty='true')
+    try:
+        load_kubernetes_config()
+        api = kubernetes.client.CoreV1Api()
+        api_response = api.list_node(pretty='true')
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
+
     nodes_list = []
     for node in api_response.items:
         nodes_list.append({"data": {"id": "node-" +
@@ -122,14 +137,19 @@ def get_cluster_pods(label_selector=''):
 
     This method returns the cluster pods for the Cytoscape graph
     """
-    load_kubernetes_config()
-    api = kubernetes.client.CoreV1Api()
-    res = api.list_pod_for_all_namespaces(pretty=
-                                          'true',
-                                          field_selector=
-                                          'status.phase=Running',
-                                          label_selector=
-                                          label_selector)
+    try:
+        load_kubernetes_config()
+        api = kubernetes.client.CoreV1Api()
+        res = api.list_pod_for_all_namespaces(pretty=
+                                              'true',
+                                              field_selector=
+                                              'status.phase=Running',
+                                              label_selector=
+                                              label_selector)
+    except Exception as e:
+        print("Cant connect to the cluster: %s" % (e))
+        return []
+
     pods_list = []
     for pod in res.items:
         pods_list.append({"data": {"id": "pod-" + pod.metadata.name,

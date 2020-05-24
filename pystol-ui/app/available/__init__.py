@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'available_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/available',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 1
+
+def get_category():
+    return 1
+
+def get_name():
+    return "Available"
+
+def get_icon():
+    return "fa-check-square"
+
+def get_endpoint():
+    return "available_blueprint.available"

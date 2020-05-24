@@ -1,5 +1,8 @@
-      <header class="c-header c-header-light c-header-fixed">
+<i data-fa-symbol="fa-github" class="fab fa-github fa-fw"></i>
+<i data-fa-symbol="fa-book-reader" class="fas fa-book-reader fa-fw"></i>
+<i data-fa-symbol="fa-sign-out-alt" class="fas fa-sign-out-alt fa-fw"></i>
 
+      <header class="c-header c-header-light c-header-fixed">
             <button class="c-header-toggler c-class-toggler d-lg-none mr-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
                 <span class="c-header-toggler-icon"></span>
             </button>
@@ -13,21 +16,16 @@
             <ul class="c-header-nav ml-auto mr-4">
               <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="https://github.com/pystol/" target="_blank">
                   <svg class="c-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/brand.svg#cib-github"></use>
+                    <use xlink:href="#fa-github"></use>
                   </svg>
                   </a>
               </li>
               <li class="c-header-nav-item d-md-down-none mx-2">
                   <a class="c-header-nav-link" href="https://docs.pystol.org/" target="_blank">
                     <svg class="c-icon">
-                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-book"></use>
+                      <use xlink:href="#fa-book-reader"></use>
                     </svg>
                   </a>
-              </li>
-              <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="{{ url_for('base_blueprint.logout') }}">
-                  <svg class="c-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                  </svg></a>
               </li>
             </ul>
           </header>

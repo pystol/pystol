@@ -37,6 +37,7 @@ def hexagons_data():
         nodes_list = core_v1.list_node().items
     except Exception:
         print("Error listing nodes")
+        nodes_list = []
 
     for node in nodes_list:
         node_name = node.metadata.name

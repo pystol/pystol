@@ -17,6 +17,7 @@ under the License.
 """
 
 from collections import defaultdict
+from types import SimpleNamespace
 
 from app.base.k8s import load_kubernetes_config
 
@@ -75,7 +76,19 @@ def compute_allocated_resources():
     try:
         nodes_list = core_v1.list_node().items
     except Exception as e:
-        print("Something bad happened: " + e)
+        print("Something bad happened:  %s" % (e))
+        return {'pods': {'allocatable': Q_('0 pods'),
+                         'allocated': Q_('0 pods'),
+                         'percentage': 0},
+                'cpu': {'allocatable': Q_('0 m'),
+                        'allocated': Q_('0 m'),
+                        'percentage': 0},
+                'mem': {'allocatable': Q_('0 Ki'),
+                        'allocated': Q_('0 Ki'),
+                        'percentage': 0},
+                'storage': {'allocatable': Q_('0 Ki'),
+                            'allocated': Q_('0 Ki'),
+                            'percentage': 0}}
 
     for node in nodes_list:
         node_name = node.metadata.name
@@ -140,7 +153,7 @@ def compute_node_resources(node_name):
     try:
         node = core_v1.list_node(field_selector=field_selector).items[0]
     except Exception as e:
-        print("Something bad happened: " + e)
+        print("Something bad happened:  %s" % (e))
 
     node_name = node.metadata.name
     allocatable = node.status.allocatable

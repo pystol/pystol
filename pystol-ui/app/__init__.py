@@ -16,6 +16,8 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import os
+import re
 
 from importlib import import_module
 from logging import ERROR, basicConfig, getLogger
@@ -48,9 +50,20 @@ def register_blueprints(app):
 
     This method will register the blueprints
     """
-    for module_name in ('base', 'home'):
+    pattern = re.compile("^([a-z]+)+$")
+
+    to_register = []
+    for module_name in next(os.walk('./app'))[1]:
+        if (pattern.match(module_name)):
+            to_register.append(module_name)
+
+    for module_name in to_register:
+        print("Registering: %s" % (module_name))
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
+        if module_name == "run":
+            print("asdf")
+            print(dir(module.blueprint))
 
 
 def configure_database(app):
@@ -126,6 +139,30 @@ def apply_themes(app):
                     values['filename'] = theme_file
         return url_for(endpoint, **values)
 
+def render_menu():
+    # We only support tree main categories
+    pattern = re.compile("^([a-z]+)+$")
+    to_render = []
+    for module_name in next(os.walk('./app'))[1]:
+        if (pattern.match(module_name) and module_name != 'home' and module_name != 'base'):
+            to_render.append(module_name)
+    menu = [[],[],[]]
+    for module_name in to_render:
+        module = import_module('app.{}'.format(module_name))
+        item = {'position': module.get_position(),
+                'category': module.get_category(),
+                'name': module.get_name(),
+                'icon': module.get_icon(),
+                'endpoint': module.get_endpoint(),
+        }
+        menu[item['category']].append(item)
+
+    cat0 = sorted(menu[0], key=lambda k: k['position'], reverse=False)
+    cat1 = sorted(menu[1], key=lambda k: k['position'], reverse=False)
+    cat2 = sorted(menu[2], key=lambda k: k['position'], reverse=False)
+
+    return [cat0, cat1, cat2]
+
 
 def create_app(config, selenium=False):
     """
@@ -142,4 +179,5 @@ def create_app(config, selenium=False):
     configure_database(app)
     configure_logs(app)
     apply_themes(app)
+    app.jinja_env.globals.update(render_menu=render_menu)
     return app

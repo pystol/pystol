@@ -16,6 +16,7 @@ License for the specific language governing permissions and limitations
 under the License.
 """
 
+import app
 
 from app import db, login_manager
 from app.base import blueprint
@@ -32,18 +33,9 @@ from app.base.util import verify_pass
 from flask import jsonify, redirect, render_template, request, url_for
 
 from flask_login import (current_user,
+                         login_required,
                          login_user,
                          logout_user)
-
-
-@blueprint.route('/')
-def route_default():
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    return redirect(url_for('base_blueprint.login'))
 
 
 @blueprint.route('/error-<error>')
@@ -53,6 +45,9 @@ def route_errors(error):
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return render_template('errors/{}.html'.format(error))
 
 
@@ -64,6 +59,9 @@ def api_list_actions():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(list_actions())
 
 
@@ -74,6 +72,9 @@ def api_show_actions():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(show_actions())
 
 
@@ -84,6 +85,9 @@ def api_state_namespaces():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(state_namespaces())
 
 
@@ -94,6 +98,9 @@ def api_state_nodes():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(state_nodes())
 
 
@@ -104,6 +111,9 @@ def api_state_pods():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(state_pods())
 
 
@@ -114,6 +124,9 @@ def api_web_terminal():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(web_terminal())
 
 
@@ -124,91 +137,10 @@ def api_cluster_name_configured():
 
     This is a main routing method
     """
+    # The auth module is installed and the user is authenticated
+    if hasattr(app, 'auth') and not current_user.is_authenticated:
+        return redirect(url_for('auth_blueprint.login'))
     return jsonify(cluster_name_configured())
-
-
-# Login & Registration
-@blueprint.route('/login', methods=['GET', 'POST'])
-def login():
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    login_form = LoginForm(request.form)
-    if 'login' in request.form:
-
-        # read form data
-        username = request.form['username']
-        password = request.form['password']
-
-        # Locate user
-        user = User.query.filter_by(username=username).first()
-
-        # Check the password
-        if user and verify_pass(password, user.password):
-            login_user(user)
-            return redirect(url_for('base_blueprint.route_default'))
-
-        # Something (user or pass) is not ok
-        return render_template('login/login.html',
-                               msg='Wrong user or password',
-                               form=login_form)
-
-    if not current_user.is_authenticated:
-        return render_template('login/login.html',
-                               form=login_form)
-    return redirect(url_for('home_blueprint.index'))
-
-
-@blueprint.route('/create_user', methods=['GET', 'POST'])
-def create_user():
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    LoginForm(request.form)
-    create_account_form = CreateAccountForm(request.form)
-    if 'register' in request.form:
-
-        username = request.form['username']
-        email = request.form['email']
-
-        user = User.query.filter_by(username=username).first()
-        if user:
-            return render_template('login/register.html',
-                                   msg='Username already registered',
-                                   form=create_account_form)
-
-        user = User.query.filter_by(email=email).first()
-        if user:
-            return render_template('login/register.html',
-                                   msg='Email already registered',
-                                   form=create_account_form)
-
-        # else we can create the user
-        user = User(**request.form)
-        db.session.add(user)
-        db.session.commit()
-
-        return render_template('login/register.html',
-                               msg='User created <a href="/login">login</a>',
-                               form=create_account_form)
-
-    else:
-        return render_template('login/register.html', form=create_account_form)
-
-
-@blueprint.route('/logout')
-def logout():
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    logout_user()
-    return redirect(url_for('base_blueprint.login'))
 
 
 @blueprint.route('/shutdown')
@@ -258,7 +190,7 @@ def not_found_error(error):
     return render_template('page-404.html',
                            template_folder="../home/templates/"), 404
 
-
+'''
 @blueprint.errorhandler(500)
 def internal_error(error):
     """
@@ -268,3 +200,4 @@ def internal_error(error):
     """
     return render_template('page-500.html',
                            template_folder="../home/templates/"), 500
+'''

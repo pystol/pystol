@@ -1,66 +1,58 @@
+<i data-fa-symbol="fa-info" class="fas fa-info fa-fw"></i>
+<i data-fa-symbol="fa-window-restore" class="fas fa-window-restore fa-fw"></i>
+<i data-fa-symbol="fa-server" class="fas fa-server fa-fw"></i>
+<i data-fa-symbol="fa-boxes" class="fas fa-boxes fa-fw"></i>
+<i data-fa-symbol="fa-project-diagram" class="fas fa-project-diagram fa-fw"></i>
+<i data-fa-symbol="fa-swatchbook" class="fas fa-swatchbook fa-fw"></i>
+<i data-fa-symbol="fa-running" class="fas fa-running fa-fw"></i>
+<i data-fa-symbol="fa-check-square" class="fas fa-check-square fa-fw"></i>
+<i data-fa-symbol="fa-rocket" class="fas fa-rocket fa-fw"></i>
+<i data-fa-symbol="fa-question" class="fas fa-question fa-fw"></i>
+<i data-fa-symbol="fa-sign-out-alt" class="fas fa-sign-out-alt fa-fw"></i>
 
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
             <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/static/assets/brand/pystol_full.svg" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="/static/assets/brand/pystol_compact.svg" width="118" height="46" alt="CoreUI Logo"></div>
             <ul class="c-sidebar-nav">
+
               <li class="c-sidebar-nav-title">Cluster status</li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/index">
+
+              {% for element in render_menu()[0] %}
+              <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href={{ url_for(element.endpoint) }}>
                   <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                  </svg> System information</a>
+                    <use xlink:href="#{{ element.icon }}"></use>
+                  </svg> {{ element.name }}
+                </a>
+              </li>
+              {% endfor %}
 
-                  <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-namespaces">
-                    <svg class="c-sidebar-nav-icon">
-                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                    </svg> Namespaces</a></li>
-
-                  <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-nodes">
-                      <svg class="c-sidebar-nav-icon">
-                        <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                      </svg> Nodes</a></li>
-                  <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-pods">
-                        <svg class="c-sidebar-nav-icon">
-                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                        </svg> Pods</a>
-                  </li>
-                  <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-cluster">
-                        <svg class="c-sidebar-nav-icon">
-                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                        </svg> Graph view<span class="badge badge-danger">WIP</span></a>
-                  </li>
-                  <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-update-kubeconfig">
-                        <svg class="c-sidebar-nav-icon">
-                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                        </svg> Change cluster<span class="badge badge-danger">WIP</span></a>
-                  </li>
-
-                  </li>
               <li class="c-sidebar-nav-title">Pystol actions</li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-executed">
-                  <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                  </svg> Executed</a>
-              </li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-available">
-                  <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                  </svg> Available</a>
-              </li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/pystol-actions-run">
-                  <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-right"></use>
-                  </svg> Run<span class="badge badge-danger">WIP</span></a>
-              </li>
-              <li class="c-sidebar-nav-item px-3 c-d-compact-none c-d-minimized-none mt-auto">
-                  <div class="text-uppercase mb-1">
-                  <small>
-                {% if cluster_name_configured |length %}
-                      <span class="badge badge-success">Connected to {{cluster_name_configured  | replace('[', '')| replace(']', '')}}</span>
-                {% else %}
-                      <span class="badge badge-danger">Not connected</span>
-                {% endif %}
-                  </small></div>
-              </li>
 
+              {% for element in render_menu()[1] %}
+              <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href={{ url_for(element.endpoint) }}>
+                  <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="#{{ element.icon }}"></use>
+                  </svg> {{ element.name }}
+                </a>
+              </li>
+              {% endfor %}
+
+              <li class="c-sidebar-nav-item px-3 c-d-compact-none c-d-minimized-none mt-auto">
+                <div class="text-uppercase mb-1">
+                  <small>
+                    {% if cluster_name_configured |length %}
+                      {% if cluster_name_configured  | replace('[', '')| replace(']', '') == "Not found" %}
+                        <span class="badge badge-danger">Not connected</span>
+                      {% else %}
+                        <span class="badge badge-success">Connected to {{cluster_name_configured  | replace('[', '')| replace(']', '')}}</span>
+                      {% endif %}
+                     {% else %}
+                       <span class="badge badge-danger">Not connected</span>
+                     {% endif %}
+                   </small>
+                </div>
+              </li>
               <li class="c-sidebar-nav-item px-3 c-d-compact-none c-d-minimized-none">
                   <div class="text-uppercase mb-1"><small><b>Pods Usage</b></small></div>
                   <div class="progress progress-xs">
@@ -101,21 +93,15 @@
                   </div><small class="text-muted">{{ storage_allocated }}/{{ storage_allocatable }} {{ storage_unit}}</small>
               </li>
 
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/about-pystol">
+              {% for element in render_menu()[2] %}
+              <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href={{ url_for(element.endpoint) }}>
                   <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-heart"></use>
-                  </svg> F.A.Q.</a>
+                    <use xlink:href="#{{ element.icon }}"></use>
+                  </svg> {{ element.name }}
+                </a>
               </li>
-
-
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href={{ url_for('base_blueprint.logout') }} >
-                  <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                  </svg> Logout</a>
-              </li>
-
-
-
+              {% endfor %}
 
             </ul>
             <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

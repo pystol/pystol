@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'pods_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/pods',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 4
+
+def get_category():
+    return 0
+
+def get_name():
+    return "Pods"
+
+def get_icon():
+    return "fa-boxes"
+
+def get_endpoint():
+    return "pods_blueprint.pods"

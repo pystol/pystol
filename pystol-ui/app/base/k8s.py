@@ -57,10 +57,8 @@ def load_kubernetes_config():
                    "    export KUBECONFIG=~/.kube/config\n"
                    "Or run Pystol from within the cluster to make use of "
                    "load_incluster_config.\n"
-                   "Error: " % (e))
+                   "Error: %s" % (e))
         print(message)
-        print("Bye...")
-        sys.exit(0)
 
 
 def show_actions():

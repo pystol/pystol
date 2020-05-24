@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'faq_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/faq',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 0
+
+def get_category():
+    return 2
+
+def get_name():
+    return "F.A.Q."
+
+def get_icon():
+    return "fa-question"
+
+def get_endpoint():
+    return "faq_blueprint.faq"

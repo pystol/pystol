@@ -20,9 +20,24 @@ under the License.
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'home_blueprint',
+    'namespaces_blueprint',
     __name__,
-    url_prefix='',
+    url_prefix='/namespaces',
     template_folder='templates',
     static_folder='static'
 )
+
+def get_position():
+    return 2
+
+def get_category():
+    return 0
+
+def get_name():
+    return "Namespaces"
+
+def get_icon():
+    return "fa-window-restore"
+
+def get_endpoint():
+    return "namespaces_blueprint.namespaces"
