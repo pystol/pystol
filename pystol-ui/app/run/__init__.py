@@ -37,7 +37,7 @@ def get_name():
     return "Run"
 
 def get_icon():
-    return "fa-running"
+    return "fa-rocket"
 
 def get_endpoint():
     return "run_blueprint.run"
