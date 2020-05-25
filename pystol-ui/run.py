@@ -22,7 +22,7 @@ from sys import exit
 
 from app import create_app
 
-from app.base.config import config_dict
+from config import config_dict
 
 get_config_mode = environ.get('PYSTOL_CONFIG_MODE', 'Debug')
 
