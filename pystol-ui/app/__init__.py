@@ -30,7 +30,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-login_manager = LoginManager()
+#login_manager = LoginManager()
 
 
 def register_extensions(app):
@@ -39,7 +39,7 @@ def register_extensions(app):
     This method will register the extension
     """
     db.init_app(app)
-    login_manager.init_app(app)
+    #login_manager.init_app(app)
 
 def register_blueprints(app):
     """
@@ -169,9 +169,9 @@ def create_app(config, selenium=False):
     if selenium:
         app.config['LOGIN_DISABLED'] = True
     register_extensions(app)
-    register_blueprints(app)
     configure_database(app)
     configure_logs(app)
     apply_themes(app)
+    register_blueprints(app)
     app.jinja_env.globals.update(render_menu=render_menu)
     return app

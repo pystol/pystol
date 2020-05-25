@@ -33,7 +33,7 @@ from app.base.run import insert_pystol_object
 
 from app.usage import blueprint
 
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for, session
 
 from flask_login import (current_user,
                          login_required,
@@ -56,8 +56,8 @@ def usage():
 
     This is a main method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
 
     try:

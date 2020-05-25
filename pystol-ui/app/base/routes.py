@@ -26,7 +26,7 @@ from app.base.k8sclient import (cluster_name_configured,
                                 state_pods,
                                 web_terminal)
 
-from flask import jsonify, redirect, render_template, request, url_for
+from flask import jsonify, redirect, render_template, request, url_for, session
 
 from flask_login import (current_user,
                          login_required,
@@ -41,9 +41,10 @@ def route_errors(error):
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return render_template('errors/{}.html'.format(error))
 
 
@@ -55,9 +56,10 @@ def api_list_actions():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(list_actions())
 
 
@@ -68,9 +70,10 @@ def api_show_actions():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(show_actions())
 
 
@@ -81,9 +84,10 @@ def api_state_namespaces():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(state_namespaces())
 
 
@@ -94,9 +98,10 @@ def api_state_nodes():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(state_nodes())
 
 
@@ -107,9 +112,10 @@ def api_state_pods():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(state_pods())
 
 
@@ -120,9 +126,10 @@ def api_web_terminal():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(web_terminal())
 
 
@@ -133,9 +140,10 @@ def api_cluster_name_configured():
 
     This is a main routing method
     """
-    # The auth module is installed and the user is authenticated
-    if hasattr(app, 'auth') and not current_user.is_authenticated:
+    # The auth module is installed and the user is not authenticated, so go to login
+    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+
     return jsonify(cluster_name_configured())
 
 
