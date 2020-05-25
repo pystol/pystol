@@ -18,17 +18,13 @@ under the License.
 
 import app
 
-from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import CreateAccountForm, LoginForm
 from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import (cluster_name_configured,
                                 state_namespaces,
                                 state_nodes,
                                 state_pods,
                                 web_terminal)
-from app.base.models import User
-from app.base.util import verify_pass
 
 from flask import jsonify, redirect, render_template, request, url_for
 
@@ -158,26 +154,26 @@ def shutdown():
 
 
 # Errors
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    """
-    Define a route.
+#@login_manager.unauthorized_handler
+#def unauthorized_handler():
+#    """
+#    Define a route.
+#
+#    This is a main routing method
+#    """
+#    return render_template('page-403.html',
+#                           template_folder="../home/templates/"), 403
 
-    This is a main routing method
-    """
-    return render_template('page-403.html',
-                           template_folder="../home/templates/"), 403
 
-
-@blueprint.errorhandler(403)
-def access_forbidden(error):
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    return render_template('page-403.html',
-                           template_folder="../home/templates/"), 403
+#@blueprint.errorhandler(403)
+#def access_forbidden(error):
+#    """
+#    Define a route.
+#
+#    This is a main routing method
+#    """
+#    return render_template('page-403.html',
+#                           template_folder="../home/templates/"), 403
 
 
 @blueprint.errorhandler(404)
