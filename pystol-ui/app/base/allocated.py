@@ -21,6 +21,8 @@ from types import SimpleNamespace
 
 from app.base.k8s import load_kubernetes_config
 
+from flask import redirect, render_template, request, url_for, session
+
 import kubernetes
 
 from pint import UnitRegistry
@@ -69,8 +71,11 @@ def compute_allocated_resources():
            'storage': {'allocatable': 0,
                        'allocated': 0,
                        'percentage': 0}}
+    if 'kubeconfig' in session:
+        load_kubernetes_config(session['kubeconfig'])
+    else:
+        load_kubernetes_config()
 
-    load_kubernetes_config()
     core_v1 = kubernetes.client.CoreV1Api()
 
     try:
@@ -145,7 +150,10 @@ def compute_node_resources(node_name):
            'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
            'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}}
 
-    load_kubernetes_config()
+    if 'kubeconfig' in session:
+        load_kubernetes_config(session['kubeconfig'])
+    else:
+        load_kubernetes_config()
     core_v1 = kubernetes.client.CoreV1Api()
 
     field_selector = ("metadata.name=" + node_name)
@@ -162,17 +170,20 @@ def compute_node_resources(node_name):
     field_selector = ("status.phase!=Succeeded,status.phase!=Failed," +
                       "spec.nodeName=" + node_name)
 
-    cpu_allocatable = Q_(allocatable["cpu"])
-    cpu_allocatable.ito(ureg.m)
-    s_i["cpu"]["allocatable"] = cpu_allocatable
+    if 'cpu' in allocatable:
+        cpu_allocatable = Q_(allocatable["cpu"])
+        cpu_allocatable.ito(ureg.m)
+        s_i["cpu"]["allocatable"] = cpu_allocatable
 
-    mem_allocatable = Q_(allocatable["memory"])
-    mem_allocatable.ito(ureg.Mi)
-    s_i["mem"]["allocatable"] = mem_allocatable
+    if 'memory' in allocatable:
+        mem_allocatable = Q_(allocatable["memory"])
+        mem_allocatable.ito(ureg.Mi)
+        s_i["mem"]["allocatable"] = mem_allocatable
 
-    storage_allocatable = Q_(allocatable["ephemeral-storage"])
-    storage_allocatable.ito(ureg.Mi)
-    s_i["storage"]["allocatable"] = storage_allocatable
+    if 'ephemeral-storage' in allocatable:
+        storage_allocatable = Q_(allocatable["ephemeral-storage"])
+        storage_allocatable.ito(ureg.Mi)
+        s_i["storage"]["allocatable"] = storage_allocatable
 
     s_i["pods"]["allocatable"] = max_pods * ureg.pods
 

@@ -19,6 +19,8 @@ under the License.
 from app.base.allocated import compute_node_resources
 from app.base.k8s import load_kubernetes_config
 
+from flask import redirect, render_template, request, url_for, session
+
 import kubernetes
 
 
@@ -31,7 +33,11 @@ def hexagons_data():
     hexa_data = []
 
     # doing this computation within a kubernetes cluster
-    load_kubernetes_config()
+    if 'kubeconfig' in session:
+        load_kubernetes_config(session['kubeconfig'])
+    else:
+        load_kubernetes_config()
+
     core_v1 = kubernetes.client.CoreV1Api()
     try:
         nodes_list = core_v1.list_node().items

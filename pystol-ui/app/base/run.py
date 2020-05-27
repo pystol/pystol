@@ -22,6 +22,8 @@ import string
 
 from app.base.k8s import load_kubernetes_config
 
+from flask import redirect, render_template, request, url_for, session
+
 import kubernetes
 
 
@@ -43,7 +45,10 @@ def insert_pystol_object(namespace,
 
     This is a main component of the input for the controller
     """
-    load_kubernetes_config()
+    if 'kubeconfig' in session:
+        load_kubernetes_config(session['kubeconfig'])
+    else:
+        load_kubernetes_config()
     custom_obj = kubernetes.client.CustomObjectsApi()
 
     resource = {

@@ -23,6 +23,8 @@ import urllib
 
 import kubernetes
 
+from flask import redirect, render_template, request, url_for, session
+
 PYSTOL_BRANCH = "master"
 
 #
@@ -31,14 +33,16 @@ PYSTOL_BRANCH = "master"
 #
 
 
-def load_kubernetes_config():
+def load_kubernetes_config(external_file=''):
     """
     Load the initial config details.
 
     We load the config depending where we execute the code from
     """
     try:
-        if 'KUBERNETES_PORT' in os.environ:
+        if external_file != '':
+            kubernetes.config.load_kube_config(external_file)
+        elif 'KUBERNETES_PORT' in os.environ:
             # We set up the client from within a k8s pod
             kubernetes.config.load_incluster_config()
         elif 'KUBECONFIG' in os.environ:
@@ -115,7 +119,10 @@ def list_actions():
 
     This is a main component of the input for the controller
     """
-    load_kubernetes_config()
+    if 'kubeconfig' in session:
+        load_kubernetes_config(session['kubeconfig'])
+    else:
+        load_kubernetes_config()
     api = kubernetes.client.CustomObjectsApi()
 
     group = "pystol.org"
@@ -155,7 +162,10 @@ def state_cluster():
 
     This is a main component of the input for the controller
     """
-    load_kubernetes_config()
+    if 'kubeconfig' in session:
+        load_kubernetes_config(session['kubeconfig'])
+    else:
+        load_kubernetes_config()
     api = kubernetes.client.CustomObjectsApi()
 
     group = "pystol.org"

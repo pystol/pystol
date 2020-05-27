@@ -18,6 +18,8 @@ under the License.
 
 from app.base.k8s import load_kubernetes_config
 
+from flask import redirect, render_template, request, url_for, session
+
 import kubernetes
 
 
@@ -39,7 +41,11 @@ def get_cluster_services():
     This method returns the cluster services for the Cytoscape graph
     """
     try:
-        load_kubernetes_config()
+        if 'kubeconfig' in session:
+            load_kubernetes_config(session['kubeconfig'])
+        else:
+            load_kubernetes_config()
+
         api = kubernetes.client.CoreV1Api()
         api_response = api.list_service_for_all_namespaces(pretty='true')
     except Exception as e:
@@ -76,7 +82,12 @@ def get_cluster_deployments():
     This method returns the cluster deployments for the Cytoscape graph
     """
     try:
-        load_kubernetes_config()
+
+        if 'kubeconfig' in session:
+            load_kubernetes_config(session['kubeconfig'])
+        else:
+            load_kubernetes_config()
+
         api = kubernetes.client.AppsV1Api()
         api_response = api.list_deployment_for_all_namespaces(pretty='true')
     except Exception as e:
@@ -114,7 +125,12 @@ def get_cluster_nodes():
     This method returns the cluster nodes for the Cytoscape graph
     """
     try:
-        load_kubernetes_config()
+
+        if 'kubeconfig' in session:
+            load_kubernetes_config(session['kubeconfig'])
+        else:
+            load_kubernetes_config()
+
         api = kubernetes.client.CoreV1Api()
         api_response = api.list_node(pretty='true')
     except Exception as e:
@@ -138,7 +154,12 @@ def get_cluster_pods(label_selector=''):
     This method returns the cluster pods for the Cytoscape graph
     """
     try:
-        load_kubernetes_config()
+
+        if 'kubeconfig' in session:
+            load_kubernetes_config(session['kubeconfig'])
+        else:
+            load_kubernetes_config()
+
         api = kubernetes.client.CoreV1Api()
         res = api.list_pod_for_all_namespaces(pretty=
                                               'true',
