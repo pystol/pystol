@@ -63,7 +63,10 @@ def hexagons_data():
         hdata['name'] = node_name
         hdata['role'] = node_role
         hdata['cpu'] = allocatable["cpu"]
-        hdata['ephstorage'] = allocatable["ephemeral-storage"]
+        if 'ephemeral-storage' in allocatable:
+            hdata['ephstorage'] = allocatable["ephemeral-storage"]
+        else:
+            hdata['ephstorage'] = 0
         hdata['mem'] = allocatable["memory"]
         hdata['maxpods'] = allocatable["pods"]
 

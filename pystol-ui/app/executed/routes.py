@@ -63,15 +63,10 @@ def executed():
     try:
         return render_template('executed.html',
                                list_actions=list_actions(),
-                               show_actions=show_actions(),
-                               state_namespaces=state_namespaces(),
-                               state_nodes=state_nodes(),
-                               state_pods=state_pods(),
                                compute_allocated_resources=
                                compute_allocated_resources(),
                                cluster_name_configured=
                                cluster_name_configured(),
-                               cluster_graph=get_cluster_graph(),
                                pystol_version = PYSTOL_VERSION,)
 
     except TemplateNotFound:
