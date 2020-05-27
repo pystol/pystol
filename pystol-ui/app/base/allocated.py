@@ -59,17 +59,17 @@ def compute_allocated_resources():
 
     This will get the cluster resources usage
     """
-    s_i = {'pods': {'allocatable': 0,
-                    'allocated': 0,
+    s_i = {'pods': {'allocatable': Q_('0 pods'),
+                    'allocated': Q_('0 pods'),
                     'percentage': 0},
-           'cpu': {'allocatable': 0,
-                   'allocated': 0,
+           'cpu': {'allocatable': Q_('0 m'),
+                   'allocated': Q_('0 m'),
                    'percentage': 0},
-           'mem': {'allocatable': 0,
-                   'allocated': 0,
+           'mem': {'allocatable': Q_('0 Ki'),
+                   'allocated': Q_('0 Ki'),
                    'percentage': 0},
-           'storage': {'allocatable': 0,
-                       'allocated': 0,
+           'storage': {'allocatable': Q_('0 Ki'),
+                       'allocated': Q_('0 Ki'),
                        'percentage': 0}}
     if 'kubeconfig' in session:
         load_kubernetes_config(session['kubeconfig'])
@@ -123,18 +123,39 @@ def compute_allocated_resources():
         s_i['storage']['allocated'] = (s_i['storage']['allocated'] +
                                        node_stats['storage']['allocated'])
 
-    s_i['pods']['percentage'] = (
-        (int(s_i['pods']['allocated'].magnitude) * 100) //
-        (int(s_i['pods']['allocatable'].magnitude)))
-    s_i['cpu']['percentage'] = (
-        (int(s_i['cpu']['allocated'].magnitude) * 100) //
-        (int(s_i['cpu']['allocatable'].magnitude)))
-    s_i['mem']['percentage'] = (
-        (int(s_i['mem']['allocated'].magnitude) * 100) //
-        (int(s_i['cpu']['allocatable'].magnitude)))
-    s_i['storage']['percentage'] = (
-        (int(s_i['storage']['allocated'].magnitude) * 100) //
-        (int(s_i['storage']['allocatable'].magnitude)))
+
+    if int(s_i['pods']['allocatable'].magnitude) == 0:
+        s_i['pods']['percentage'] = 0
+    else:
+        s_i['pods']['percentage'] = (
+            (int(s_i['pods']['allocated'].magnitude) * 100) //
+            (int(s_i['pods']['allocatable'].magnitude)))
+
+    if int(s_i['cpu']['allocatable'].magnitude) == 0:
+        s_i['cpu']['percentage'] = 0
+    else:
+        s_i['cpu']['percentage'] = (
+            (int(s_i['cpu']['allocated'].magnitude) * 100) //
+            (int(s_i['cpu']['allocatable'].magnitude)))
+
+    if int(s_i['mem']['allocatable'].magnitude) == 0:
+        s_i['mem']['percentage'] = 0
+    else:
+        s_i['mem']['percentage'] = (
+            (int(s_i['mem']['allocated'].magnitude) * 100) //
+            (int(s_i['mem']['allocatable'].magnitude)))
+
+    if int(s_i['storage']['allocatable'].magnitude) == 0:
+        s_i['storage']['percentage'] = 0
+    else:
+        s_i['storage']['percentage'] = (
+            (int(s_i['storage']['allocated'].magnitude) * 100) //
+            (int(s_i['storage']['allocatable'].magnitude)))
+
+
+
+
+
 
     return s_i
 
@@ -145,10 +166,19 @@ def compute_node_resources(node_name):
 
     This will get the node resources usage
     """
-    s_i = {'pods': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-           'cpu': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-           'mem': {'allocatable': 0, 'allocated': 0, 'percentage': 0},
-           'storage': {'allocatable': 0, 'allocated': 0, 'percentage': 0}}
+    s_i = {'pods': {'allocatable': Q_('0 pods'),
+                    'allocated': Q_('0 pods'),
+                    'percentage': 0},
+           'cpu': {'allocatable': Q_('0 m'),
+                   'allocated': Q_('0 m'),
+                   'percentage': 0},
+           'mem': {'allocatable': Q_('0 Ki'),
+                   'allocated': Q_('0 Ki'),
+                   'percentage': 0},
+           'storage': {'allocatable': Q_('0 Ki'),
+                       'allocated': Q_('0 Ki'),
+                       'percentage': 0}}
+
 
     if 'kubeconfig' in session:
         load_kubernetes_config(session['kubeconfig'])
@@ -224,17 +254,32 @@ def compute_node_resources(node_name):
     storage_allocated.ito(ureg.Mi)
     s_i["storage"]["allocated"] = storage_allocated
 
-    s_i['pods']['percentage'] = (
-        (int(s_i['pods']['allocated'].magnitude) * 100) //
-        (int(s_i['pods']['allocatable'].magnitude)))
-    s_i['cpu']['percentage'] = (
-        (int(s_i['cpu']['allocated'].magnitude) * 100) //
-        (int(s_i['cpu']['allocatable'].magnitude)))
-    s_i['mem']['percentage'] = (
-        (int(s_i['mem']['allocated'].magnitude) * 100) //
-        (int(s_i['mem']['allocatable'].magnitude)))
-    s_i['storage']['percentage'] = (
-        (int(s_i['storage']['allocated'].magnitude) * 100) //
-        (int(s_i['storage']['allocatable'].magnitude)))
+    if int(s_i['pods']['allocatable'].magnitude) == 0:
+        s_i['pods']['percentage'] = 0
+    else:
+        s_i['pods']['percentage'] = (
+            (int(s_i['pods']['allocated'].magnitude) * 100) //
+            (int(s_i['pods']['allocatable'].magnitude)))
+
+    if int(s_i['cpu']['allocatable'].magnitude) == 0:
+        s_i['cpu']['percentage'] = 0
+    else:
+        s_i['cpu']['percentage'] = (
+            (int(s_i['cpu']['allocated'].magnitude) * 100) //
+            (int(s_i['cpu']['allocatable'].magnitude)))
+
+    if int(s_i['mem']['allocatable'].magnitude) == 0:
+        s_i['mem']['percentage'] = 0
+    else:
+        s_i['mem']['percentage'] = (
+            (int(s_i['mem']['allocated'].magnitude) * 100) //
+            (int(s_i['mem']['allocatable'].magnitude)))
+
+    if int(s_i['storage']['allocatable'].magnitude) == 0:
+        s_i['storage']['percentage'] = 0
+    else:
+        s_i['storage']['percentage'] = (
+            (int(s_i['storage']['allocated'].magnitude) * 100) //
+            (int(s_i['storage']['allocatable'].magnitude)))
 
     return s_i
