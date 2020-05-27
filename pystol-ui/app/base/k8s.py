@@ -33,14 +33,14 @@ PYSTOL_BRANCH = "master"
 #
 
 
-def load_kubernetes_config(external_file=''):
+def load_kubernetes_config(external_file=None):
     """
     Load the initial config details.
 
     We load the config depending where we execute the code from
     """
     try:
-        if external_file != '':
+        if external_file not None:
             kubernetes.config.load_kube_config(external_file)
         elif 'KUBERNETES_PORT' in os.environ:
             # We set up the client from within a k8s pod
