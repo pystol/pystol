@@ -40,7 +40,7 @@ def load_kubernetes_config(external_file=None):
     We load the config depending where we execute the code from
     """
     try:
-        if external_file not None:
+        if not external_file is None:
             kubernetes.config.load_kube_config(external_file)
         elif 'KUBERNETES_PORT' in os.environ:
             # We set up the client from within a k8s pod
