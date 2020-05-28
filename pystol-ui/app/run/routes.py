@@ -33,7 +33,7 @@ from app.base.run import insert_pystol_object
 
 from app.run import blueprint
 
-from flask import redirect, render_template, request, url_for, session
+from flask import redirect, render_template, request, url_for
 
 from flask_login import (current_user,
                          login_required,
@@ -48,6 +48,12 @@ try:
 except ImportError:
     PYSTOL_VERSION = "Not installed"
 
+# Auth required
+from app.auth.routes import get_session_data
+from google.cloud import firestore
+#Auth required
+fdb = firestore.Client()
+transaction = fdb.transaction()
 
 @blueprint.route('/')
 def run():
@@ -56,16 +62,28 @@ def run():
 
     This is a main method
     """
-    # The auth module is installed and the user is not authenticated, so go to login
-    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
+    #
+    # Basic authentication module requirement
+    # If the auth module is installed and the user is not authenticated, so go to login
+    #
+    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+    #
+    # End basic authentication requirement
+    #
+
+    if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
+        kubeconfig = None
+    else:
+        kubeconfig = session['kubeconfig']
 
     try:
         return render_template('run.html',
                                compute_allocated_resources=
-                               compute_allocated_resources(),
+                               compute_allocated_resources(kubeconfig=kubeconfig),
                                cluster_name_configured=
-                               cluster_name_configured(),
+                               cluster_name_configured(kubeconfig=kubeconfig),
                                pystol_version = PYSTOL_VERSION,)
 
     except TemplateNotFound:

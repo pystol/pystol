@@ -23,7 +23,7 @@ from flask import redirect, render_template, request, url_for, session
 import kubernetes
 
 
-def get_cluster_name():
+def get_cluster_name(kubeconfig=None):
     """
     Get the cluster name.
 
@@ -34,17 +34,14 @@ def get_cluster_name():
              "classes": "entity"}]
 
 
-def get_cluster_services():
+def get_cluster_services(kubeconfig=None):
     """
     Get the cluster services.
 
     This method returns the cluster services for the Cytoscape graph
     """
     try:
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
+        load_kubernetes_config(external_yaml=kubeconfig)
 
         api = kubernetes.client.CoreV1Api()
         api_response = api.list_service_for_all_namespaces(pretty='true')
@@ -75,7 +72,7 @@ def get_cluster_services():
     return s_list
 
 
-def get_cluster_deployments():
+def get_cluster_deployments(kubeconfig=None):
     """
     Get the cluster deployments.
 
@@ -83,10 +80,7 @@ def get_cluster_deployments():
     """
     try:
 
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
+        load_kubernetes_config(external_yaml=kubeconfig)
 
         api = kubernetes.client.AppsV1Api()
         api_response = api.list_deployment_for_all_namespaces(pretty='true')
@@ -118,7 +112,7 @@ def get_cluster_deployments():
     return dep_list
 
 
-def get_cluster_nodes():
+def get_cluster_nodes(kubeconfig=None):
     """
     Get the cluster nodes.
 
@@ -126,10 +120,7 @@ def get_cluster_nodes():
     """
     try:
 
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
+        load_kubernetes_config(external_yaml=kubeconfig)
 
         api = kubernetes.client.CoreV1Api()
         api_response = api.list_node(pretty='true')
@@ -147,7 +138,7 @@ def get_cluster_nodes():
     return nodes_list
 
 
-def get_cluster_pods(label_selector=''):
+def get_cluster_pods(label_selector='',kubeconfig=None):
     """
     Get the cluster pods.
 
@@ -155,10 +146,7 @@ def get_cluster_pods(label_selector=''):
     """
     try:
 
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
+        load_kubernetes_config(external_yaml=kubeconfig)
 
         api = kubernetes.client.CoreV1Api()
         res = api.list_pod_for_all_namespaces(pretty=
@@ -180,7 +168,7 @@ def get_cluster_pods(label_selector=''):
     return pods_list
 
 
-def get_cluster_graph():
+def get_cluster_graph(kubeconfig=None):
     """
     Get the cluster graph.
 

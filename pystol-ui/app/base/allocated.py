@@ -21,12 +21,13 @@ from types import SimpleNamespace
 
 from app.base.k8s import load_kubernetes_config
 
-from flask import redirect, render_template, request, url_for, session
+from flask import Flask, redirect, render_template, request, url_for
 
 import kubernetes
 
 from pint import UnitRegistry
 
+from app import app
 
 ureg = UnitRegistry()
 # Pod
@@ -53,12 +54,15 @@ ureg.define("E = k^6")
 Q_ = ureg.Quantity
 
 
-def compute_allocated_resources():
+def compute_allocated_resources(kubeconfig=None):
     """
     Get the allocated resources.
 
     This will get the cluster resources usage
     """
+    load_kubernetes_config(external_yaml=kubeconfig)
+    core_v1 = kubernetes.client.CoreV1Api()
+
     s_i = {'pods': {'allocatable': Q_('0 pods'),
                     'allocated': Q_('0 pods'),
                     'percentage': 0},
@@ -71,12 +75,8 @@ def compute_allocated_resources():
            'storage': {'allocatable': Q_('0 Ki'),
                        'allocated': Q_('0 Ki'),
                        'percentage': 0}}
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
 
-    core_v1 = kubernetes.client.CoreV1Api()
+
 
     try:
         nodes_list = core_v1.list_node().items
@@ -97,7 +97,7 @@ def compute_allocated_resources():
 
     for node in nodes_list:
         node_name = node.metadata.name
-        node_stats = compute_node_resources(node_name)
+        node_stats = compute_node_resources(node_name=node_name, kubeconfig=kubeconfig)
 
         s_i['pods']['allocatable'] = (s_i['pods']['allocatable'] +
                                       node_stats['pods']['allocatable'])
@@ -160,12 +160,15 @@ def compute_allocated_resources():
     return s_i
 
 
-def compute_node_resources(node_name):
+def compute_node_resources(node_name=None, kubeconfig=None):
     """
     Get the node allocated resources.
 
     This will get the node resources usage
     """
+    load_kubernetes_config(external_yaml=kubeconfig)
+    core_v1 = kubernetes.client.CoreV1Api()
+
     s_i = {'pods': {'allocatable': Q_('0 pods'),
                     'allocated': Q_('0 pods'),
                     'percentage': 0},
@@ -178,13 +181,6 @@ def compute_node_resources(node_name):
            'storage': {'allocatable': Q_('0 Ki'),
                        'allocated': Q_('0 Ki'),
                        'percentage': 0}}
-
-
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
-    core_v1 = kubernetes.client.CoreV1Api()
 
     field_selector = ("metadata.name=" + node_name)
 

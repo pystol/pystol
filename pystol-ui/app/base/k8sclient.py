@@ -21,7 +21,7 @@ import subprocess
 
 from app.base.k8s import load_kubernetes_config
 
-from flask import redirect, render_template, request, url_for, session
+from flask import redirect, render_template, request, url_for
 
 import kubernetes
 
@@ -38,7 +38,7 @@ def state_cluster():
     return ret
 
 
-def state_nodes():
+def state_nodes(kubeconfig=None):
     """
     Return nodes.
 
@@ -48,10 +48,7 @@ def state_nodes():
 
     try:
 
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
+        load_kubernetes_config(external_yaml=kubeconfig)
 
         core_v1 = kubernetes.client.CoreV1Api()
         nodes = core_v1.list_node().items
@@ -65,7 +62,7 @@ def state_nodes():
     return datanodes
 
 
-def state_namespaces():
+def state_namespaces(kubeconfig=None):
     """
     Return namespaces.
 
@@ -74,12 +71,7 @@ def state_namespaces():
     datanamespaces = []
 
     try:
-
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
-
+        load_kubernetes_config(external_yaml=kubeconfig)
         core_v1 = kubernetes.client.CoreV1Api()
         namespaces = core_v1.list_namespace().items
     except Exception as e:
@@ -92,7 +84,7 @@ def state_namespaces():
     return datanamespaces
 
 
-def state_pods():
+def state_pods(kubeconfig=None):
     """
     Return pods.
 
@@ -102,11 +94,7 @@ def state_pods():
 
     try:
 
-        if 'kubeconfig' in session:
-            load_kubernetes_config(session['kubeconfig'])
-        else:
-            load_kubernetes_config()
-
+        load_kubernetes_config(external_yaml=kubeconfig)
         core_v1 = kubernetes.client.CoreV1Api()
         pods = core_v1.list_pod_for_all_namespaces().items
     except Exception as e:
@@ -138,7 +126,7 @@ def web_terminal():
     return ret
 
 
-def cluster_name_configured():
+def cluster_name_configured(kubeconfig=None):
     """
     Get the current cluster name.
 
@@ -146,11 +134,7 @@ def cluster_name_configured():
     """
     cluster_name = "Not found"
 
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
-
+    load_kubernetes_config(external_yaml=kubeconfig)
     core_v1 = kubernetes.client.CoreV1Api()
 
     try:

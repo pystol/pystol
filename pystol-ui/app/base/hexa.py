@@ -24,7 +24,7 @@ from flask import redirect, render_template, request, url_for, session
 import kubernetes
 
 
-def hexagons_data():
+def hexagons_data(kubeconfig=None):
     """
     Get the hexagons data for the index.
 
@@ -32,11 +32,7 @@ def hexagons_data():
     """
     hexa_data = []
 
-    # doing this computation within a kubernetes cluster
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
+    load_kubernetes_config(external_yaml=kubeconfig)
 
     core_v1 = kubernetes.client.CoreV1Api()
     try:
@@ -77,7 +73,7 @@ def hexagons_data():
         hdata['kubeletver'] = node_info.kubelet_version
         hdata['os'] = node_info.operating_system
 
-        state_info = compute_node_resources(node_name)
+        state_info = compute_node_resources(node_name=node_name, kubeconfig=kubeconfig)
         hdata['state_info'] = state_info
         max_pods = int(int(allocatable["pods"]) * 1.5)
         field_selector = ("spec.nodeName=" + node_name)

@@ -15,15 +15,16 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations
 under the License.
 """
-
+import tempfile
 import json
 import os
 import sys
 import urllib
+import yaml
 
 import kubernetes
 
-from flask import redirect, render_template, request, url_for, session
+from flask import Flask, redirect, render_template, request, url_for
 
 PYSTOL_BRANCH = "master"
 
@@ -32,15 +33,24 @@ PYSTOL_BRANCH = "master"
 # where we execute the operator from.
 #
 
-
-def load_kubernetes_config(external_file=None):
+def load_kubernetes_config(external_file=None, external_yaml=None):
     """
     Load the initial config details.
 
     We load the config depending where we execute the code from
     """
     try:
-        if not external_file is None:
+        if external_yaml != None:
+            print(external_yaml)
+            temp_dir = tempfile.mkdtemp()
+            print('Created a temporary directory', temp_dir)
+            file_path = os.path.join(temp_dir,'kubeconfig.yml')
+            print('The k8s config file will be', file_path)
+            with open(file_path, 'w+') as file:
+                print("The file is open for writing the config data")
+                yaml.dump(external_yaml, file)
+            kubernetes.config.load_kube_config(file_path)
+        elif external_file != None:
             kubernetes.config.load_kube_config(external_file)
         elif 'KUBERNETES_PORT' in os.environ:
             # We set up the client from within a k8s pod
@@ -113,16 +123,13 @@ def show_actions():
     return ret
 
 
-def list_actions():
+def list_actions(kubeconfig=None):
     """
     List Pystol actions from the cluster.
 
     This is a main component of the input for the controller
     """
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
+    load_kubernetes_config(external_yaml=kubeconfig)
     api = kubernetes.client.CustomObjectsApi()
 
     group = "pystol.org"
@@ -156,16 +163,14 @@ def list_actions():
     return ret
 
 
-def state_cluster():
+def state_cluster(kubeconfig=None):
     """
     List component of cluster.
 
     This is a main component of the input for the controller
     """
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
+
+    load_kubernetes_config(external_yaml=kubeconfig)
     api = kubernetes.client.CustomObjectsApi()
 
     group = "pystol.org"

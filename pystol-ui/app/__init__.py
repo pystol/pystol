@@ -32,6 +32,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 #login_manager = LoginManager()
 
+app = Flask(__name__, static_folder='base/static')
 
 def register_extensions(app):
     """
@@ -164,7 +165,7 @@ def create_app(config, selenium=False):
 
     This method will create the app
     """
-    app = Flask(__name__, static_folder='base/static')
+    # app = Flask(__name__, static_folder='base/static')
     app.config.from_object(config)
     if selenium:
         app.config['LOGIN_DISABLED'] = True
