@@ -15,7 +15,11 @@
             </ul>
             <ul class="c-header-nav ml-auto mr-4">
               <li class="c-header-nav-item d-md-down-none mx-2">
-              {% if session['username'] and session['email'] %} Welcome: {{ session['username'] }} - {{ session['email'] }} {% endif %}
+                {% if username and email %}
+                <small class="text-muted text-uppercase font-weight-bold">
+                  Welcome: {{ username }} - {{ email }}
+                </small>
+                {% endif %}
               </li>
               <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="https://github.com/pystol/" target="_blank">
                   <svg class="c-icon">

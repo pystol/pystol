@@ -78,8 +78,22 @@ def run():
     else:
         kubeconfig = session['kubeconfig']
 
+    if (not 'username' in session or
+        session['username'] == None or
+        session['username'] == '' or
+        not 'email' in session or
+        session['email'] == None or
+        session['email'] == ''):
+
+        username = None
+        email = None
+    else:
+        username = session['username']
+        email = session['email']
+
     try:
         return render_template('run.html',
+                               username=username, email=email,
                                compute_allocated_resources=
                                compute_allocated_resources(kubeconfig=kubeconfig),
                                cluster_name_configured=
