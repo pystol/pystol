@@ -23,7 +23,9 @@ import urllib
 import yaml
 
 import kubernetes
-
+from kubernetes import client
+from kubernetes.client import Configuration
+from kubernetes.config import kube_config
 from flask import Flask, redirect, render_template, request, url_for
 
 PYSTOL_BRANCH = "master"
@@ -41,15 +43,10 @@ def load_kubernetes_config(external_file=None, external_yaml=None):
     """
     try:
         if external_yaml != None:
-            print(external_yaml)
-            temp_dir = tempfile.mkdtemp()
-            print('Created a temporary directory', temp_dir)
-            file_path = os.path.join(temp_dir,'kubeconfig.yml')
-            print('The k8s config file will be', file_path)
-            with open(file_path, 'w+') as file:
-                print("The file is open for writing the config data")
-                yaml.dump(external_yaml, file)
-            kubernetes.config.load_kube_config(file_path)
+            loader = kubernetes.config.kube_config.KubeConfigLoader(config_dict=external_yaml, config_base_path=None)
+            call_config = type.__call__(Configuration)
+            loader.load_and_set(call_config)
+            Configuration.set_default(call_config)
         elif external_file != None:
             kubernetes.config.load_kube_config(external_file)
         elif 'KUBERNETES_PORT' in os.environ:
