@@ -69,7 +69,7 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql://{}:{}@{}:{}/{}'.format(
         environ.get('DATABASE_USER', 'pystol'),
         environ.get('DATABASE_PASSWORD', 'pystol'),
-        environ.get('DATABASE_HOST', 'db'),
+        environ.get('DATABASE_HOST', 'localhost'),
         environ.get('DATABASE_PORT', 5432),
         environ.get('DATABASE_NAME', 'pystol')
     )
@@ -82,7 +82,7 @@ class DebugConfig(Config):
     This is a main class
     """
 
-    DEBUG = False
+    DEBUG = True
 
 
 config_dict = {

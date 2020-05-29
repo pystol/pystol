@@ -27,20 +27,7 @@ from flask import Flask, url_for
 
 from flask_login import LoginManager
 
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
-#login_manager = LoginManager()
-
 app = Flask(__name__, static_folder='base/static')
-
-def register_extensions(app):
-    """
-    Register the extension.
-    This method will register the extension
-    """
-    db.init_app(app)
-    #login_manager.init_app(app)
 
 def register_blueprints(app):
     """
@@ -63,18 +50,6 @@ def register_blueprints(app):
             print("asdf")
             print(dir(module.blueprint))
 
-def configure_database(app):
-    """
-    Configure the database.
-    This method will configure the DB
-    """
-    @app.before_first_request
-    def initialize_database():
-        db.create_all()
-
-    @app.teardown_request
-    def shutdown_session(exception=None):
-        db.session.remove()
 
 def configure_logs(app):
     """
@@ -169,8 +144,6 @@ def create_app(config, selenium=False):
     app.config.from_object(config)
     if selenium:
         app.config['LOGIN_DISABLED'] = True
-    register_extensions(app)
-    configure_database(app)
     configure_logs(app)
     apply_themes(app)
     register_blueprints(app)

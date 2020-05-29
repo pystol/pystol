@@ -154,12 +154,21 @@ def cluster_name_configured(kubeconfig=None):
     except Exception:
         print("Cant find clustername for OpenShift case")
 
+    try:
+        if kubeconfig != None:
+            cluster_name = kubeconfig['clusters'][0]['name']
+            print(cluster_name)
+            return cluster_name
+    except Exception:
+        print("Cant find the clustername in the Kubeconfig")
+
     # If we dont manage to find it we fall back to the CLI as a last resource
     try:
         command = 'kubectl config view -o jsonpath="{.clusters[].name}"'
         output = subprocess.check_output(command,
                                          stderr=subprocess.STDOUT,
                                          shell=True)
+        print(output)
         return output.decode('utf-8')
     except Exception:
         print("Cant find the clustername at all")
