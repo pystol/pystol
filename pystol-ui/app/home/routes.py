@@ -69,6 +69,7 @@ def home_root():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -85,9 +86,16 @@ def route_template(template):
 
     This is a main method
     """
-    # The auth module is installed and the user is not authenticated, so go to login
-    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
+    #
+    # Basic authentication module requirement
+    # If the auth module is installed and the user is not authenticated, so go to login
+    #
+    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+    #
+    # End basic authentication requirement
+    #
 
     try:
         return render_template(template + '.html',
@@ -105,8 +113,8 @@ def route_template(template):
 
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    # except Exception:
-    #     return render_template('page-500.html'), 500
+    except Exception:
+        return render_template('page-500.html'), 500
 
 
 @blueprint.route('/api/v1/actionRun', methods = ['POST'])
@@ -120,6 +128,7 @@ def action_run():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
