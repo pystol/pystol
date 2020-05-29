@@ -49,7 +49,10 @@ except ImportError:
     PYSTOL_VERSION = "Not installed"
 
 # Auth required
-from app.auth.routes import get_session_data
+try:
+    from app.auth.routes import get_session_data
+except ImportError:
+    print("Module not available")
 from google.cloud import firestore
 #Auth required
 fdb = firestore.Client()
@@ -66,7 +69,11 @@ def executed():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
-    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -90,7 +97,7 @@ def executed():
     else:
         username = session['username']
         email = session['email']
-        
+
     try:
         return render_template('executed.html',
                                username=username, email=email,
@@ -103,5 +110,5 @@ def executed():
 
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    # except Exception:
-    #     return render_template('page-500.html'), 500
+    except Exception:
+        return render_template('page-500.html'), 500

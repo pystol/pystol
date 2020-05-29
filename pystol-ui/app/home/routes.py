@@ -33,7 +33,7 @@ from app.base.run import insert_pystol_object
 
 from app.home import blueprint
 
-from flask import redirect, render_template, request, url_for, session
+from flask import redirect, render_template, request, url_for
 
 from flask_login import (current_user,
                          login_required,
@@ -48,6 +48,15 @@ try:
 except ImportError:
     PYSTOL_VERSION = "Not installed"
 
+# Auth required
+try:
+    from app.auth.routes import get_session_data
+except ImportError:
+    print("Module not available")
+from google.cloud import firestore
+#Auth required
+fdb = firestore.Client()
+transaction = fdb.transaction()
 
 @blueprint.route('/')
 def home_root():
@@ -56,9 +65,15 @@ def home_root():
 
     This is a main method
     """
-    # The auth module is installed and the user is not authenticated, so go to login
-    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
+    #
+    # Basic authentication module requirement
+    # If the auth module is installed and the user is not authenticated, so go to login
+    #
+    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+    #
+    # End basic authentication requirement
+    #
 
     return redirect(url_for('usage_blueprint.usage'))
 
@@ -101,9 +116,15 @@ def action_run():
 
     This is a main method
     """
-    # The auth module is installed and the user is not authenticated, so go to login
-    if hasattr(app, 'auth') and not 'username' in session: #not current_user.is_authenticated:
+    #
+    # Basic authentication module requirement
+    # If the auth module is installed and the user is not authenticated, so go to login
+    #
+    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
+    #
+    # End basic authentication requirement
+    #
 
     try:
         if request.method == "POST":
@@ -148,5 +169,5 @@ def action_run():
             return redirect('/pystol-actions-executed')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    # except Exception:
-    #     return render_template('page-500.html'), 500
+    except Exception:
+        return render_template('page-500.html'), 500
