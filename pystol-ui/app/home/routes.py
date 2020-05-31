@@ -70,7 +70,11 @@ def home_root():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
-    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -91,14 +95,23 @@ def route_template(template):
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
-    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
     #
 
-    api_client=remote_cluster(kubeconfig=kubeconfig)
+    if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
+        kubeconfig = None
+        api_client = None
+    else:
+        kubeconfig = session['kubeconfig']
+        api_client=remote_cluster(kubeconfig=kubeconfig)
 
     try:
         return render_template(template + '.html',
@@ -131,12 +144,21 @@ def action_run():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
-    session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
     #
+
+    if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
+        api_client = None
+    else:
+        api_client=remote_cluster(kubeconfig=kubeconfig)
 
     try:
         if request.method == "POST":
@@ -177,7 +199,8 @@ def action_run():
                                  collection=collection,
                                  role=role,
                                  source=source,
-                                 extra_vars=extra_vars)
+                                 extra_vars=extra_vars,
+                                 api_client=api_client)
             return redirect('/pystol-actions-executed')
     except TemplateNotFound:
         return render_template('page-404.html'), 404

@@ -85,8 +85,10 @@ def usage():
 
     if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
         kubeconfig = None
+        api_client = None
     else:
         kubeconfig = session['kubeconfig']
+        api_client=remote_cluster(kubeconfig=kubeconfig)
 
     if (not 'username' in session or
         session['username'] == None or
@@ -100,8 +102,6 @@ def usage():
     else:
         username = session['username']
         email = session['email']
-
-    api_client=remote_cluster(kubeconfig=kubeconfig)
 
     try:
         return render_template('usage.html',

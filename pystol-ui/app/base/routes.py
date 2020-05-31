@@ -45,6 +45,11 @@ def route_errors(error):
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -66,6 +71,11 @@ def api_list_actions():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -86,6 +96,11 @@ def api_show_actions():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -106,6 +121,11 @@ def api_state_namespaces():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -126,6 +146,11 @@ def api_state_nodes():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -146,6 +171,11 @@ def api_state_pods():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -166,6 +196,11 @@ def api_web_terminal():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
@@ -186,6 +221,11 @@ def api_cluster_name_configured():
     # Basic authentication module requirement
     # If the auth module is installed and the user is not authenticated, so go to login
     #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
     if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
         return redirect(url_for('auth_blueprint.login'))
     #
