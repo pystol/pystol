@@ -54,14 +54,14 @@ ureg.define("E = k^6")
 Q_ = ureg.Quantity
 
 
-def compute_allocated_resources(kubeconfig=None):
+def compute_allocated_resources(api_client=None):
     """
     Get the allocated resources.
 
     This will get the cluster resources usage
     """
-    load_kubernetes_config(external_yaml=kubeconfig)
-    core_v1 = kubernetes.client.CoreV1Api()
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api(api_client=api_client)
 
     s_i = {'pods': {'allocatable': Q_('0 pods'),
                     'allocated': Q_('0 pods'),
@@ -97,7 +97,7 @@ def compute_allocated_resources(kubeconfig=None):
 
     for node in nodes_list:
         node_name = node.metadata.name
-        node_stats = compute_node_resources(node_name=node_name, kubeconfig=kubeconfig)
+        node_stats = compute_node_resources(node_name=node_name, api_client=api_client)
 
         s_i['pods']['allocatable'] = (s_i['pods']['allocatable'] +
                                       node_stats['pods']['allocatable'])
@@ -160,14 +160,14 @@ def compute_allocated_resources(kubeconfig=None):
     return s_i
 
 
-def compute_node_resources(node_name=None, kubeconfig=None):
+def compute_node_resources(node_name=None, api_client=None):
     """
     Get the node allocated resources.
 
     This will get the node resources usage
     """
-    load_kubernetes_config(external_yaml=kubeconfig)
-    core_v1 = kubernetes.client.CoreV1Api()
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api(api_client=api_client)
 
     s_i = {'pods': {'allocatable': Q_('0 pods'),
                     'allocated': Q_('0 pods'),

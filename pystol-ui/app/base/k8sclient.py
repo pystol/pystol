@@ -38,7 +38,7 @@ def state_cluster():
     return ret
 
 
-def state_nodes(kubeconfig=None):
+def state_nodes(api_client=None):
     """
     Return nodes.
 
@@ -48,9 +48,9 @@ def state_nodes(kubeconfig=None):
 
     try:
 
-        load_kubernetes_config(external_yaml=kubeconfig)
+        load_kubernetes_config()
 
-        core_v1 = kubernetes.client.CoreV1Api()
+        core_v1 = kubernetes.client.CoreV1Api(api_client=api_client)
         nodes = core_v1.list_node().items
     except Exception as e:
         print("Cant connect to the cluster: %s" % (e))
@@ -62,7 +62,7 @@ def state_nodes(kubeconfig=None):
     return datanodes
 
 
-def state_namespaces(kubeconfig=None):
+def state_namespaces(api_client=None):
     """
     Return namespaces.
 
@@ -71,8 +71,8 @@ def state_namespaces(kubeconfig=None):
     datanamespaces = []
 
     try:
-        load_kubernetes_config(external_yaml=kubeconfig)
-        core_v1 = kubernetes.client.CoreV1Api()
+        load_kubernetes_config()
+        core_v1 = kubernetes.client.CoreV1Api(api_client=api_client)
         namespaces = core_v1.list_namespace().items
     except Exception as e:
         print("Cant connect to the cluster: %s" % (e))
@@ -84,7 +84,7 @@ def state_namespaces(kubeconfig=None):
     return datanamespaces
 
 
-def state_pods(kubeconfig=None):
+def state_pods(api_client=None):
     """
     Return pods.
 
@@ -94,8 +94,8 @@ def state_pods(kubeconfig=None):
 
     try:
 
-        load_kubernetes_config(external_yaml=kubeconfig)
-        core_v1 = kubernetes.client.CoreV1Api()
+        load_kubernetes_config()
+        core_v1 = kubernetes.client.CoreV1Api(api_client=api_client)
         pods = core_v1.list_pod_for_all_namespaces().items
     except Exception as e:
         print("Cant connect to the cluster: %s" % (e))
@@ -126,7 +126,7 @@ def web_terminal():
     return ret
 
 
-def cluster_name_configured(kubeconfig=None):
+def cluster_name_configured(api_client=None):
     """
     Get the current cluster name.
 
@@ -134,8 +134,8 @@ def cluster_name_configured(kubeconfig=None):
     """
     cluster_name = "Not found"
 
-    load_kubernetes_config(external_yaml=kubeconfig)
-    core_v1 = kubernetes.client.CoreV1Api()
+    load_kubernetes_config()
+    core_v1 = kubernetes.client.CoreV1Api(api_client=api_client)
 
     try:
         # OpenShift case

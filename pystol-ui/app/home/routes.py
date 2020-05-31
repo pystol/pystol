@@ -51,6 +51,7 @@ except ImportError:
 # Auth required
 try:
     from app.auth.routes import get_session_data
+    from app.auth.util import remote_cluster
 except ImportError:
     print("Module not available")
 from google.cloud import firestore
@@ -97,18 +98,20 @@ def route_template(template):
     # End basic authentication requirement
     #
 
+    api_client=remote_cluster(kubeconfig=kubeconfig)
+
     try:
         return render_template(template + '.html',
-                               list_actions=list_actions(),
-                               show_actions=show_actions(),
-                               state_namespaces=state_namespaces(),
-                               state_nodes=state_nodes(),
-                               state_pods=state_pods(),
+                               list_actions=list_actions(api_client=api_client),
+                               show_actions=show_actions(api_client=api_client),
+                               state_namespaces=state_namespaces(api_client=api_client),
+                               state_nodes=state_nodes(api_client=api_client),
+                               state_pods=state_pods(api_client=api_client),
                                compute_allocated_resources=
-                               compute_allocated_resources(),
+                               compute_allocated_resources(api_client=api_client),
                                cluster_name_configured=
-                               cluster_name_configured(),
-                               cluster_graph=get_cluster_graph(),
+                               cluster_name_configured(api_client=api_client),
+                               cluster_graph=get_cluster_graph(api_client=api_client),
                                pystol_version = PYSTOL_VERSION,)
 
     except TemplateNotFound:

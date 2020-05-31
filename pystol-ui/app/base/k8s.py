@@ -35,21 +35,14 @@ PYSTOL_BRANCH = "master"
 # where we execute the operator from.
 #
 
-def load_kubernetes_config(external_file=None, external_yaml=None):
+def load_kubernetes_config():
     """
     Load the initial config details.
 
     We load the config depending where we execute the code from
     """
     try:
-        if external_yaml != None:
-            loader = kubernetes.config.kube_config.KubeConfigLoader(config_dict=external_yaml, config_base_path=None)
-            call_config = type.__call__(Configuration)
-            loader.load_and_set(call_config)
-            Configuration.set_default(call_config)
-        elif external_file != None:
-            kubernetes.config.load_kube_config(external_file)
-        elif 'KUBERNETES_PORT' in os.environ:
+        if 'KUBERNETES_PORT' in os.environ:
             # We set up the client from within a k8s pod
             kubernetes.config.load_incluster_config()
         elif 'KUBECONFIG' in os.environ:
@@ -72,7 +65,7 @@ def load_kubernetes_config(external_file=None, external_yaml=None):
         print(message)
 
 
-def show_actions():
+def show_actions(api_client=None):
     """
     Show the available Pystol actions from Galaxy.
 
@@ -120,14 +113,14 @@ def show_actions():
     return ret
 
 
-def list_actions(kubeconfig=None):
+def list_actions(api_client=None):
     """
     List Pystol actions from the cluster.
 
     This is a main component of the input for the controller
     """
-    load_kubernetes_config(external_yaml=kubeconfig)
-    api = kubernetes.client.CustomObjectsApi()
+    load_kubernetes_config()
+    api = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     group = "pystol.org"
     version = "v1alpha1"
@@ -160,15 +153,15 @@ def list_actions(kubeconfig=None):
     return ret
 
 
-def state_cluster(kubeconfig=None):
+def state_cluster(api_client=None):
     """
     List component of cluster.
 
     This is a main component of the input for the controller
     """
 
-    load_kubernetes_config(external_yaml=kubeconfig)
-    api = kubernetes.client.CustomObjectsApi()
+    load_kubernetes_config()
+    api = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     group = "pystol.org"
     version = "v1alpha1"

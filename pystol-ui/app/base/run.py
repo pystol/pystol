@@ -39,17 +39,15 @@ def insert_pystol_object(namespace,
                          collection,
                          role,
                          source,
-                         extra_vars):
+                         extra_vars,
+                         api_client=None):
     """
     Determine where we will insert the CR.
 
     This is a main component of the input for the controller
     """
-    if 'kubeconfig' in session:
-        load_kubernetes_config(session['kubeconfig'])
-    else:
-        load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi()
+    load_kubernetes_config()
+    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     resource = {
         "apiVersion": CRD_DOMAIN + "/" + CRD_VERSION,

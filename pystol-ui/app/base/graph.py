@@ -23,7 +23,7 @@ from flask import redirect, render_template, request, url_for, session
 import kubernetes
 
 
-def get_cluster_name(kubeconfig=None):
+def get_cluster_name(api_client=None):
     """
     Get the cluster name.
 
@@ -34,16 +34,16 @@ def get_cluster_name(kubeconfig=None):
              "classes": "entity"}]
 
 
-def get_cluster_services(kubeconfig=None):
+def get_cluster_services(api_client=None):
     """
     Get the cluster services.
 
     This method returns the cluster services for the Cytoscape graph
     """
     try:
-        load_kubernetes_config(external_yaml=kubeconfig)
+        load_kubernetes_config()
 
-        api = kubernetes.client.CoreV1Api()
+        api = kubernetes.client.CoreV1Api(api_client=api_client)
         api_response = api.list_service_for_all_namespaces(pretty='true')
     except Exception as e:
         print("Cant connect to the cluster: %s" % (e))
@@ -72,7 +72,7 @@ def get_cluster_services(kubeconfig=None):
     return s_list
 
 
-def get_cluster_deployments(kubeconfig=None):
+def get_cluster_deployments(api_client=None):
     """
     Get the cluster deployments.
 
@@ -80,7 +80,7 @@ def get_cluster_deployments(kubeconfig=None):
     """
     try:
 
-        load_kubernetes_config(external_yaml=kubeconfig)
+        load_kubernetes_config(api_client=api_client)
 
         api = kubernetes.client.AppsV1Api()
         api_response = api.list_deployment_for_all_namespaces(pretty='true')
@@ -112,7 +112,7 @@ def get_cluster_deployments(kubeconfig=None):
     return dep_list
 
 
-def get_cluster_nodes(kubeconfig=None):
+def get_cluster_nodes(api_client=None):
     """
     Get the cluster nodes.
 
@@ -120,9 +120,9 @@ def get_cluster_nodes(kubeconfig=None):
     """
     try:
 
-        load_kubernetes_config(external_yaml=kubeconfig)
+        load_kubernetes_config()
 
-        api = kubernetes.client.CoreV1Api()
+        api = kubernetes.client.CoreV1Api(api_client=api_client)
         api_response = api.list_node(pretty='true')
     except Exception as e:
         print("Cant connect to the cluster: %s" % (e))
@@ -138,7 +138,7 @@ def get_cluster_nodes(kubeconfig=None):
     return nodes_list
 
 
-def get_cluster_pods(label_selector='',kubeconfig=None):
+def get_cluster_pods(label_selector='', api_client=None):
     """
     Get the cluster pods.
 
@@ -146,9 +146,9 @@ def get_cluster_pods(label_selector='',kubeconfig=None):
     """
     try:
 
-        load_kubernetes_config(external_yaml=kubeconfig)
+        load_kubernetes_config()
 
-        api = kubernetes.client.CoreV1Api()
+        api = kubernetes.client.CoreV1Api(api_client=api_client)
         res = api.list_pod_for_all_namespaces(pretty=
                                               'true',
                                               field_selector=
@@ -168,7 +168,7 @@ def get_cluster_pods(label_selector='',kubeconfig=None):
     return pods_list
 
 
-def get_cluster_graph(kubeconfig=None):
+def get_cluster_graph(api_client=None):
     """
     Get the cluster graph.
 
