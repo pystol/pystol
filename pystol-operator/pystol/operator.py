@@ -69,13 +69,10 @@ def load_kubernetes_config():
                    "    export KUBECONFIG=~/.kube/config\n"
                    "Or run Pystol from within the cluster to make use of "
                    "load_incluster_config.\n"
-                   "Error: " % (e))
+                   "Error: %s" % (e))
         print(message)
         print("---")
         print("The current Pystol version is: %s" % (pystol_version))
-        print(" ")
-        print("Bye...")
-        sys.exit(0)
 
 #
 # Part of the operation in charge of adding the custom resources
@@ -88,14 +85,15 @@ def insert_pystol_object(namespace,
                          collection,
                          role,
                          source,
-                         extra_vars):
+                         extra_vars,
+                         api_client=None):
     """
     Determine where we will insert the CR.
 
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi()
+    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     resource = {
         "apiVersion": CRD_DOMAIN + "/" + CRD_VERSION,
@@ -154,7 +152,8 @@ def insert_pystol_object(namespace,
 #
 
 
-def watch_for_pystol_timeouts(stop):
+def watch_for_pystol_timeouts(stop,
+                              api_client=None):
     """
     Watch for action with timeouts.
 
@@ -165,7 +164,8 @@ def watch_for_pystol_timeouts(stop):
         return True
 
 
-def watch_for_pystol_objects(stop):
+def watch_for_pystol_objects(stop,
+                             api_client=None):
     """
     Initiate the main listening method.
 
@@ -174,7 +174,7 @@ def watch_for_pystol_objects(stop):
     The watcher is defined here.
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi()
+    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     w = kubernetes.watch.Watch()
     for event in w.stream(custom_obj.list_cluster_custom_object,
@@ -196,7 +196,8 @@ def watch_for_pystol_objects(stop):
         execute_pystol_action(obj)
 
 
-def execute_pystol_action(obj):
+def execute_pystol_action(obj,
+                          api_client=None):
     """
     Execute the Pystol action.
 
@@ -204,7 +205,7 @@ def execute_pystol_action(obj):
     defined in the custom object.
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi()
+    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     metadata = obj.get("metadata")
     if not metadata:
@@ -247,7 +248,7 @@ def execute_pystol_action(obj):
                                               updt)
 
     # Create the job definition
-    api_instance = kubernetes.client.BatchV1Api()
+    api_instance = kubernetes.client.BatchV1Api(api_client=api_client)
 
     # TODO: This should be configurable
     container_image = "quay.io/pystol/pystol-operator-stable:latest"

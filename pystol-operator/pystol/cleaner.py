@@ -25,14 +25,14 @@ from pystol.operator import load_kubernetes_config
 pystol_version = __version__
 
 
-def purge_pystol():
+def purge_pystol(api_client=None):
     """
     Purge Pystol from the cluster.
 
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    v1 = kubernetes.client.CoreV1Api()
+    v1 = kubernetes.client.CoreV1Api(api_client=api_client)
 
     name = 'pystol'
     pretty = 'true'
@@ -105,7 +105,7 @@ def purge_pystol():
         print("    " + u"\u2757" + " Service account removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
-    rbac = kubernetes.client.RbacAuthorizationV1Api()
+    rbac = kubernetes.client.RbacAuthorizationV1Api(api_client=api_client)
     name = 'pystol'
     pretty = 'true'
     orphan_dependents = True
@@ -122,7 +122,7 @@ def purge_pystol():
         print("    " + u"\u2757" + " Cluster role removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
-    rbac = kubernetes.client.RbacAuthorizationV1Api()
+    rbac = kubernetes.client.RbacAuthorizationV1Api(api_client=api_client)
     name = 'pystol'
     pretty = 'true'
     orphan_dependents = True
@@ -139,7 +139,7 @@ def purge_pystol():
         print("    " + u"\u2757" + " Cluster role binding removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
-    ext = kubernetes.client.ApiextensionsV1beta1Api()
+    ext = kubernetes.client.ApiextensionsV1beta1Api(api_client=api_client)
     name = 'pystolactions.pystol.org'
     pretty = 'true'
     orphans = True

@@ -117,14 +117,14 @@ def show_actions():
     print("For more information go to: https://docs.pystol.org")
 
 
-def list_actions():
+def list_actions(api_client=None):
     """
     List Pystol actions from the cluster.
 
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    api = kubernetes.client.CustomObjectsApi()
+    api = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     group = "pystol.org"
     version = "v1alpha1"
@@ -153,14 +153,14 @@ def list_actions():
     print(x)
 
 
-def get_action(name, debug=False):
+def get_action(name, debug=False, api_client=None):
     """
     Get Pystol action details.
 
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    api = kubernetes.client.CustomObjectsApi()
+    api = kubernetes.client.CustomObjectsApi(api_client=api_client)
 
     group = "pystol.org"
     version = "v1alpha1"
@@ -207,7 +207,7 @@ def get_action(name, debug=False):
 
     if debug:
 
-        api = kubernetes.client.BatchV1Api()
+        api = kubernetes.client.BatchV1Api(api_client=api_client)
         namespace = "pystol"
         pretty = 'true'
         try:
@@ -221,7 +221,7 @@ def get_action(name, debug=False):
             print("  " + u"\U0001F914" +
                   " Job not found, perhaps you have a typo.")
 
-        api = kubernetes.client.CoreV1Api()
+        api = kubernetes.client.CoreV1Api(api_client=api_client)
         namespace = "pystol"
         pretty = 'true'
         try:

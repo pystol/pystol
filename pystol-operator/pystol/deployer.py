@@ -32,17 +32,21 @@ import yaml
 pystol_version = __version__
 
 
-def deploy_pystol():
+def deploy_pystol(api_client=None):
     """
     Install Pystol from Python.
 
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    v1 = kubernetes.client.CoreV1Api()
-    deployment = kubernetes.client.AppsV1Api()
-    rbac = kubernetes.client.RbacAuthorizationV1Api()
-    apicli = kubernetes.client.ApiClient()
+    v1 = kubernetes.client.CoreV1Api(api_client=api_client)
+    deployment = kubernetes.client.AppsV1Api(api_client=api_client)
+    rbac = kubernetes.client.RbacAuthorizationV1Api(api_client=api_client)
+    
+    if api_client == None:
+        apicli = kubernetes.client.ApiClient()
+    else:
+        apicli = api_client
 
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/namespace.yaml")) as f:

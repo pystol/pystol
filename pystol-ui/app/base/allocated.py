@@ -19,7 +19,7 @@ under the License.
 from collections import defaultdict
 from types import SimpleNamespace
 
-from app.base.k8s import load_kubernetes_config
+from pystol.operator import load_kubernetes_config
 
 from flask import Flask, redirect, render_template, request, url_for
 
