@@ -13,6 +13,9 @@ nohup.out
 .github_CODE_OF_CONDUCT.md
 .github_LICENSE
 .github_README.md
+pystol-ui/app/auth
+pystol-ui/app/graph
+pystol-ui/app/connect
 node_modules/*
 pystol-ansible_CODE_OF_CONDUCT.md
 pystol-ansible_LICENSE
