@@ -22,7 +22,6 @@ import os
 import app
 
 from app.base.allocated import compute_allocated_resources
-from app.base.graph import get_cluster_graph
 from app.base.hexa import hexagons_data
 from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import (cluster_name_configured,
@@ -124,7 +123,6 @@ def route_template(template):
                                compute_allocated_resources(api_client=api_client),
                                cluster_name_configured=
                                cluster_name_configured(api_client=api_client),
-                               cluster_graph=get_cluster_graph(api_client=api_client),
                                pystol_version = PYSTOL_VERSION,)
 
     except TemplateNotFound:

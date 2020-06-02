@@ -22,7 +22,6 @@ import os
 import app
 
 from app.base.allocated import compute_allocated_resources
-from app.base.graph import get_cluster_graph
 from app.base.hexa import hexagons_data
 from app.base.k8s import list_actions, show_actions
 from app.base.k8sclient import (cluster_name_configured,
