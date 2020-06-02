@@ -73,14 +73,13 @@ def hexagons_data(api_client=None):
         hdata['kubeletver'] = node_info.kubelet_version
         hdata['os'] = node_info.operating_system
 
-        state_info = compute_node_resources(node_name=node_name, api_client=api_client)
+        state_info = compute_node_resources(
+            node_name=node_name, api_client=api_client)
         hdata['state_info'] = state_info
         max_pods = int(int(allocatable["pods"]) * 1.5)
         field_selector = ("spec.nodeName=" + node_name)
-        pods = core_v1.list_pod_for_all_namespaces(limit=
-                                                   max_pods,
-                                                   field_selector=
-                                                   field_selector).items
+        pods = core_v1.list_pod_for_all_namespaces(limit=max_pods,
+                                                   field_selector=field_selector).items
         hdata['pods'] = []
         for pod in pods:
             hdata['pods'].append({'name': pod.metadata.name,

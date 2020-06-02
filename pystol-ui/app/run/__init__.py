@@ -27,17 +27,22 @@ blueprint = Blueprint(
     static_folder='static'
 )
 
+
 def get_position():
     return 2
+
 
 def get_category():
     return 1
 
+
 def get_name():
     return "Run"
 
+
 def get_icon():
     return "fa-rocket"
+
 
 def get_endpoint():
     return "run_blueprint.run"

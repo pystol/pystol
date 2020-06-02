@@ -41,8 +41,9 @@ def deploy_pystol(api_client=None):
     load_kubernetes_config()
     v1 = kubernetes.client.CoreV1Api(api_client=api_client)
     deployment = kubernetes.client.AppsV1Api(api_client=api_client)
-    rbac = kubernetes.client.RbacAuthorizationV1Api(api_client=api_client)
-    
+    rbac = kubernetes.client.RbacAuthorizationV1Api(
+        api_client=api_client)
+
     if api_client == None:
         apicli = kubernetes.client.ApiClient()
     else:
@@ -106,7 +107,8 @@ def deploy_pystol(api_client=None):
             print("  " + u"\U0001F4E6" + " Service account created.")
             print("     '%s'" % resp.metadata.name)
         except ApiException:
-            print("  " + u"\u2757" + " Service account creation warning.")
+            print("  " + u"\u2757" +
+                  " Service account creation warning.")
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
@@ -125,7 +127,8 @@ def deploy_pystol(api_client=None):
         try:
             resp = rbac.create_cluster_role_binding(
                 body=yaml.safe_load(f))
-            print("  " + u"\U0001F4E6" + " Cluster role bindings created.")
+            print("  " + u"\U0001F4E6" +
+                  " Cluster role bindings created.")
             print("     '%s'"
                   % resp.metadata.name)
         except ApiException:

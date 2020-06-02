@@ -27,17 +27,22 @@ blueprint = Blueprint(
     static_folder='static'
 )
 
+
 def get_position():
     return 0
+
 
 def get_category():
     return 2
 
+
 def get_name():
     return "F.A.Q."
 
+
 def get_icon():
     return "fa-question"
+
 
 def get_endpoint():
     return "faq_blueprint.faq"

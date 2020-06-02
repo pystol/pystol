@@ -105,7 +105,8 @@ def purge_pystol(api_client=None):
         print("    " + u"\u2757" + " Service account removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
-    rbac = kubernetes.client.RbacAuthorizationV1Api(api_client=api_client)
+    rbac = kubernetes.client.RbacAuthorizationV1Api(
+        api_client=api_client)
     name = 'pystol'
     pretty = 'true'
     orphan_dependents = True
@@ -122,7 +123,8 @@ def purge_pystol(api_client=None):
         print("    " + u"\u2757" + " Cluster role removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
-    rbac = kubernetes.client.RbacAuthorizationV1Api(api_client=api_client)
+    rbac = kubernetes.client.RbacAuthorizationV1Api(
+        api_client=api_client)
     name = 'pystol'
     pretty = 'true'
     orphan_dependents = True
@@ -134,12 +136,15 @@ def purge_pystol(api_client=None):
                                          orphan_dependents=orphan_dependents,
                                          propagation_policy=propagation_policy,
                                          body=body)
-        print("    " + u"\U0001F9F9" + " Cluster role binding removed.")
+        print("    " + u"\U0001F9F9" +
+              " Cluster role binding removed.")
     except ApiException:
-        print("    " + u"\u2757" + " Cluster role binding removing warning.")
+        print("    " + u"\u2757" +
+              " Cluster role binding removing warning.")
         print("       Can't remove it, maybe it's gone...")
 
-    ext = kubernetes.client.ApiextensionsV1beta1Api(api_client=api_client)
+    ext = kubernetes.client.ApiextensionsV1beta1Api(
+        api_client=api_client)
     name = 'pystolactions.pystol.org'
     pretty = 'true'
     orphans = True

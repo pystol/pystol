@@ -43,7 +43,8 @@ def get_file_handler():
 
     This is a main component of the input for the controller
     """
-    file_handler = TimedRotatingFileHandler(PYSTOL_LOG_FILE, when='midnight')
+    file_handler = TimedRotatingFileHandler(
+        PYSTOL_LOG_FILE, when='midnight')
     file_handler.setFormatter(FORMATTER)
     return file_handler
 

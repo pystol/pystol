@@ -29,6 +29,7 @@ from flask_login import LoginManager
 
 app = Flask(__name__, static_folder='base/static')
 
+
 def register_blueprints(app):
     """
     Register the blueprints.
@@ -109,6 +110,7 @@ def apply_themes(app):
                     values['filename'] = theme_file
         return url_for(endpoint, **values)
 
+
 def render_menu():
     # We only support tree main categories
     pattern = re.compile("^([a-z]+)+$")
@@ -116,7 +118,7 @@ def render_menu():
     for module_name in next(os.walk('./app'))[1]:
         if (pattern.match(module_name) and module_name != 'home' and module_name != 'base'):
             to_render.append(module_name)
-    menu = [[],[],[]]
+    menu = [[], [], []]
     for module_name in to_render:
         module = import_module('app.{}'.format(module_name))
         item = {'position': module.get_position(),
@@ -124,7 +126,7 @@ def render_menu():
                 'name': module.get_name(),
                 'icon': module.get_icon(),
                 'endpoint': module.get_endpoint(),
-        }
+                }
         menu[item['category']].append(item)
 
     cat0 = sorted(menu[0], key=lambda k: k['position'], reverse=False)

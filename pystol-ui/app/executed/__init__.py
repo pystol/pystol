@@ -27,17 +27,22 @@ blueprint = Blueprint(
     static_folder='static'
 )
 
+
 def get_position():
     return 0
+
 
 def get_category():
     return 1
 
+
 def get_name():
     return "Executed"
 
+
 def get_icon():
     return "fa-running"
+
 
 def get_endpoint():
     return "executed_blueprint.executed"

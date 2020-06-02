@@ -204,8 +204,10 @@ def main():
                                        args.extra_vars)
 
             if ins:
-                print("  " + u"\U0001F4A8" + " The action was deployed OK")
-                print("  " + u"\U0001F916" + " Check its status for details")
+                print("  " + u"\U0001F4A8" +
+                      " The action was deployed OK")
+                print("  " + u"\U0001F916" +
+                      " Check its status for details")
                 print("  " + u"\U0001F92B" + " Try using the CLI list and get"
                                              " options, 'pystol -h' helps")
             else:
@@ -236,10 +238,13 @@ def main():
                        "*  RBAC rules, and any other Pystol resource.  *\n"
                        "*********This action can not be undone**********\n")
                 print(msg)
-                choice = input("Write 'yes' and press 'enter' to proceed: \n")
+                choice = input(
+                    "Write 'yes' and press 'enter' to proceed: \n")
                 if choice in yes:
-                    print(u"\U0001F480" + " Purging Pystol from the cluster.")
-                    print("  " + u"\U0001F4A3" + " Removing resources...")
+                    print(u"\U0001F480" +
+                          " Purging Pystol from the cluster.")
+                    print("  " + u"\U0001F4A3" +
+                          " Removing resources...")
                     purge_pystol()
                     print(u"\u2728" + " Pystol was removed completely.")
                 else:

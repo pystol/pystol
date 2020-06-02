@@ -47,7 +47,8 @@ def insert_pystol_object(namespace,
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
+    custom_obj = kubernetes.client.CustomObjectsApi(
+        api_client=api_client)
 
     resource = {
         "apiVersion": CRD_DOMAIN + "/" + CRD_VERSION,

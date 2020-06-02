@@ -76,8 +76,6 @@ def compute_allocated_resources(api_client=None):
                        'allocated': Q_('0 Ki'),
                        'percentage': 0}}
 
-
-
     try:
         nodes_list = core_v1.list_node().items
     except Exception as e:
@@ -97,7 +95,8 @@ def compute_allocated_resources(api_client=None):
 
     for node in nodes_list:
         node_name = node.metadata.name
-        node_stats = compute_node_resources(node_name=node_name, api_client=api_client)
+        node_stats = compute_node_resources(
+            node_name=node_name, api_client=api_client)
 
         s_i['pods']['allocatable'] = (s_i['pods']['allocatable'] +
                                       node_stats['pods']['allocatable'])
@@ -122,7 +121,6 @@ def compute_allocated_resources(api_client=None):
 
         s_i['storage']['allocated'] = (s_i['storage']['allocated'] +
                                        node_stats['storage']['allocated'])
-
 
     if int(s_i['pods']['allocatable'].magnitude) == 0:
         s_i['pods']['percentage'] = 0
@@ -152,11 +150,6 @@ def compute_allocated_resources(api_client=None):
             (int(s_i['storage']['allocated'].magnitude) * 100) //
             (int(s_i['storage']['allocatable'].magnitude)))
 
-
-
-
-
-
     return s_i
 
 
@@ -185,7 +178,8 @@ def compute_node_resources(node_name=None, api_client=None):
     field_selector = ("metadata.name=" + node_name)
 
     try:
-        node = core_v1.list_node(field_selector=field_selector).items[0]
+        node = core_v1.list_node(
+            field_selector=field_selector).items[0]
     except Exception as e:
         print("Something bad happened:  %s" % (e))
 
@@ -213,10 +207,8 @@ def compute_node_resources(node_name=None, api_client=None):
 
     s_i["pods"]["allocatable"] = max_pods * ureg.pods
 
-    pods = core_v1.list_pod_for_all_namespaces(limit=
-                                               max_pods,
-                                               field_selector=
-                                               field_selector).items
+    pods = core_v1.list_pod_for_all_namespaces(limit=max_pods,
+                                               field_selector=field_selector).items
 
     s_i["pods"]["allocated"] = len(pods) * ureg.pods
 

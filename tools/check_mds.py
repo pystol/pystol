@@ -69,7 +69,8 @@ def main():
     repos_to_exclude = opts.exclude_repos
 
     gh = Github()
-    temp_repositories = gh.search_repositories(query='user:' + organization)
+    temp_repositories = gh.search_repositories(
+        query='user:' + organization)
 
     repos_to_exclude.append('pystol/pystol')
     repositories = []

@@ -21,6 +21,7 @@ import os
 from os import environ
 import secrets
 
+
 class Config(object):
     """
     Get the global config.
@@ -30,7 +31,7 @@ class Config(object):
 
     basedir = os.path.abspath(os.path.dirname(__file__))
 
-    SECRET_KEY = "KeYkEyKeY" # secrets.token_urlsafe(16)
+    SECRET_KEY = "KeYkEyKeY"  # secrets.token_urlsafe(16)
 
     # This will create a file in <app> FOLDER
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir,

@@ -177,7 +177,8 @@ def plot_graph():
 
     x_kill = [x[0] for x in global_kill]
     y_kill = [x[1] for x in global_kill]
-    plt.plot(x_kill, y_kill, color='red', marker='o', label='Killed pods')
+    plt.plot(x_kill, y_kill, color='red',
+             marker='o', label='Killed pods')
 
     plt.legend(loc='upper left')
     plt.savefig('foo.png', bbox_inches='tight')

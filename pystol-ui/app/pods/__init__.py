@@ -27,17 +27,22 @@ blueprint = Blueprint(
     static_folder='static'
 )
 
+
 def get_position():
     return 4
+
 
 def get_category():
     return 0
 
+
 def get_name():
     return "Pods"
 
+
 def get_icon():
     return "fa-boxes"
+
 
 def get_endpoint():
     return "pods_blueprint.pods"

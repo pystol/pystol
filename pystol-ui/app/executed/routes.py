@@ -54,9 +54,10 @@ try:
 except ImportError:
     print("Module not available")
 from google.cloud import firestore
-#Auth required
+# Auth required
 fdb = firestore.Client()
 transaction = fdb.transaction()
+
 
 @blueprint.route('/')
 def executed():
@@ -71,10 +72,12 @@ def executed():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -85,14 +88,14 @@ def executed():
         api_client = None
     else:
         kubeconfig = session['kubeconfig']
-        api_client=remote_cluster(kubeconfig=kubeconfig)
+        api_client = remote_cluster(kubeconfig=kubeconfig)
 
     if (not 'username' in session or
         session['username'] == None or
         session['username'] == '' or
         not 'email' in session or
         session['email'] == None or
-        session['email'] == ''):
+            session['email'] == ''):
 
         username = None
         email = None
@@ -103,12 +106,13 @@ def executed():
     try:
         return render_template('executed.html',
                                username=username, email=email,
-                               list_actions=list_actions(api_client=api_client),
-                               compute_allocated_resources=
-                               compute_allocated_resources(api_client=api_client),
-                               cluster_name_configured=
-                               cluster_name_configured(api_client=api_client),
-                               pystol_version = PYSTOL_VERSION,)
+                               list_actions=list_actions(
+                                   api_client=api_client),
+                               compute_allocated_resources=compute_allocated_resources(
+                                   api_client=api_client),
+                               cluster_name_configured=cluster_name_configured(
+                                   api_client=api_client),
+                               pystol_version=PYSTOL_VERSION,)
 
     except TemplateNotFound:
         return render_template('page-404.html'), 404

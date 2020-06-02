@@ -49,7 +49,7 @@ setup(
     description=_DESCRIPTION,
     long_description_content_type='text/markdown',
     long_description=long_description,
-    url = 'https://www.pystol.org',
+    url='https://www.pystol.org',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',

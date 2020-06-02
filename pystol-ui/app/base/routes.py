@@ -47,10 +47,12 @@ def route_errors(error):
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -73,10 +75,12 @@ def api_list_actions():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -98,10 +102,12 @@ def api_show_actions():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -123,10 +129,12 @@ def api_state_namespaces():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -148,10 +156,12 @@ def api_state_nodes():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -173,10 +183,12 @@ def api_state_pods():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -198,10 +210,12 @@ def api_web_terminal():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -223,10 +237,12 @@ def api_cluster_name_configured():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -250,8 +266,8 @@ def shutdown():
 
 
 # Errors
-#@login_manager.unauthorized_handler
-#def unauthorized_handler():
+# @login_manager.unauthorized_handler
+# def unauthorized_handler():
 #    """
 #    Define a route.
 #
@@ -261,8 +277,8 @@ def shutdown():
 #                           template_folder="../home/templates/"), 403
 
 
-#@blueprint.errorhandler(403)
-#def access_forbidden(error):
+# @blueprint.errorhandler(403)
+# def access_forbidden(error):
 #    """
 #    Define a route.
 #

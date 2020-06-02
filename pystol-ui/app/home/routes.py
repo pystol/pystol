@@ -54,9 +54,10 @@ try:
 except ImportError:
     print("Module not available")
 from google.cloud import firestore
-#Auth required
+# Auth required
 fdb = firestore.Client()
 transaction = fdb.transaction()
+
 
 @blueprint.route('/')
 def home_root():
@@ -71,10 +72,12 @@ def home_root():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -96,10 +99,12 @@ def route_template(template):
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -110,20 +115,25 @@ def route_template(template):
         api_client = None
     else:
         kubeconfig = session['kubeconfig']
-        api_client=remote_cluster(kubeconfig=kubeconfig)
+        api_client = remote_cluster(kubeconfig=kubeconfig)
 
     try:
         return render_template(template + '.html',
-                               list_actions=list_actions(api_client=api_client),
-                               show_actions=show_actions(api_client=api_client),
-                               state_namespaces=state_namespaces(api_client=api_client),
-                               state_nodes=state_nodes(api_client=api_client),
-                               state_pods=state_pods(api_client=api_client),
-                               compute_allocated_resources=
-                               compute_allocated_resources(api_client=api_client),
-                               cluster_name_configured=
-                               cluster_name_configured(api_client=api_client),
-                               pystol_version = PYSTOL_VERSION,)
+                               list_actions=list_actions(
+                                   api_client=api_client),
+                               show_actions=show_actions(
+                                   api_client=api_client),
+                               state_namespaces=state_namespaces(
+                                   api_client=api_client),
+                               state_nodes=state_nodes(
+                                   api_client=api_client),
+                               state_pods=state_pods(
+                                   api_client=api_client),
+                               compute_allocated_resources=compute_allocated_resources(
+                                   api_client=api_client),
+                               cluster_name_configured=cluster_name_configured(
+                                   api_client=api_client),
+                               pystol_version=PYSTOL_VERSION,)
 
     except TemplateNotFound:
         return render_template('page-404.html'), 404
@@ -131,7 +141,7 @@ def route_template(template):
         return render_template('page-500.html'), 500
 
 
-@blueprint.route('/api/v1/actionRun', methods = ['POST'])
+@blueprint.route('/api/v1/actionRun', methods=['POST'])
 def action_run():
     """
     Show the executed Pystol actions.
@@ -144,10 +154,12 @@ def action_run():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
     else:
         session['kubeconfig'] = None
-    if hasattr(app, 'auth') and session['email'] == None: #not current_user.is_authenticated:
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
         return redirect(url_for('auth_blueprint.login'))
     #
     # End basic authentication requirement
@@ -156,7 +168,7 @@ def action_run():
     if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
         api_client = None
     else:
-        api_client=remote_cluster(kubeconfig=kubeconfig)
+        api_client = remote_cluster(kubeconfig=kubeconfig)
 
     try:
         if request.method == "POST":

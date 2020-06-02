@@ -54,7 +54,8 @@ def load_kubernetes_config():
             # We set up the client from within a k8s pod
             kubernetes.config.load_incluster_config()
         elif 'KUBECONFIG' in os.environ:
-            kubernetes.config.load_kube_config(os.getenv('KUBECONFIG'))
+            kubernetes.config.load_kube_config(
+                os.getenv('KUBECONFIG'))
         else:
             kubernetes.config.load_kube_config()
     except Exception as e:
@@ -93,7 +94,8 @@ def insert_pystol_object(namespace,
     This is a main component of the input for the controller
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
+    custom_obj = kubernetes.client.CustomObjectsApi(
+        api_client=api_client)
 
     resource = {
         "apiVersion": CRD_DOMAIN + "/" + CRD_VERSION,
@@ -174,7 +176,8 @@ def watch_for_pystol_objects(stop,
     The watcher is defined here.
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
+    custom_obj = kubernetes.client.CustomObjectsApi(
+        api_client=api_client)
 
     w = kubernetes.watch.Watch()
     for event in w.stream(custom_obj.list_cluster_custom_object,
@@ -205,7 +208,8 @@ def execute_pystol_action(obj,
     defined in the custom object.
     """
     load_kubernetes_config()
-    custom_obj = kubernetes.client.CustomObjectsApi(api_client=api_client)
+    custom_obj = kubernetes.client.CustomObjectsApi(
+        api_client=api_client)
 
     metadata = obj.get("metadata")
     if not metadata:
