@@ -23,6 +23,8 @@ from pystol.operator import load_kubernetes_config
 
 from flask import redirect, render_template, request, url_for
 
+from urllib.parse import urlparse
+
 import kubernetes
 
 import yaml
@@ -155,12 +157,10 @@ def cluster_name_configured(api_client=None):
         print("Cant find clustername for OpenShift case")
 
     try:
-        if kubeconfig != None:
-            cluster_name = kubeconfig['clusters'][0]['name']
-            print(cluster_name)
-            return cluster_name
+        if api_client.configuration.host != None:
+            return urlparse(api_client.configuration.host).hostname
     except Exception:
-        print("Cant find the clustername in the Kubeconfig")
+        print("Cant find the clustername in the config object")
 
     # If we dont manage to find it we fall back to the CLI as a last resource
     try:
