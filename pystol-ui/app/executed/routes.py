@@ -40,23 +40,30 @@ from flask_login import (current_user,
                          logout_user)
 
 from jinja2 import TemplateNotFound
+from google.cloud import firestore
 
 try:
     from pystol import __version__
     PYSTOL_VERSION = __version__
 except ImportError:
     PYSTOL_VERSION = "Not installed"
-
-# Auth required
+#
+# Begin authentication
+#
 try:
     from app.auth.routes import get_session_data
     from app.auth.util import remote_cluster
 except ImportError:
     print("Module not available")
-from google.cloud import firestore
-# Auth required
-fdb = firestore.Client()
-transaction = fdb.transaction()
+
+try:
+    fdb = firestore.Client()
+    transaction = fdb.transaction()
+except Exception as e:
+    print("Cant connect to firestore: %s" % (e))
+#
+# End authentication
+#
 
 
 @blueprint.route('/')

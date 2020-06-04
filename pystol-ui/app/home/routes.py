@@ -40,24 +40,30 @@ from flask_login import (current_user,
                          logout_user)
 
 from jinja2 import TemplateNotFound
+from google.cloud import firestore
 
 try:
     from pystol import __version__
     PYSTOL_VERSION = __version__
 except ImportError:
     PYSTOL_VERSION = "Not installed"
-
-# Auth required
+#
+# Begin authentication
+#
 try:
     from app.auth.routes import get_session_data
     from app.auth.util import remote_cluster
 except ImportError:
     print("Module not available")
-from google.cloud import firestore
-# Auth required
-fdb = firestore.Client()
-transaction = fdb.transaction()
 
+try:
+    fdb = firestore.Client()
+    transaction = fdb.transaction()
+except Exception as e:
+    print("Cant connect to firestore: %s" % (e))
+#
+# End authentication
+#
 
 @blueprint.route('/')
 def home_root():
@@ -166,8 +172,10 @@ def action_run():
     #
 
     if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
+        kubeconfig = None
         api_client = None
     else:
+        kubeconfig = session['kubeconfig']
         api_client = remote_cluster(kubeconfig=kubeconfig)
 
     try:
@@ -211,7 +219,7 @@ def action_run():
                                  source=source,
                                  extra_vars=extra_vars,
                                  api_client=api_client)
-            return redirect('/pystol-actions-executed')
+            return redirect(url_for('executed_blueprint.executed'))
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except Exception:
