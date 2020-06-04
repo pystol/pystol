@@ -212,6 +212,8 @@ def action_run():
                 source = ""
 
             if 'extra_vars' in dict:
+                if dict['extra_vars'] == "" or dict['extra_vars'] is None:
+                    extra_vars = {}
                 extra_vars = dict['extra_vars']
             else:
                 extra_vars = {}
