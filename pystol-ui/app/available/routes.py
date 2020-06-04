@@ -23,12 +23,11 @@ import app
 
 from app.base.allocated import compute_allocated_resources
 from app.base.hexa import hexagons_data
-from app.base.k8s import list_actions, show_actions
+from pystol.lister import show_actions
 from app.base.k8sclient import (cluster_name_configured,
                                 state_namespaces,
                                 state_nodes,
                                 state_pods)
-from app.base.run import insert_pystol_object
 
 from app.available import blueprint
 
@@ -113,8 +112,7 @@ def available():
     try:
         return render_template('available.html',
                                username=username, email=email,
-                               show_actions=show_actions(
-                                   api_client=api_client),
+                               show_actions=show_actions(),
                                compute_allocated_resources=compute_allocated_resources(
                                    api_client=api_client),
                                cluster_name_configured=cluster_name_configured(

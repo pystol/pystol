@@ -103,8 +103,16 @@ def show_actions():
     url = ("https://github.com/pystol/pystol-galaxy/tree/" +
            PYSTOL_BRANCH + "/actions/roles/")
 
+    ret = []
     for action in actions:
         if action['content_type'] == "role":
+            ret.append({'name': action['name'],
+                        'description': action['description'],
+                        'documentation': url + action['name'],
+                        'license': str(license),
+                        'version': str(version),
+                        'repository': str(repository)})
+
             x.add_row([action['name'],
                        action['description'],
                        url + action['name']])
@@ -116,6 +124,7 @@ def show_actions():
     print("Published at: https://galaxy.ansible.com/pystol")
     print("For more information go to: https://docs.pystol.org")
 
+    return ret
 
 def list_actions(api_client=None):
     """
@@ -137,6 +146,7 @@ def list_actions(api_client=None):
                      "Creation",
                      "Action state",
                      "Workflow state"]
+    ret = []
     try:
         resp = api.list_namespaced_custom_object(group=group,
                                                  version=version,
@@ -144,13 +154,27 @@ def list_actions(api_client=None):
                                                  plural=plural,
                                                  pretty=pretty)
         for action in resp['items']:
+            ret.append({'name':
+                        action['metadata']['name'],
+                        'creationTimestamp':
+                        action['metadata']['creationTimestamp'],
+                        'action_state':
+                        action['spec']['action_state'],
+                        'workflow_state':
+                        action['spec']['workflow_state'],
+                        'stdout':
+                        action['spec']['action_stdout'],
+                        'stderr':
+                        action['spec']['action_stderr']})
             x.add_row([action['metadata']['name'],
                        action['metadata']['creationTimestamp'],
                        action['spec']['action_state'],
                        action['spec']['workflow_state']])
     except ApiException:
         print("No objects found...")
+        return []
     print(x)
+    return ret
 
 
 def get_action(name, debug=False, api_client=None):

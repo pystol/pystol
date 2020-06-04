@@ -19,7 +19,7 @@ under the License.
 import app
 
 from app.base import blueprint
-from app.base.k8s import list_actions, show_actions
+from pystol.lister import list_actions, show_actions
 from app.base.k8sclient import (cluster_name_configured,
                                 state_namespaces,
                                 state_nodes,
