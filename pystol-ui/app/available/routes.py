@@ -32,7 +32,7 @@ from app.base.run import insert_pystol_object
 
 from app.available import blueprint
 
-from flask import redirect, render_template, request, url_for
+from flask import current_app, redirect, render_template, request, url_for
 
 from flask_login import (current_user,
                          login_required,
@@ -123,5 +123,8 @@ def available():
 
     except TemplateNotFound:
         return render_template('page-404.html'), 404
-    except Exception:
+    except Exception as e:
+        print("Exception found in %s: %s" % (blueprint.name, e))
+        if current_app.config['DEBUG']:
+            raise e
         return render_template('page-500.html'), 500
