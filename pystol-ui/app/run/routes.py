@@ -28,6 +28,8 @@ from app.base.k8sclient import (cluster_name_configured,
                                 state_nodes,
                                 state_pods)
 
+from pystol.operator import insert_pystol_object
+
 from app.run import blueprint
 
 from flask import current_app, redirect, render_template, request, url_for
@@ -117,6 +119,106 @@ def run():
                                    api_client=api_client),
                                pystol_version=PYSTOL_VERSION,)
 
+    except TemplateNotFound:
+        return render_template('page-404.html'), 404
+    except Exception as e:
+        print("Exception found in %s: %s" % (blueprint.name, e))
+        if current_app.config['DEBUG']:
+            raise e
+        return render_template('page-500.html'), 500
+
+
+
+@blueprint.route('/action', methods=['POST'])
+def run_action():
+    """
+    Show the executed Pystol actions.
+
+    This is a main method
+    """
+    #
+    # Basic authentication module requirement
+    # If the auth module is installed and the user is not authenticated, so go to login
+    #
+    session = {}
+    if hasattr(app, 'auth'):
+        session = get_session_data(
+            transaction=transaction, session_id=request.cookies.get('session_id'))
+    else:
+        session['kubeconfig'] = None
+    # not current_user.is_authenticated:
+    if hasattr(app, 'auth') and session['email'] == None:
+        return redirect(url_for('auth_blueprint.login'))
+    #
+    # End basic authentication requirement
+    #
+
+    if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
+        kubeconfig = None
+        api_client = None
+    else:
+        kubeconfig = session['kubeconfig']
+        api_client = remote_cluster(kubeconfig=kubeconfig)
+
+    if (not 'username' in session or
+        session['username'] == None or
+        session['username'] == '' or
+        not 'email' in session or
+        session['email'] == None or
+            session['email'] == ''):
+
+        username = None
+        email = None
+    else:
+        username = session['username']
+        email = session['email']
+
+
+    try:
+        if request.method == "POST":
+            print("Run action by post")
+            dict = request.form
+            namespace = ""
+            collection = ""
+            role = ""
+            source = ""
+            extra_vars = {}
+
+            if 'namespace' in dict:
+                namespace = dict['namespace']
+            else:
+                namespace = ""
+
+            if 'collection' in dict:
+                collection = dict['collection']
+            else:
+                collection = ""
+
+            if 'role' in dict:
+                role = dict['role']
+            else:
+                role = ""
+
+            if 'source' in dict:
+                source = dict['source']
+            else:
+                source = ""
+
+            if 'extra_vars' in dict:
+                if dict['extra_vars'] == "" or dict['extra_vars'] is None:
+                    extra_vars = "{}"
+                else:
+                    extra_vars = dict['extra_vars']
+            else:
+                extra_vars = "{}"
+
+            insert_pystol_object(namespace=namespace,
+                                 collection=collection,
+                                 role=role,
+                                 source=source,
+                                 extra_vars=extra_vars,
+                                 api_client=api_client)
+            return redirect(url_for('executed_blueprint.executed'))
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except Exception as e:

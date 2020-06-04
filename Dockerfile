@@ -11,7 +11,7 @@ COPY . .
 
 ## Installing dependencies
 # Installing Python3
-RUN apk add --update build-base bash curl python3 git python3-dev libffi-dev openssl-dev py3-pip
+RUN apk add --update build-base bash curl python3 git python3-dev libffi-dev openssl-dev py3-pip iputils
 RUN pip3 install --upgrade pip virtualenv setuptools
 
 ## Installing pystol launcher requirements
