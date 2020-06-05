@@ -77,8 +77,10 @@ def pods():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:

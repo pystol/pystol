@@ -78,8 +78,10 @@ def executed():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -110,10 +112,16 @@ def executed():
         email = session['email']
 
     try:
+        # If the Pystol resources are not deployed
+        # this will fail, we always return a valid parameter.
+        list_actions = list_actions(api_client=api_client)
+    except Exception as e:
+        list_actions = []
+
+    try:
         return render_template('executed.html',
                                username=username, email=email,
-                               list_actions=list_actions(
-                                   api_client=api_client),
+                               list_actions=list_actions,
                                compute_allocated_resources=compute_allocated_resources(
                                    api_client=api_client),
                                cluster_name_configured=cluster_name_configured(

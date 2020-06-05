@@ -71,8 +71,10 @@ def route_errors(error):
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -99,8 +101,10 @@ def api_list_actions():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -126,8 +130,10 @@ def api_show_actions():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -153,8 +159,10 @@ def api_state_namespaces():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -180,8 +188,10 @@ def api_state_nodes():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -207,8 +217,10 @@ def api_state_pods():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -234,8 +246,10 @@ def api_web_terminal():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
@@ -261,8 +275,10 @@ def api_cluster_name_configured():
     #
     session = {}
     if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
+        try:
+            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
+        except Exception as e:
+            return redirect(url_for('auth_blueprint.login'))
     else:
         session['kubeconfig'] = None
     # not current_user.is_authenticated:
