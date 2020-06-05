@@ -30,6 +30,8 @@ from app.base.k8sclient import (cluster_name_configured,
 
 from pystol.operator import insert_pystol_object
 
+import json
+
 from app.run import blueprint
 
 from flask import current_app, redirect, render_template, request, url_for
@@ -40,6 +42,8 @@ from flask_login import (current_user,
                          logout_user)
 
 from jinja2 import TemplateNotFound
+from app.run.forms import RunForm
+
 from google.cloud import firestore
 
 try:
@@ -66,7 +70,7 @@ except Exception as e:
 #
 
 
-@blueprint.route('/')
+@blueprint.route('/', methods=['GET', 'POST'])
 def run():
     """
     Render all the templates not from base.
@@ -78,6 +82,7 @@ def run():
     # If the auth module is installed and the user is not authenticated, so go to login
     #
     session = {}
+    form = RunForm(request.form)
     if hasattr(app, 'auth'):
         session = get_session_data(
             transaction=transaction, session_id=request.cookies.get('session_id'))
@@ -110,72 +115,19 @@ def run():
         username = session['username']
         email = session['email']
 
-    try:
-        return render_template('run.html',
-                               username=username, email=email,
-                               compute_allocated_resources=compute_allocated_resources(
-                                   api_client=api_client),
-                               cluster_name_configured=cluster_name_configured(
-                                   api_client=api_client),
-                               pystol_version=PYSTOL_VERSION,)
+    form = RunForm()
 
-    except TemplateNotFound:
-        return render_template('page-404.html'), 404
-    except Exception as e:
-        print("Exception found in %s: %s" % (blueprint.name, e))
-        if current_app.config['DEBUG']:
-            raise e
-        return render_template('page-500.html'), 500
+    if request.method == "POST":
+        errors = 0
+        try:
+            json.loads(request.form['extra_vars'])
+        except ValueError as e:
+            errors = errors + 1
 
-
-
-@blueprint.route('/action', methods=['POST'])
-def run_action():
-    """
-    Show the executed Pystol actions.
-
-    This is a main method
-    """
-    #
-    # Basic authentication module requirement
-    # If the auth module is installed and the user is not authenticated, so go to login
-    #
-    session = {}
-    if hasattr(app, 'auth'):
-        session = get_session_data(
-            transaction=transaction, session_id=request.cookies.get('session_id'))
-    else:
-        session['kubeconfig'] = None
-    # not current_user.is_authenticated:
-    if hasattr(app, 'auth') and session['email'] == None:
-        return redirect(url_for('auth_blueprint.login'))
-    #
-    # End basic authentication requirement
-    #
-
-    if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
-        kubeconfig = None
-        api_client = None
-    else:
-        kubeconfig = session['kubeconfig']
-        api_client = remote_cluster(kubeconfig=kubeconfig)
-
-    if (not 'username' in session or
-        session['username'] == None or
-        session['username'] == '' or
-        not 'email' in session or
-        session['email'] == None or
-            session['email'] == ''):
-
-        username = None
-        email = None
-    else:
-        username = session['username']
-        email = session['email']
-
-
-    try:
-        if request.method == "POST":
+        if errors != 0:
+            print("There are errors in the form")
+            form.extra_vars.errors = ["The field extra_vars must be a valid JSON"]
+        else:
             print("Run action by post")
             dict = request.form
             namespace = ""
@@ -219,6 +171,19 @@ def run_action():
                                  extra_vars=extra_vars,
                                  api_client=api_client)
             return redirect(url_for('executed_blueprint.executed'))
+
+
+
+    try:
+        return render_template('run.html',
+                               username=username, email=email,
+                               form=form,
+                               compute_allocated_resources=compute_allocated_resources(
+                                   api_client=api_client),
+                               cluster_name_configured=cluster_name_configured(
+                                   api_client=api_client),
+                               pystol_version=PYSTOL_VERSION,)
+
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except Exception as e:
