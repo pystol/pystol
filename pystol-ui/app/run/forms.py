@@ -37,5 +37,8 @@ class RunForm(FlaskForm):
     role = TextField('Role',
                          id='role',
                          validators=[DataRequired()])
-    source = TextField('Source', id='source')
-    extra_vars = StringField('Extra vars', id='extra_vars')
+    source = TextField('Source',
+                       id='source')
+    extra_vars = StringField('Extra vars',
+                             id='extra_vars',
+                             default='{}')

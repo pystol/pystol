@@ -67,9 +67,10 @@
   </div>
 </div>
 
-{% for error in form.extra_vars.errors %}
-    <div class="alert alert-danger" role="alert">{{ error }}</div>
-{% endfor %}
+        {% for field, errors in form.errors.items() %}
+            <div class="alert alert-danger" role="alert">{{ form[field].label }}: {{ ', '.join(errors) }}</div>
+        {% endfor %}
+
 
 <div class="form-actions">
   <button class="btn btn-sm btn-info" type="submit"> Submit</button>

@@ -118,52 +118,49 @@ def run():
     form = RunForm()
 
     if request.method == "POST":
+        dict = request.form
+
+        namespace = ""
+        collection = ""
+        role = ""
+        source = ""
+        extra_vars = {}
+
+        if 'namespace' in dict:
+            namespace = dict['namespace']
+        else:
+            namespace = ""
+
+        if 'collection' in dict:
+            collection = dict['collection']
+        else:
+            collection = ""
+
+        if 'role' in dict:
+            role = dict['role']
+        else:
+            role = ""
+
+        if 'source' in dict:
+            source = dict['source']
+        else:
+            source = ""
+
+        if 'extra_vars' in dict:
+            if dict['extra_vars'] == "" or dict['extra_vars'] is None:
+                extra_vars = "{}"
+            else:
+                extra_vars = dict['extra_vars']
+        else:
+            extra_vars = "{}"
+
         errors = 0
         try:
-            json.loads(request.form['extra_vars'])
+            json.loads(extra_vars)
         except ValueError as e:
             errors = errors + 1
 
-        if errors != 0:
-            print("There are errors in the form")
-            form.extra_vars.errors = ["The field extra_vars must be a valid JSON"]
-        else:
-            print("Run action by post")
-            dict = request.form
-            namespace = ""
-            collection = ""
-            role = ""
-            source = ""
-            extra_vars = {}
-
-            if 'namespace' in dict:
-                namespace = dict['namespace']
-            else:
-                namespace = ""
-
-            if 'collection' in dict:
-                collection = dict['collection']
-            else:
-                collection = ""
-
-            if 'role' in dict:
-                role = dict['role']
-            else:
-                role = ""
-
-            if 'source' in dict:
-                source = dict['source']
-            else:
-                source = ""
-
-            if 'extra_vars' in dict:
-                if dict['extra_vars'] == "" or dict['extra_vars'] is None:
-                    extra_vars = "{}"
-                else:
-                    extra_vars = dict['extra_vars']
-            else:
-                extra_vars = "{}"
-
+        if errors == 0:
             insert_pystol_object(namespace=namespace,
                                  collection=collection,
                                  role=role,
@@ -171,9 +168,8 @@ def run():
                                  extra_vars=extra_vars,
                                  api_client=api_client)
             return redirect(url_for('executed_blueprint.executed'))
-
-
-
+        else:
+            form.extra_vars.errors = ["This must be a valid JSON"]
     try:
         return render_template('run.html',
                                username=username, email=email,
