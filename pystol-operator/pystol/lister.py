@@ -170,8 +170,8 @@ def list_actions(api_client=None):
                        action['metadata']['creationTimestamp'],
                        action['spec']['action_state'],
                        action['spec']['workflow_state']])
-    except ApiException:
-        print("No objects found...")
+    except Exception as e:
+        print("No objects found or error...")
         return []
     print(x)
     return ret

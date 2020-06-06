@@ -93,7 +93,7 @@ def home_root():
 
     return redirect(url_for('usage_blueprint.usage'))
 
-
+'''
 @blueprint.route('/<template>')
 def route_template(template):
     """
@@ -128,23 +128,7 @@ def route_template(template):
         api_client = remote_cluster(kubeconfig=kubeconfig)
 
     try:
-        return render_template(template + '.html',
-                               list_actions=list_actions(
-                                   api_client=api_client),
-                               show_actions=show_actions(
-                                   api_client=api_client),
-                               state_namespaces=state_namespaces(
-                                   api_client=api_client),
-                               state_nodes=state_nodes(
-                                   api_client=api_client),
-                               state_pods=state_pods(
-                                   api_client=api_client),
-                               compute_allocated_resources=compute_allocated_resources(
-                                   api_client=api_client),
-                               cluster_name_configured=cluster_name_configured(
-                                   api_client=api_client),
-                               pystol_version=PYSTOL_VERSION,)
-
+        return render_template(template + '.html')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except Exception as e:
@@ -152,3 +136,4 @@ def route_template(template):
         if current_app.config['DEBUG']:
             raise e
         return render_template('page-500.html'), 500
+'''
