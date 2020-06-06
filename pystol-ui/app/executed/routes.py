@@ -111,17 +111,11 @@ def executed():
         username = session['username']
         email = session['email']
 
-    try:
-        # If the Pystol resources are not deployed
-        # this will fail, we always return a valid parameter.
-        list_actions = list_actions(api_client=api_client)
-    except Exception as e:
-        list_actions = []
 
     try:
         return render_template('executed.html',
                                username=username, email=email,
-                               list_actions=list_actions,
+                               list_actions=list_actions(api_client=api_client),
                                compute_allocated_resources=compute_allocated_resources(
                                    api_client=api_client),
                                cluster_name_configured=cluster_name_configured(

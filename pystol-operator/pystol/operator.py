@@ -70,10 +70,8 @@ def load_kubernetes_config():
                    "    export KUBECONFIG=~/.kube/config\n"
                    "Or run Pystol from within the cluster to make use of "
                    "load_incluster_config.\n"
-                   "Error: %s" % (e))
-        print(message)
-        print("---")
-        print("The current Pystol version is: %s" % (pystol_version))
+                   "Version: %s"
+                   "Error: %s" % (pystol_version, e))
 
 #
 # Part of the operation in charge of adding the custom resources
