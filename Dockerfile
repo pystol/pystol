@@ -9,6 +9,9 @@ ARG revision
 # Bundle app source
 COPY . .
 
+# Until https://github.com/grpc/grpc/issues/18150 is fixed
+# The grpcio install will be compiled from source.
+
 ## Installing dependencies
 # Installing Python3
 RUN apk add --update build-base bash curl python3 git python3-dev libffi-dev openssl-dev py3-pip iputils
