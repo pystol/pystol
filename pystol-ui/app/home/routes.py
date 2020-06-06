@@ -93,42 +93,17 @@ def home_root():
 
     return redirect(url_for('usage_blueprint.usage'))
 
-'''
-@blueprint.route('/<template>')
-def route_template(template):
+
+@blueprint.route('/', defaults={'path': ''})
+@blueprint.route('/<path:path>')
+def route_template(path):
     """
-    Render all the templates not from base.
+    Render all the templates not from other blueprints.
 
     This is a main method
     """
-    #
-    # Basic authentication module requirement
-    # If the auth module is installed and the user is not authenticated, so go to login
-    #
-    session = {}
-    if hasattr(app, 'auth'):
-        try:
-            session = get_session_data(transaction=transaction, session_id=request.cookies.get('session_id'))
-        except Exception as e:
-            return redirect(url_for('auth_blueprint.login'))
-    else:
-        session['kubeconfig'] = None
-    # not current_user.is_authenticated:
-    if hasattr(app, 'auth') and session['email'] == None:
-        return redirect(url_for('auth_blueprint.login'))
-    #
-    # End basic authentication requirement
-    #
-
-    if not 'kubeconfig' in session or session['kubeconfig'] == None or session['kubeconfig'] == '':
-        kubeconfig = None
-        api_client = None
-    else:
-        kubeconfig = session['kubeconfig']
-        api_client = remote_cluster(kubeconfig=kubeconfig)
-
     try:
-        return render_template(template + '.html')
+        return render_template(path + '.html')
     except TemplateNotFound:
         return render_template('page-404.html'), 404
     except Exception as e:
@@ -136,4 +111,3 @@ def route_template(template):
         if current_app.config['DEBUG']:
             raise e
         return render_template('page-500.html'), 500
-'''

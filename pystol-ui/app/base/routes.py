@@ -305,6 +305,27 @@ def shutdown():
     return 'Server shutting down...'
 
 
+@blueprint.errorhandler(404)
+def not_found_error(error):
+    """
+    Define a route.
+
+    This is a main routing method
+    """
+    return render_template('page-404.html',
+                           template_folder="../home/templates/"), 404
+
+
+@blueprint.errorhandler(404)
+def internal_error(error):
+    """
+    Define a route.
+
+    This is a main routing method
+    """
+    return render_template('page-500.html',
+                           template_folder="../home/templates/"), 500
+
 # Errors
 # @login_manager.unauthorized_handler
 # def unauthorized_handler():
@@ -326,25 +347,3 @@ def shutdown():
 #    """
 #    return render_template('page-403.html',
 #                           template_folder="../home/templates/"), 403
-
-
-@blueprint.errorhandler(404)
-def not_found_error(error):
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    return render_template('page-404.html',
-                           template_folder="../home/templates/"), 404
-
-
-@blueprint.errorhandler(500)
-def internal_error(error):
-    """
-    Define a route.
-
-    This is a main routing method
-    """
-    return render_template('page-500.html',
-                           template_folder="../home/templates/"), 500
