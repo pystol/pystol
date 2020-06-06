@@ -1,6 +1,12 @@
-FROM alpine
+FROM centos:8
 LABEL maintainer="Carlos Camacho <carloscamachoucv@gmail.com>"
 LABEL quay.expires-after=30w
+
+RUN yum groupinstall 'Development Tools' -y && \
+    yum install bash curl python3 git python3-devel libffi-devel openssl-devel postgresql-devel gcc -y && \
+    yum update -y
+
+RUN pip3 install --upgrade pip virtualenv setuptools
 
 # Arguments
 ARG revision
@@ -8,14 +14,6 @@ ARG revision
 ## Initial copy of the repository to the container image
 # Bundle app source
 COPY . .
-
-# Until https://github.com/grpc/grpc/issues/18150 is fixed
-# The grpcio install will be compiled from source.
-
-## Installing dependencies
-# Installing Python3
-RUN apk add --update build-base bash curl python3 git python3-dev libffi-dev openssl-dev py3-pip iputils
-RUN pip3 install --upgrade pip virtualenv setuptools
 
 ## Installing pystol launcher requirements
 # Install kubectl
