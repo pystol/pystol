@@ -1,8 +1,9 @@
 {% extends "base-site.html" %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} Usage {% endblock %}
 
 {% block content %}
+<i data-fa-symbol="fa-server" class="fas fa-server fa-fw"></i>
 
     <div class="container-fluid">
       <div class="fade-in">
@@ -17,13 +18,13 @@
                   <!-- /.col-->
              {% for node in hexagons_data %}
                <!-- /.col-->
-                <div class="col-6 col-sm-6 col-lg-4">
+                <div class="col-12 col-sm-12 col-lg-4">
               <!-- card body -->
                   <div class="card overflow-hidden">
                     <div class="card-body p-0 d-flex align-items-center">
                       <div class="bg-info p-2 mfe-3">
                         <svg class="c-icon c-icon-xl" data-toggle="modal" data-target="#{{ node.name | replace(".","-") }}">
-                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
+                          <use xlink:href="#fa-server"></use>
                         </svg>
                       </div>
                       <div>
@@ -72,7 +73,7 @@
                     <div class="card-body p-0 d-flex align-items-center">
                       <div class="bg-info p-2 mfe-3">
                         <svg class="c-icon c-icon-xl">
-                          <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-storage"></use>
+                          <use xlink:href="#fa-server"></use>
                         </svg>
                       </div>
                       <div>

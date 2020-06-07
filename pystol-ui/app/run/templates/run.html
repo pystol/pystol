@@ -1,6 +1,6 @@
 {% extends "base-site.html" %}
 
-{% block title %} Forms {% endblock %}
+{% block title %} Run {% endblock %}
 
 {% block content %}
 
@@ -9,19 +9,8 @@
           <!-- /.row-->
           <div class="row">
             <div class="col-md-12">
-
-            <div class="card">
-              <div class="card-header">Card title</div>
-              <div class="card-body">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
-                nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-              </div>
-            </div>
-
               <div class="card">
-                <div class="card-header">Run an action</div>
+                <div class="card-header">Run a Pystol action</div>
                 <div class="card-body">
                     <form class="form-horizontal" action="{{ url_for('run_blueprint.run') }}"  method="POST" enctype="multipart/form-data">
 
