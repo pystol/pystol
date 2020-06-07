@@ -375,6 +375,10 @@ def kube_create_job_object(name,
     extra_ansible_vars.update(y2)
 
     command = ["/bin/bash"]
+
+    if (action_source == '' or action_sourse is None):
+        action_source = "galaxy.ansible.com"
+
     if (action_source == "galaxy.ansible.com"):
         args = ["-c",
                 "echo '---' > req.yml; \
