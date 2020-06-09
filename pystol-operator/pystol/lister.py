@@ -126,7 +126,7 @@ def show_actions():
 
     return ret
 
-def list_actions(api_client=None):
+def list_actions(api_client=None, debug=False):
     """
     List Pystol actions from the cluster.
 
@@ -154,6 +154,44 @@ def list_actions(api_client=None):
                                                  plural=plural,
                                                  pretty=pretty)
         for action in resp['items']:
+
+            name = action['metadata']['name']
+            job_description = ""
+            pod_logs = ""
+
+            if debug:
+
+                namespace = "pystol"
+                pretty = 'true'
+
+                apiO = kubernetes.client.BatchV1Api(api_client=api_client)
+
+                try:
+                    resp = apiO.read_namespaced_job(name=name,
+                                                   namespace=namespace,
+                                                   pretty=pretty)
+                    job_description = resp
+                except ApiException:
+                    print("Job not found")
+
+                apiO = kubernetes.client.CoreV1Api(api_client=api_client)
+
+                try:
+                    resp = apiO.list_namespaced_pod(namespace=namespace,
+                                                   pretty=pretty)
+                    found = False
+                    for pod in resp.items:
+                        if name in pod.metadata.name:
+                            found = True
+                            resp = apiO.read_namespaced_pod_log(name=pod.metadata.name,
+                                                               namespace=namespace,
+                                                               pretty=pretty)
+                            pod_logs = resp
+                    if not found:
+                        print("Pod not found.")
+                except ApiException:
+                    print("Pod not found.")
+
             ret.append({'name':
                         action['metadata']['name'],
                         'creationTimestamp':
@@ -165,7 +203,10 @@ def list_actions(api_client=None):
                         'stdout':
                         action['spec']['action_stdout'],
                         'stderr':
-                        action['spec']['action_stderr']})
+                        action['spec']['action_stderr'],
+                        'job_description': job_description,
+                        'pod_logs': pod_logs})
+
             x.add_row([action['metadata']['name'],
                        action['metadata']['creationTimestamp'],
                        action['spec']['action_state'],

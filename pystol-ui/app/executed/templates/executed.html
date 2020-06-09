@@ -75,17 +75,20 @@
 {% for action in list_actions %}
         <!-- /.modal-->
     <div class="modal fade" id="{{ action.name | replace(".","-") }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h4 class="modal-title">{{ action.name }}</h4>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h5 class="modal-title">{{ action.name }}</h5>
             </div>
             <div class="modal-body">
-            <p>Output</p>
-            <p>{{ action.stdout }}</p>
-            <p>Error</p>
-            <p>{{ action.stderr }}</p>
+            <h5>Output</h5>
+            <pre>{{ action.stdout | string | safe }}</pre>
+            <h5>Error</h5>
+            <pre>{{ action.stderr | string | safe }}</pre>
+            <h5>Job description</h5>
+            <pre>{{ action.job_description | string | safe }}</pre>
+            <h5>Pod logs</h5>
+            <pre>{{ action.pod_logs | string | safe }}</pre>
             </div>
         </div>
         </div>

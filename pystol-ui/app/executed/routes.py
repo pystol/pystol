@@ -115,7 +115,7 @@ def executed():
     try:
         return render_template('executed.html',
                                username=username, email=email,
-                               list_actions=list_actions(api_client=api_client),
+                               list_actions=list_actions(api_client=api_client, debug=True),
                                compute_allocated_resources=compute_allocated_resources(
                                    api_client=api_client),
                                cluster_name_configured=cluster_name_configured(
