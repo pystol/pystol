@@ -104,7 +104,7 @@ jobs:
         echo
         echo ">>> Install Pystol deployment crd and rbac"
 
-        kubectl apply -f ./pystol-operator/pystol/templates/namespace.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.namespace.yaml
 
         cat <<EOF > ~/ci_values.yaml
         appSettings:
@@ -122,24 +122,24 @@ jobs:
               app: run.py
         EOF
 
-        j2 ./pystol-operator/pystol/templates/config_map.yaml.j2 \
+        j2 ./pystol-operator/pystol/templates/latest/pystol.configmap.yaml.j2 \
            ~/ci_values.yaml \
            | kubectl apply -f -
 
-        kubectl apply -f ./pystol-operator/pystol/templates/crd.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/service_account.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/cluster_role.yaml
-        kubectl apply -f ./pystol-operator/pystol/templates/cluster_role_binding.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.crd.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.serviceaccount.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.clusterrole.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.clusterrolebinding.yaml
 
-        j2 ./pystol-operator/pystol/templates/controller.yaml.j2 \
+        j2 ./pystol-operator/pystol/templates/latest/pystol.controller.yaml.j2 \
            ~/ci_values.yaml \
            | kubectl apply -f -
 
-        j2 ./pystol-operator/pystol/templates/ui.yaml.j2 \
+        j2 ./pystol-operator/pystol/templates/latest/pystol.ui.yaml.j2 \
            ~/ci_values.yaml \
            | kubectl apply -f -
 
-        kubectl apply -f ./pystol-operator/pystol/templates/service.yaml
+        kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.service.yaml
 
         echo
         echo ">>> Get pods 12 times"

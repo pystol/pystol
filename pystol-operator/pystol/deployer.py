@@ -50,7 +50,7 @@ def deploy_pystol(api_client=None):
         apicli = api_client
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/namespace.yaml")) as f:
+                           "templates/latest/pystol.namespace.yaml")) as f:
         try:
             resp = v1.create_namespace(
                 body=yaml.safe_load(f))
@@ -61,11 +61,11 @@ def deploy_pystol(api_client=None):
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/upstream_values.yaml")) as f:
+                           "templates/latest/pystol.upstreamvalues.yaml")) as f:
         values = yaml.safe_load(f)
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/config_map.yaml.j2")) as f:
+                           "templates/latest/pystol.configmap.yaml.j2")) as f:
         template = Template(f.read())
         cm = template.render(values)
         try:
@@ -81,7 +81,7 @@ def deploy_pystol(api_client=None):
         resp = kubernetes.utils.create_from_yaml(
             k8s_client=apicli,
             yaml_file=os.path.join(os.path.dirname(__file__),
-                                   "templates/crd.yaml"),
+                                   "templates/latest/pystol.crd.yaml"),
             namespace="pystol"
         )
         print("  " + u"\U0001F4E6" + " CRD created.")
@@ -99,7 +99,7 @@ def deploy_pystol(api_client=None):
         # print("https://github.com/kubernetes-client/python/issues/1022")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/service_account.yaml")) as f:
+                           "templates/latest/pystol.serviceaccount.yaml")) as f:
         try:
             resp = v1.create_namespaced_service_account(
                 namespace="pystol",
@@ -112,7 +112,7 @@ def deploy_pystol(api_client=None):
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/cluster_role.yaml")) as f:
+                           "templates/latest/pystol.clusterrole.yaml")) as f:
         try:
             resp = rbac.create_cluster_role(
                 body=yaml.safe_load(f))
@@ -123,7 +123,7 @@ def deploy_pystol(api_client=None):
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/cluster_role_binding.yaml")) as f:
+                           "templates/latest/pystol.clusterrolebinding.yaml")) as f:
         try:
             resp = rbac.create_cluster_role_binding(
                 body=yaml.safe_load(f))
@@ -137,7 +137,7 @@ def deploy_pystol(api_client=None):
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/controller.yaml.j2")) as f:
+                           "templates/latest/pystol.controller.yaml.j2")) as f:
         template = Template(f.read())
         rendered_deployment = template.render(values)
         try:
@@ -153,7 +153,7 @@ def deploy_pystol(api_client=None):
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/ui.yaml.j2")) as f:
+                           "templates/latest/pystol.ui.yaml.j2")) as f:
         template = Template(f.read())
         rendered_deployment = template.render(values)
         try:
@@ -168,7 +168,7 @@ def deploy_pystol(api_client=None):
             print("     Maybe it is already created.")
 
     with open(os.path.join(os.path.dirname(__file__),
-                           "templates/service.yaml")) as f:
+                           "templates/latest/pystol.service.yaml")) as f:
         try:
             resp = v1.create_namespaced_service(
                 namespace="pystol",
