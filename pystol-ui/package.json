@@ -2,16 +2,6 @@
   "name": "pystol-ui",
   "version": "0.8.6",
   "description": "Pystol UI",
-  "scripts": {
-    "lint": "eslint ."
-  },
-  "engines": {
-    "node": "8.11.3"
-  },
-  "devDependencies": {
-    "eslint": "5.0.0",
-    "eslint-config-google": "0.9.1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pystol/pystol.git"
@@ -24,5 +14,5 @@
   "contributors": [
     "Carlos Camacho <carloscamachoucv@gmail.com>"
   ],
-  "license": "Commercial"
+  "license": "Apache 2.0"
 }
