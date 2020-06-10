@@ -90,6 +90,10 @@ spec:
     Pystol is open source software
     licensed under the [Apache license](LICENSE).
 
+    ## Requirements
+
+    When installing Pystol, create and use the **pystol** namespace.
+
   maturity: beta
   version: 0.8.9
   replaces: ''
