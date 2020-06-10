@@ -24,24 +24,4 @@ spec:
           command: ["flask"]
           args: ["run"]
           imagePullPolicy: Always
-          env:
-            - name: FLASK_APP
-              valueFrom:
-                configMapKeyRef:
-                  key: PYSTOL_UI_FLASK_APP
-                  name: pystol-config
-            - name: FLASK_RUN_PORT
-              valueFrom:
-                configMapKeyRef:
-                  key: PYSTOL_UI_PORT
-                  name: pystol-config
-            - name: FLASK_RUN_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: PYSTOL_UI_HOST
-                  name: pystol-config
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
       serviceAccountName: pystol

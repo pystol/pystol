@@ -122,10 +122,6 @@ jobs:
               app: run.py
         EOF
 
-        j2 ./pystol-operator/pystol/templates/latest/pystol.configmap.yaml.j2 \
-           ~/ci_values.yaml \
-           | kubectl apply -f -
-
         kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.crd.yaml
         kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.serviceaccount.yaml
         kubectl apply -f ./pystol-operator/pystol/templates/latest/pystol.clusterrole.yaml

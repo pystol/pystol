@@ -50,6 +50,10 @@ def deploy_pystol(api_client=None):
         apicli = api_client
 
     with open(os.path.join(os.path.dirname(__file__),
+                           "templates/latest/pystol.upstreamvalues.yaml")) as f:
+        values = yaml.safe_load(f)
+
+    with open(os.path.join(os.path.dirname(__file__),
                            "templates/latest/pystol.namespace.yaml")) as f:
         try:
             resp = v1.create_namespace(
@@ -60,10 +64,7 @@ def deploy_pystol(api_client=None):
             print("  " + u"\u2757" + " Namespace creation warning.")
             print("     Maybe it is already created.")
 
-    with open(os.path.join(os.path.dirname(__file__),
-                           "templates/latest/pystol.upstreamvalues.yaml")) as f:
-        values = yaml.safe_load(f)
-
+    '''
     with open(os.path.join(os.path.dirname(__file__),
                            "templates/latest/pystol.configmap.yaml.j2")) as f:
         template = Template(f.read())
@@ -76,7 +77,7 @@ def deploy_pystol(api_client=None):
         except ApiException:
             print("  " + u"\u2757" + " Config map creation warning.")
             print("     Maybe it is already created.")
-
+    '''
     try:
         resp = kubernetes.utils.create_from_yaml(
             k8s_client=apicli,
