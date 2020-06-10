@@ -18,25 +18,18 @@ metadata:
           "apiVersion": "pystol.org/v1alpha1",
           "kind": "PystolAction",
           "metadata": {
-            "creationTimestamp": "2020-06-10T07:48:00Z",
-            "generation": 9,
-            "name": "pystol-action-pystol-actions-pingtest-8nviz",
-            "namespace": "pystol",
-            "resourceVersion": "434846",
-            "selfLink": "/apis/pystol.org/v1alpha1/namespaces/pystol/pystolactions/pystol-action-pystol-actions-pingtest-8nviz",
-            "uid": "b523d5ec-aaee-11ea-8952-02682b78153c"
+            "name": "pystol-action-pystol-actions-pingtest-8nviz"
           },
           "spec": {
-            "action_state": "PystolActionEndedSuccessfully",
-            "action_stderr": "",
-            "executed": true,
-            "workflow_state": "PystolOperatorEnded",
-            "action_stdout": "PING 10.0.166.251 (10.0.166.251) 56(124) bytes of data.--- 10.0.166.251 ping statistics ---2 packets transmitted, 2 received, 0% packet loss, time 24ms",
-            "role": "pingtest",
+            "action_state": "PystolActionCreating",
+            "workflow_state": "PystolOperatorWaitingAction",
             "source": "",
-            "extra_vars": "{}",
             "namespace": "pystol",
-            "collection": "actions"
+            "collection": "actions",
+            "role": "pingtest",
+            "extra_vars": "{}",
+            "action_stderr": "{}",
+            "action_stdout": "{}"
           }
         }
       ]
@@ -197,12 +190,6 @@ spec:
             displayName: Action Stderr
             x-descriptors: []
         statusDescriptors: []
-    required:
-      - name: add-crd
-        displayName: Pystol Actions
-        kind: PystolAction
-        version: v1alpha1
-        description: The definition of the pystol action
   install:
     strategy: deployment
     spec:
