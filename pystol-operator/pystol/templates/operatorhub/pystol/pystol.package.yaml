@@ -2,4 +2,4 @@ packageName: pystol
 defaultChannel: alpha
 channels:
   - name: alpha
-    currentCSV: pystol.v0.8.15
+    currentCSV: pystol.v0.8.17

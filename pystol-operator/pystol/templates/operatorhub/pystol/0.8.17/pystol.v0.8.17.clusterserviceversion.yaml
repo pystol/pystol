@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: pystol.v0.8.15
+  name: pystol.v0.8.17
   namespace: pystol
   annotations:
     categories: Integration & Delivery
@@ -92,10 +92,13 @@ spec:
 
     ## Requirements
 
-    When installing Pystol, create and use the **pystol** namespace.
+    * When installing Pystol, create and use the **pystol** namespace.
+
+    ## Accessing the native web user interface.
+    * If the user wants to access the native Pystol's UI, create a route in the cluster pointing to the Pystol's service.
 
   maturity: alpha
-  version: 0.8.15
+  version: 0.8.17
   replaces: ''
   skips: []
   minKubeVersion: 1.12.0
