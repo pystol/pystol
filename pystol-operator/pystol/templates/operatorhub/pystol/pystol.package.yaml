@@ -1,5 +1,5 @@
 packageName: pystol
-defaultChannel: stable
+defaultChannel: alpha
 channels:
-  - name: stable
-    currentCSV: pystol.v0.8.9
+  - name: alpha
+    currentCSV: pystol.v0.8.15
