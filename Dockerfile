@@ -37,11 +37,14 @@ RUN echo "localhost ansible_connection=local" >> /etc/ansible/hosts
 # it might be a good idea, to have it already in the image.
 # This needs to use also --force if we install it from
 # source (check the operator code)
-RUN ansible-galaxy collection install pystol.actions
+RUN ansible-galaxy collection install pystol.actions && \
+    chmod -R ug+rwx ${HOME}/.ansible && \
+    ln -s ${HOME}/.ansible /pystol-ui/.ansible
 
 ## Moving to the UI install
 # Change the current working directory
 WORKDIR "/pystol-ui"
+
 ## Installing the UI dependencies (Web UI + endpoints) and Build the application
 # RUN npm install -g react-scripts && npm install && npm install pystol-wui && npm run-script build
 RUN pip3 install -r requirements.txt
