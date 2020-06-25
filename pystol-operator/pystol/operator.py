@@ -376,7 +376,7 @@ def kube_create_job_object(name,
 
     command = ["/bin/bash"]
 
-    if (action_source == '' or action_sourse is None):
+    if (action_source == '' or action_source is None):
         action_source = "galaxy.ansible.com"
 
     if (action_source == "galaxy.ansible.com"):
